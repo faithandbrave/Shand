@@ -1,0 +1,30 @@
+#include "SingletonHolder.hpp"
+
+
+// マルチスレッドセーフなログ出力クラス
+class CSingletonLogger : public SingletonHolder<CLogger, CComMultiThreadModel> {
+public:
+	void Write(int nLogType, int nLogNo, const CString& strMessage)
+	{
+		...
+	}
+};
+
+
+/* Example
+
+// マルチスレッド内でのログ出力
+void CxxxThread::Function()
+{
+	CSingletonLogger::GetInstance()->Write(...);
+}
+
+
+// アプリケーション終了時に解放
+CxxxApp::~CxxxApp()
+{
+	delete CSingletonLogger::GetInstance();
+}
+
+*/
+

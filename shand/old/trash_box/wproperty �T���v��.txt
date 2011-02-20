@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+#include <shand/property.hpp>
+
+using namespace std;
+using namespace shand;
+
+class person {
+    int    age_;
+    string name_;
+
+public:
+    person()
+        : age_(0), name_()
+    {
+        age(this);
+        name(this);
+    }
+
+    void disp()
+    {
+        cout << age_  << endl;
+        cout << name_ << endl;
+    }
+
+    // setter(¦ argument is 'const&')
+    void set_age(const int& value)     { age_  = value; }
+    void set_name(const string& value) { name_ = value; }
+
+    // property
+    wproperty<int,    person, &person::set_age>  age;
+	wproperty<string, person, &person::set_name> name;
+
+};
+
+int main()
+{
+    person akira;
+
+    akira.age  = 22;
+    akira.name = "Akira";
+
+    akira.disp();
+
+    return 0;
+}

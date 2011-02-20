@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+#include <shand/property.hpp>
+
+using namespace std;
+using namespace shand;
+
+class person {
+public:
+    property<int>    age;
+    property<string> name;
+};
+
+int main()
+{
+    person akira;
+
+    akira.age  = 22;
+    akira.name = "Akira";
+
+    cout << akira.age    << endl;
+    cout << akira.name() << endl;
+
+    return 0;
+}
