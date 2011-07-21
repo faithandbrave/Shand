@@ -18,25 +18,25 @@ namespace result_of {
 
 template <class Seq, class F>
 struct adjacency_transform {
-	typedef
-		typename boost::fusion::result_of::transform<
-			boost::fusion::zip<
-				Seq,
-				typename boost::fusion::pop_front<Seq>::type
-			>
-			F
-		>::type
-	type;
+    typedef
+        typename boost::fusion::result_of::transform<
+            boost::fusion::zip<
+                Seq,
+                typename boost::fusion::pop_front<Seq>::type
+            >
+            F
+        >::type
+    type;
 };
 
 } // namespace result_of
 
 template <class Seq, class F>
 inline typename result_of::adjacency_transform<Seq, F>::type
-	adjacency_transform(const Seq& seq, F f)
+    adjacency_transform(const Seq& seq, F f)
 {
-	namespace fusion = boost::fusion;
-	return fusion::transform(fusion::zip(seq, fusion::pop_front(seq)), f);
+    namespace fusion = boost::fusion;
+    return fusion::transform(fusion::zip(seq, fusion::pop_front(seq)), f);
 }
 
 }} // namespace shand::fusion
