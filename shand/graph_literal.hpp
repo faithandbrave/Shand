@@ -15,11 +15,25 @@
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/push_back.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/multi_index_container.hpp>
+#include <boost/multi_index/ordered_index.hpp>
+#include <boost/multi_index/sequenced_index.hpp>
+#include <boost/multi_index/identity.hpp>
 
 namespace shand {
 
 struct graph_converter {
-    typedef std::vector<std::pair<int, int> > edges_type;
+    typedef
+        boost::multi_index_container<
+            std::pair<int, int>,
+            boost::multi_index::indexed_by<
+                boost::multi_index::sequenced<>,
+                boost::multi_index::ordered_unique<
+                    boost::multi_index::identity<std::pair<int, int> >
+                >
+            >
+        >
+    edges_type;
 
     edges_type edges;
 
@@ -28,6 +42,12 @@ struct graph_converter {
 
     edges_type::iterator end() { return edges.end(); }
     edges_type::const_iterator end() const { return edges.end(); }
+
+    template <class Container>
+    operator Container() const
+    {
+        return Container(edges.begin(), edges.end(), edges.get<1>().size());
+    }
 };
 
 template <class>
