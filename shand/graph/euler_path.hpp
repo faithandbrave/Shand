@@ -12,6 +12,7 @@
 #include <boost/optional.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace shand { namespace graph {
 
@@ -45,33 +46,33 @@ inline boost::optional<std::size_t>
 
 namespace euler_detail {
 
-    template <class AdjacencyList, class Adj, class UnaryFunction>
-    inline void visit(const AdjacencyList& g,
-                     Adj& adj,
-                     typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
-                     UnaryFunction f,
-                     std::size_t& path_size)
-    {
-        typedef boost::graph_traits<AdjacencyList> traits;
-        typedef typename traits::vertex_descriptor vertex_desc;
-        typedef typename traits::edge_descriptor edge_desc;
+template <class AdjacencyList, class Adj, class UnaryFunction>
+inline void visit(const AdjacencyList& g,
+                 Adj& adj,
+                 typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
+                 UnaryFunction f,
+                 std::size_t& path_size)
+{
+    typedef boost::graph_traits<AdjacencyList> traits;
+    typedef typename traits::vertex_descriptor vertex_desc;
+    typedef typename traits::edge_descriptor edge_desc;
 
-        BOOST_FOREACH (const edge_desc& e, boost::out_edges(s, g)) {
-            if (adj[boost::source(e, g)][boost::target(e, g)] > 0) {
-                --adj[boost::source(e, g)][boost::target(e, g)];
-                --adj[boost::target(e, g)][boost::source(e, g)];
-                visit(g, adj, boost::target(e, g), f, path_size);
-            }
+    BOOST_FOREACH (const edge_desc& e, boost::out_edges(s, g)) {
+        if (adj[boost::source(e, g)][boost::target(e, g)] > 0) {
+            --adj[boost::source(e, g)][boost::target(e, g)];
+            --adj[boost::target(e, g)][boost::source(e, g)];
+            visit(g, adj, boost::target(e, g), f, path_size);
         }
-        f(s);
-        ++path_size;
     }
+    f(s);
+    ++path_size;
 }
 
 template <class AdjacencyList, class UnaryFunction>
 inline bool euler_path(const AdjacencyList& g,
                        typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
-                       UnaryFunction f)
+                       UnaryFunction f,
+                       boost::undirected_tag)
 {
     boost::optional<std::size_t> m = is_euler(g, s);
     if (!m) {
@@ -91,9 +92,20 @@ inline bool euler_path(const AdjacencyList& g,
     }
 
     std::size_t path_size = 0;
-    euler_detail::visit(g, adj, s, f, path_size);
+    visit(g, adj, s, f, path_size);
 
     return path_size == m.get() + 1;
+}
+
+} // namespace euler_detail
+
+template <class AdjacencyList, class UnaryFunction>
+inline bool euler_path(const AdjacencyList& g,
+                       typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
+                       UnaryFunction f)
+{
+    typedef typename boost::graph_traits<AdjacencyList>::directed_category Cat;
+    return euler_detail::euler_path(g, s, f, Cat());
 }
 
 }} // namespace shand::graph
