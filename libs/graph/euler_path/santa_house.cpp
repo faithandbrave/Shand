@@ -17,7 +17,7 @@ int main()
     typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS> Graph;
     typedef boost::graph_traits<Graph>::vertex_descriptor vertex_desc;
 
-    // House of Santa (Japanese name is "ƒTƒ“ƒ^‚Ì‰Æ") : http://ameblo.jp/masanori432/entry-10058793629.html
+    // House of Santa (Japanese name is "ã‚µãƒ³ã‚¿ã®å®¶") : http://ameblo.jp/masanori432/entry-10058793629.html
     // path variation :  http://www.mathematische-basteleien.de/house.html
     const std::vector<std::pair<int, int> > edges = {
         {A, B},
