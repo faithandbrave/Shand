@@ -6,21 +6,12 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <stdexcept>
 #include <vector>
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
-#include <boost/throw_exception.hpp>
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/utility/enable_if.hpp>
 
 namespace shand { namespace graph {
-
-class no_euler_graph : public std::invalid_argument {
-public:
-    no_euler_graph()
-        : std::invalid_argument("no euler graph") {}
-};
 
 template <class AdjacencyList>
 inline boost::optional<std::size_t>
@@ -75,10 +66,7 @@ inline bool euler_path(const AdjacencyList& g,
                        boost::undirected_tag)
 {
     boost::optional<std::size_t> m = is_euler(g, s);
-    if (!m) {
-        boost::throw_exception(no_euler_graph());
-        return false;
-    }
+    if (!m) return false;
 
     typedef boost::graph_traits<AdjacencyList> traits;
     typedef typename traits::vertex_descriptor vertex_desc;
