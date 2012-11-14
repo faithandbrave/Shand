@@ -30,20 +30,20 @@ degree<T> radian_to_degree(const radian<T>& x)
 
 int main ()
 {
-    // ˆÙ‚È‚éŒ^(ƒ^ƒO)ŠÔ‚Å‚ÌˆÃ–Ù•ÏŠ·‚Í‚Å‚«‚È‚¢
+    // ç•°ãªã‚‹å‹(ã‚¿ã‚°)é–“ã§ã®æš—é»™å¤‰æ›ã¯ã§ããªã„
     {
         degree<float> deg(90.0f);
-//      radian<float> rad = deg; // ƒRƒ“ƒpƒCƒ‹ƒGƒ‰[IŒ^‚ªˆá‚¤
+//      radian<float> rad = deg; // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ï¼å‹ãŒé•ã†
     }
 
-    // degree‚©‚çradian‚Ö‚Ì•ÏŠ·
+    // degreeã‹ã‚‰radianã¸ã®å¤‰æ›
     {
         degree<float> deg(90.0f);
         radian<float> rad = degree_to_radian(deg);
         std::cout << rad.get() << std::endl;
     }
 
-    // radian‚©‚çdegree‚Ö‚Ì•ÏŠ·
+    // radianã‹ã‚‰degreeã¸ã®å¤‰æ›
     {
         radian<float> rad(0.5 * boost::math::constants::pi<float>());
         degree<float> deg = radian_to_degree(rad);
