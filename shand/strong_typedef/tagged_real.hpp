@@ -37,9 +37,6 @@ public:
     tagged_real& operator-=(const tagged_real& x) { value_ -= x.value_; return *this; }
     tagged_real& operator*=(const tagged_real& x) { value_ *= x.value_; return *this; }
     tagged_real& operator/=(const tagged_real& x) { value_ /= x.value_; return *this; }
-    tagged_real& operator|=(const tagged_real& x) { value_ |= x.value_; return *this; }
-    tagged_real& operator&=(const tagged_real& x) { value_ &= x.value_; return *this; }
-    tagged_real& operator^=(const tagged_real& x) { value_ ^= x.value_; return *this; }
 
     bool equals(const tagged_real& x) const
     {
