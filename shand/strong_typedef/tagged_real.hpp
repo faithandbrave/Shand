@@ -16,7 +16,7 @@
 
 namespace shand {
 
-template <class FloatingPoint, class Tag>
+template <class FloatingPoint, class Tag> // Tag is phantom type
 class tagged_real :
         private boost::operators<tagged_real<FloatingPoint, Tag> > {
 
