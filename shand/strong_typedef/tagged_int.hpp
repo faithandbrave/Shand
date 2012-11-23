@@ -56,7 +56,7 @@ std::basic_ostream<CharT, Traits>&
 
 template <class CharT, class Traits, class Integer, class Tag>
 std::basic_istream<CharT, Traits>&
-    operator<<(std::basic_istream<CharT, Traits>& is, const tagged_int<Integer, Tag>& x)
+    operator>>(std::basic_istream<CharT, Traits>& is, tagged_int<Integer, Tag>& x)
 {
     return is >> x.get();
 }

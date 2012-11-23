@@ -44,16 +44,16 @@ public:
     }
 };
 
-template <class CharT, class Traits, class Integer, class Tag>
+template <class CharT, class Traits, class FloatingPoint, class Tag>
 std::basic_ostream<CharT, Traits>&
-    operator<<(std::basic_ostream<CharT, Traits>& os, const tagged_real<Integer, Tag>& x)
+    operator<<(std::basic_ostream<CharT, Traits>& os, const tagged_real<FloatingPoint, Tag>& x)
 {
     return os << x.get();
 }
 
-template <class CharT, class Traits, class Integer, class Tag>
+template <class CharT, class Traits, class FloatingPoint, class Tag>
 std::basic_istream<CharT, Traits>&
-    operator<<(std::basic_istream<CharT, Traits>& is, const tagged_real<Integer, Tag>& x)
+    operator>>(std::basic_istream<CharT, Traits>& is, tagged_real<FloatingPoint, Tag>& x)
 {
     return is >> x.get();
 }

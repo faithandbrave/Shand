@@ -5,6 +5,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <shand/strong_typedef/tagged_real.hpp>
+#include <sstream>
 
 struct tag {};
 typedef shand::tagged_real<double, tag> real;
@@ -66,6 +67,23 @@ int main ()
 
         real z = real(6.0) / real(2.0);
         BOOST_TEST(z.equals(3.0));
+    }
+
+    // output stream
+    {
+        real y = 3.0;
+        std::ostringstream ss;
+        ss << y;
+        BOOST_TEST(ss.str() == "3");
+    }
+
+    // input stream
+    {
+        real y;
+        std::stringstream ss;
+        ss << "3.0";
+        ss >> y;
+        BOOST_TEST(y.equals(3.0));
     }
 
     return boost::report_errors();
