@@ -5,6 +5,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <shand/strong_typedef/tagged_real.hpp>
+#include <shand/strong_typedef/tagged_real_io.hpp>
 #include <sstream>
 
 struct tag {};

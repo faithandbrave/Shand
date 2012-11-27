@@ -8,7 +8,6 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <iosfwd>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/operators.hpp>
@@ -43,20 +42,6 @@ public:
         return boost::geometry::math::equals(value_, x.value_);
     }
 };
-
-template <class CharT, class Traits, class FloatingPoint, class Tag>
-std::basic_ostream<CharT, Traits>&
-    operator<<(std::basic_ostream<CharT, Traits>& os, const tagged_real<FloatingPoint, Tag>& x)
-{
-    return os << x.get();
-}
-
-template <class CharT, class Traits, class FloatingPoint, class Tag>
-std::basic_istream<CharT, Traits>&
-    operator>>(std::basic_istream<CharT, Traits>& is, tagged_real<FloatingPoint, Tag>& x)
-{
-    return is >> x.get();
-}
 
 } // namespace shand
 

@@ -3,9 +3,9 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <iostream>
 #include <ctime>
 #include <shand/strong_typedef/tagged_int.hpp>
+#include <shand/strong_typedef/tagged_int_io.hpp>
 
 struct count_tag {};
 struct seconds_tag {};

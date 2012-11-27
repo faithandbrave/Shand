@@ -8,7 +8,6 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <iosfwd>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/operators.hpp>
@@ -46,20 +45,6 @@ public:
     tagged_int& operator++() { ++value_; return *this; }
     tagged_int& operator--() { --value_; return *this; }
 };
-
-template <class CharT, class Traits, class Integer, class Tag>
-std::basic_ostream<CharT, Traits>&
-    operator<<(std::basic_ostream<CharT, Traits>& os, const tagged_int<Integer, Tag>& x)
-{
-    return os << x.get();
-}
-
-template <class CharT, class Traits, class Integer, class Tag>
-std::basic_istream<CharT, Traits>&
-    operator>>(std::basic_istream<CharT, Traits>& is, tagged_int<Integer, Tag>& x)
-{
-    return is >> x.get();
-}
 
 } // namespace shand
 

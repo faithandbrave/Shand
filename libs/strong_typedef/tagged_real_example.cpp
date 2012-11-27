@@ -3,9 +3,9 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <iostream>
 #include <boost/math/constants/constants.hpp>
 #include <shand/strong_typedef/tagged_real.hpp>
+#include <shand/strong_typedef/tagged_real_io.hpp>
 
 struct degree_tag {};
 struct radian_tag {};
