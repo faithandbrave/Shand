@@ -12,14 +12,14 @@ struct seconds_tag {};
 
 int main()
 {
-	shand::tagged_int<std::size_t, count_tag> count = 0;
-	shand::tagged_int<std::time_t, seconds_tag> seconds = std::time(0);
+    shand::tagged_int<std::size_t, count_tag> count = 0;
+    shand::tagged_int<std::time_t, seconds_tag> seconds = std::time(0);
 
-    // ˆÙ‚È‚éŒ^(ƒ^ƒO)ŠÔ‚Å‚ÌˆÃ–Ù•ÏŠ·‚Í‚Å‚«‚È‚¢
-//	count = seconds; // ƒRƒ“ƒpƒCƒ‹ƒGƒ‰[IŒ^‚ªˆá‚¤
+    // ç•°ãªã‚‹å‹(ã‚¿ã‚°)é–“ã§ã®æš—é»™å¤‰æ›ã¯ã§ããªã„
+//  count = seconds; // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ï¼å‹ãŒé•ã†
 
-	std::cout << count << std::endl;
-	std::cout << seconds << std::endl;
+    std::cout << count << std::endl;
+    std::cout << seconds << std::endl;
 }
 
 /*
