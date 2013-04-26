@@ -16,18 +16,18 @@ namespace shand { namespace optional_algorithm {
 
 template <class SinglePassRange, class UnaryPredicate>
 inline boost::optional<typename boost::range_reference<SinglePassRange>::type>
-	find_if(SinglePassRange& r, UnaryPredicate pred)
+    find_if(SinglePassRange& r, UnaryPredicate pred)
 {
-	typename boost::range_iterator<SinglePassRange>::type it = boost::find_if(r, pred);
-	return optional_return(it != boost::end(r), *it);
+    typename boost::range_iterator<SinglePassRange>::type it = boost::find_if(r, pred);
+    return optional_return(it != boost::end(r), *it);
 }
 
 template <class SinglePassRange, class UnaryPredicate>
 inline boost::optional<typename boost::range_reference<const SinglePassRange>::type>
-	find_if(const SinglePassRange& r, UnaryPredicate pred)
+    find_if(const SinglePassRange& r, UnaryPredicate pred)
 {
-	typename boost::range_iterator<const SinglePassRange>::type it = boost::find_if(r, pred);
-	return optional_return(it != boost::end(r), *it);
+    typename boost::range_iterator<const SinglePassRange>::type it = boost::find_if(r, pred);
+    return optional_return(it != boost::end(r), *it);
 }
 
 } // namespace optional_algorithm

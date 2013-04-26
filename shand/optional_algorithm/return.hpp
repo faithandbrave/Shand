@@ -15,13 +15,13 @@ namespace shand {
 template <class T>
 inline boost::optional<T&> optional_return(bool cond, T& then)
 {
-	return cond ? boost::optional<T&>(then) : boost::optional<T&>();
+    return cond ? boost::optional<T&>(then) : boost::optional<T&>();
 }
 
 template <class T>
 inline boost::optional<const T&> optional_return(bool cond, const T& then)
 {
-	return cond ? boost::optional<const T&>(then) : boost::optional<const T&>();
+    return cond ? boost::optional<const T&>(then) : boost::optional<const T&>();
 }
 
 } // namespace shand
