@@ -14,14 +14,17 @@ using boost::lambda::_1;
 
 int main()
 {
-	const std::vector<int> v = boost::assign::list_of(3)(1)(4);
-	if (boost::optional<const int&> p = shand::find_if(v, _1 % 2 == 0)) {
-		BOOST_TEST(p.get() == 4);
-	}
-	else {
-		BOOST_ERROR("find_if failed!");
-	}
+    const std::vector<int> v = boost::assign::list_of(3)(1)(4);
+    if (boost::optional<const int&> p = shand::find_if(v, _1 % 2 == 0)) {
+        BOOST_TEST(p.get() == 4);
+    }
+    else {
+        BOOST_ERROR("find_if failed!");
+    }
 
-	return boost::report_errors();
+    boost::optional<const int&> failed = shand::find_if(v, _1 == 5);
+    BOOST_TEST(!failed);
+
+    return boost::report_errors();
 }
 

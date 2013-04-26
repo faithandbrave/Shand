@@ -8,7 +8,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include "./return.hpp"
+#include <boost/optional.hpp>
 #include <boost/range/reference.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 
@@ -19,7 +19,10 @@ inline boost::optional<typename boost::range_reference<SinglePassRange>::type>
     find_if(SinglePassRange& r, UnaryPredicate pred)
 {
     typename boost::range_iterator<SinglePassRange>::type it = boost::find_if(r, pred);
-    return optional_return(it != boost::end(r), *it);
+    if (it != boost::end(r)) {
+        return *it;
+    }
+    return boost::none;
 }
 
 template <class SinglePassRange, class UnaryPredicate>
@@ -27,7 +30,10 @@ inline boost::optional<typename boost::range_reference<const SinglePassRange>::t
     find_if(const SinglePassRange& r, UnaryPredicate pred)
 {
     typename boost::range_iterator<const SinglePassRange>::type it = boost::find_if(r, pred);
-    return optional_return(it != boost::end(r), *it);
+    if (it != boost::end(r)) {
+        return *it;
+    }
+    return boost::none;
 }
 
 } // namespace optional_algorithm

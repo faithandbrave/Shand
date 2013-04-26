@@ -22,6 +22,6 @@ int main()
     else
         BOOST_ERROR("Not Found");
 
-	return boost::report_errors();
+    return boost::report_errors();
 }
 

@@ -8,7 +8,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include "./return.hpp"
+#include <boost/optional.hpp>
 #include <boost/range/reference.hpp>
 #include <boost/range/algorithm/max_element.hpp>
 
@@ -19,7 +19,10 @@ inline boost::optional<typename boost::range_reference<ForwardRange>::type>
     max_element(ForwardRange& r)
 {
     typename boost::range_iterator<ForwardRange>::type it = boost::max_element(r);
-    return optional_return(it != boost::end(r), *it);
+    if (it != boost::end(r)) {
+        return *it;
+    }
+    return boost::none;
 }
 
 template <class ForwardRange>
@@ -27,7 +30,10 @@ inline boost::optional<typename boost::range_reference<const ForwardRange>::type
     max_element(const ForwardRange& r)
 {
     typename boost::range_iterator<const ForwardRange>::type it = boost::max_element(r);
-    return optional_return(it != boost::end(r), *it);
+    if (it != boost::end(r)) {
+        return *it;
+    }
+    return boost::none;
 }
 
 template <class ForwardRange, class BinaryPredicate>
@@ -35,7 +41,10 @@ inline boost::optional<typename boost::range_reference<ForwardRange>::type>
     max_element(ForwardRange& r, BinaryPredicate pred)
 {
     typename boost::range_iterator<ForwardRange>::type it = boost::max_element(r, pred);
-    return optional_return(it != boost::end(r), *it);
+    if (it != boost::end(r)) {
+        return *it;
+    }
+    return boost::none;
 }
 
 template <class ForwardRange, class BinaryPredicate>
@@ -43,7 +52,10 @@ inline boost::optional<typename boost::range_reference<const ForwardRange>::type
     max_element(const ForwardRange& r, BinaryPredicate pred)
 {
     typename boost::range_iterator<const ForwardRange>::type it = boost::max_element(r, pred);
-    return optional_return(it != boost::end(r), *it);
+    if (it != boost::end(r)) {
+        return *it;
+    }
+    return boost::none;
 }
 
 } // namespace optional_algorithm
