@@ -4,8 +4,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/detail/lightweight_test.hpp>
-#include <deque>
-#include <string>
 #include <shand/graph/euler_path.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/assign/list_of.hpp>
@@ -27,16 +25,16 @@ int main()
 
     // House of Santa
     // http://www.mathematische-basteleien.de/house.html
-    const std::vector<std::pair<int, int> > edges = {
-        {A, B},
-        {B, C},
-        {C, A},
-        {B, D},
-        {B, E},
-        {C, D},
-        {D, E},
-        {E, C}
-    };
+    const std::vector<std::pair<int, int> > edges = boost::assign::list_of
+        (std::make_pair(A, B))
+        (std::make_pair(B, C))
+        (std::make_pair(C, A))
+        (std::make_pair(B, D))
+        (std::make_pair(B, E))
+        (std::make_pair(C, D))
+        (std::make_pair(D, E))
+        (std::make_pair(E, C))
+    ;
 
     const Graph g(edges.begin(), edges.end(), N);
 
