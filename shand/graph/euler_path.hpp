@@ -59,6 +59,9 @@ inline void visit(const AdjacencyList& g,
     ++path_size;
 }
 
+// Eulerian tour for undirected graph.
+// Complexity : O(E)
+// Returns : `true` if find eulerian path, and `false` otherwise.
 template <class AdjacencyList, class UnaryFunction>
 inline bool euler_path(const AdjacencyList& g,
                        typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
