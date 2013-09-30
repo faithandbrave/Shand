@@ -13,12 +13,12 @@
 
 namespace shand { namespace graph {
 
-template <class AdjacencyList>
+template <class Graph>
 inline boost::optional<std::size_t>
-    is_euler_graph(const AdjacencyList& g,
-                   typename boost::graph_traits<AdjacencyList>::vertex_descriptor s)
+    is_euler_graph(const Graph& g,
+                   typename boost::graph_traits<Graph>::vertex_descriptor s)
 {
-    typedef boost::graph_traits<AdjacencyList> traits;
+    typedef boost::graph_traits<Graph> traits;
     typedef typename traits::vertex_descriptor vertex_desc;
     typedef typename traits::degree_size_type degree_size_type;
 
@@ -37,14 +37,14 @@ inline boost::optional<std::size_t>
 
 namespace euler_detail {
 
-template <class AdjacencyList, class Adj, class UnaryFunction>
-inline void visit(const AdjacencyList& g,
+template <class Graph, class Adj, class UnaryFunction>
+inline void visit(const Graph& g,
                  Adj& adj,
-                 typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
+                 typename boost::graph_traits<Graph>::vertex_descriptor s,
                  UnaryFunction f,
                  std::size_t& path_size)
 {
-    typedef boost::graph_traits<AdjacencyList> traits;
+    typedef boost::graph_traits<Graph> traits;
     typedef typename traits::vertex_descriptor vertex_desc;
     typedef typename traits::edge_descriptor edge_desc;
 
@@ -60,18 +60,19 @@ inline void visit(const AdjacencyList& g,
 }
 
 // Eulerian tour for undirected graph.
+// Requires : Graph is IncidenceGraph
 // Complexity : O(E)
 // Returns : `true` if find eulerian path, and `false` otherwise.
-template <class AdjacencyList, class UnaryFunction>
-inline bool euler_path(const AdjacencyList& g,
-                       typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
+template <class Graph, class UnaryFunction>
+inline bool euler_path(const Graph& g,
+                       typename boost::graph_traits<Graph>::vertex_descriptor s,
                        UnaryFunction f,
                        boost::undirected_tag)
 {
     boost::optional<std::size_t> m = is_euler_graph(g, s);
     if (!m) return false;
 
-    typedef boost::graph_traits<AdjacencyList> traits;
+    typedef boost::graph_traits<Graph> traits;
     typedef typename traits::vertex_descriptor vertex_desc;
     typedef typename traits::edge_descriptor edge_desc;
 
@@ -90,12 +91,12 @@ inline bool euler_path(const AdjacencyList& g,
 
 } // namespace euler_detail
 
-template <class AdjacencyList, class UnaryFunction>
-inline bool euler_path(const AdjacencyList& g,
-                       typename boost::graph_traits<AdjacencyList>::vertex_descriptor s,
+template <class Graph, class UnaryFunction>
+inline bool euler_path(const Graph& g,
+                       typename boost::graph_traits<Graph>::vertex_descriptor s,
                        UnaryFunction f)
 {
-    typedef typename boost::graph_traits<AdjacencyList>::directed_category Cat;
+    typedef typename boost::graph_traits<Graph>::directed_category Cat;
     return euler_detail::euler_path(g, s, f, Cat());
 }
 
