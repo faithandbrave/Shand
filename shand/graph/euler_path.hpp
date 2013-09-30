@@ -15,8 +15,8 @@ namespace shand { namespace graph {
 
 template <class AdjacencyList>
 inline boost::optional<std::size_t>
-    is_euler(const AdjacencyList& g,
-             typename boost::graph_traits<AdjacencyList>::vertex_descriptor s)
+    is_euler_graph(const AdjacencyList& g,
+                   typename boost::graph_traits<AdjacencyList>::vertex_descriptor s)
 {
     typedef boost::graph_traits<AdjacencyList> traits;
     typedef typename traits::vertex_descriptor vertex_desc;
@@ -65,7 +65,7 @@ inline bool euler_path(const AdjacencyList& g,
                        UnaryFunction f,
                        boost::undirected_tag)
 {
-    boost::optional<std::size_t> m = is_euler(g, s);
+    boost::optional<std::size_t> m = is_euler_graph(g, s);
     if (!m) return false;
 
     typedef boost::graph_traits<AdjacencyList> traits;
