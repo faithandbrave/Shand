@@ -60,6 +60,7 @@ inline void visit(const Graph& g,
 }
 
 // Eulerian tour for undirected graph.
+// Implementation use Hierholzer's algorithm.
 // Requires : Graph is IncidenceGraph
 // Complexity : O(E)
 // Returns : `true` if find eulerian path, and `false` otherwise.
