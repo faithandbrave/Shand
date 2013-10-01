@@ -10,6 +10,8 @@
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graph_concepts.hpp>
+#include <boost/concept/assert.hpp>
 
 namespace shand { namespace graph {
 
@@ -70,6 +72,8 @@ inline bool euler_path(const Graph& g,
                        UnaryFunction f,
                        boost::undirected_tag)
 {
+    BOOST_CONCEPT_ASSERT(( boost::IncidenceGraphConcept<Graph> ));
+
     boost::optional<std::size_t> m = is_euler_graph(g, s);
     if (!m) return false;
 
