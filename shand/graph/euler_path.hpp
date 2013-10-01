@@ -65,6 +65,9 @@ inline void visit(const Graph& g,
 // Implementation use Hierholzer's algorithm.
 // Requires : Graph is IncidenceGraph
 // Complexity : O(E)
+// Parameters : `g` is target graph object.
+//              `s` is start vertex for tour
+//              `f` is unary function object. the function call when discover vertex. Vertex order is reverse.
 // Returns : `true` if find eulerian path, and `false` otherwise.
 template <class Graph, class UnaryFunction>
 inline bool euler_path(const Graph& g,
