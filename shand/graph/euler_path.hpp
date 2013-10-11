@@ -63,7 +63,7 @@ inline void visit(const Graph& g,
 
 // Eulerian tour for undirected graph.
 // Implementation use Hierholzer's algorithm.
-// Requires : Graph is IncidenceGraph
+// Requires : Graph is VertexAndEdgeListGraph
 // Complexity : O(E)
 // Parameters : `g` is target graph object.
 //              `s` is start vertex for tour
@@ -75,7 +75,7 @@ inline bool euler_path(const Graph& g,
                        UnaryFunction f,
                        boost::undirected_tag)
 {
-    BOOST_CONCEPT_ASSERT(( boost::IncidenceGraphConcept<Graph> ));
+    BOOST_CONCEPT_ASSERT(( boost::VertexAndEdgeListGraphConcept<Graph> ));
 
     boost::optional<std::size_t> m = is_euler_graph(g, s);
     if (!m) return false;
