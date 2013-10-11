@@ -27,12 +27,12 @@ inline boost::optional<std::size_t>
     std::size_t odd = 0;
     std::size_t m = 0;
     BOOST_FOREACH (const vertex_desc& v, vertices(g)) {
-        const degree_size_type size = degree(v, g);
+        const degree_size_type size = out_degree(v, g);
         if (size % 2 == 1) ++odd;
         m += size;
     }
     m /= 2;
-    if (!(odd == 0 || (odd == 2 && degree(s, g) % 2 == 1)))
+    if (!(odd == 0 || (odd == 2 && out_degree(s, g) % 2 == 1)))
         return boost::none;
     return m;
 }
