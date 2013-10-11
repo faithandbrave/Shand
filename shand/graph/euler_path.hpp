@@ -16,7 +16,7 @@
 namespace shand { namespace graph {
 
 template <class Graph>
-inline boost::optional<std::size_t>
+inline bool
     is_euler_graph(const Graph& g,
                    typename boost::graph_traits<Graph>::vertex_descriptor s)
 {
@@ -25,16 +25,12 @@ inline boost::optional<std::size_t>
     typedef typename traits::degree_size_type degree_size_type;
 
     std::size_t odd = 0;
-    std::size_t m = 0;
     BOOST_FOREACH (const vertex_desc& v, vertices(g)) {
         const degree_size_type size = out_degree(v, g);
-        if (size % 2 == 1) ++odd;
-        m += size;
+        if (size % 2 == 1)
+            ++odd;
     }
-    m /= 2;
-    if (!(odd == 0 || (odd == 2 && out_degree(s, g) % 2 == 1)))
-        return boost::none;
-    return m;
+    return (odd == 0 || (odd == 2 && out_degree(s, g) % 2 == 1));
 }
 
 namespace euler_detail {
@@ -77,8 +73,8 @@ inline bool euler_path(const Graph& g,
 {
     BOOST_CONCEPT_ASSERT(( boost::VertexAndEdgeListGraphConcept<Graph> ));
 
-    boost::optional<std::size_t> m = is_euler_graph(g, s);
-    if (!m) return false;
+    if (!is_euler_graph(g, s))
+        return false;
 
     typedef boost::graph_traits<Graph> traits;
     typedef typename traits::vertex_descriptor vertex_desc;
@@ -94,7 +90,7 @@ inline bool euler_path(const Graph& g,
     std::size_t path_size = 0;
     visit(g, adj, s, f, path_size);
 
-    return path_size == m.get() + 1;
+    return path_size == num_edges(g) + 1;
 }
 
 } // namespace euler_detail
