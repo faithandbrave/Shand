@@ -9,16 +9,17 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/assign/list_of.hpp>
 
-template <class Container>
+template <class Container, class Graph>
 class add_path {
     Container& path_;
+    const Graph& g_;
 public:
-    add_path(Container& path) : path_(path) {}
+    add_path(Container& path, const Graph& g) : path_(path), g_(g) {}
 
     template <class VertexDescriptor>
     void operator()(VertexDescriptor v)
     {
-        path_.push_front(v);
+        path_.push_front(get(boost::vertex_index, g_, v));
     }
 };
 
@@ -27,14 +28,14 @@ struct null_add_path {
     void operator()(VertexDescriptor) {}
 };
 
-template <class Graph, class Vertex, class VertexDescriptor>
+template <class Graph, class VertexDescriptor, class VertexIndex>
 void success_test(const Graph& g,
-                  const Vertex& start,
-                  const std::deque<VertexDescriptor>& expected)
+                  VertexDescriptor start,
+                  const std::deque<VertexIndex>& expected)
 {
-    std::deque<VertexDescriptor> path;
+    std::deque<VertexIndex> path;
 
-    add_path<std::deque<VertexDescriptor> > adder(path);
+    add_path<std::deque<VertexIndex>, Graph> adder(path, g);
     if (!shand::graph::euler_path(g, start, adder)) {
         BOOST_TEST(false);
         return;
@@ -43,8 +44,8 @@ void success_test(const Graph& g,
     BOOST_TEST(path == expected);
 }
 
-template <class Graph, class Vertex>
-void fail_test(const Graph& g, const Vertex& start)
+template <class Graph, class VertexDescriptor>
+void fail_test(const Graph& g, const VertexDescriptor& start)
 {
     BOOST_TEST(!shand::graph::euler_path(g, start, null_add_path()));
 }
@@ -81,17 +82,17 @@ int main()
     const Graph g(edges.begin(), edges.end(), N);
 
     {
-        const std::deque<vertex_desc> expected = boost::assign::list_of(E)(B)(A)(C)(B)(D)(C)(E)(D);
-        success_test(g, E, expected);
+        const std::deque<int> expected = boost::assign::list_of(E)(B)(A)(C)(B)(D)(C)(E)(D);
+        success_test(g, vertex(E, g), expected);
     }
     {
-        const std::deque<vertex_desc> expected = boost::assign::list_of(D)(B)(A)(C)(B)(E)(D)(C)(E);
-        success_test(g, D, expected);
+        const std::deque<int> expected = boost::assign::list_of(D)(B)(A)(C)(B)(E)(D)(C)(E);
+        success_test(g, vertex(D, g), expected);
     }
 
-    fail_test(g, A);
-    fail_test(g, B);
-    fail_test(g, C);
+    fail_test(g, vertex(A, g));
+    fail_test(g, vertex(B, g));
+    fail_test(g, vertex(C, g));
 
     return boost::report_errors();
 }
