@@ -26,13 +26,13 @@ inline boost::optional<std::size_t>
 
     std::size_t odd = 0;
     std::size_t m = 0;
-    BOOST_FOREACH (const vertex_desc& v, boost::vertices(g)) {
-        const degree_size_type size = boost::degree(v, g);
+    BOOST_FOREACH (const vertex_desc& v, vertices(g)) {
+        const degree_size_type size = degree(v, g);
         if (size % 2 == 1) ++odd;
         m += size;
     }
     m /= 2;
-    if (!(odd == 0 || (odd == 2 && boost::degree(s, g) % 2 == 1)))
+    if (!(odd == 0 || (odd == 2 && degree(s, g) % 2 == 1)))
         return boost::none;
     return m;
 }
@@ -50,11 +50,11 @@ inline void visit(const Graph& g,
     typedef typename traits::vertex_descriptor vertex_desc;
     typedef typename traits::edge_descriptor edge_desc;
 
-    BOOST_FOREACH (const edge_desc& e, boost::out_edges(s, g)) {
-        if (adj[boost::source(e, g)][boost::target(e, g)] > 0) {
-            --adj[boost::source(e, g)][boost::target(e, g)];
-            --adj[boost::target(e, g)][boost::source(e, g)];
-            visit(g, adj, boost::target(e, g), f, path_size);
+    BOOST_FOREACH (const edge_desc& e, out_edges(s, g)) {
+        if (adj[source(e, g)][target(e, g)] > 0) {
+            --adj[source(e, g)][target(e, g)];
+            --adj[target(e, g)][source(e, g)];
+            visit(g, adj, target(e, g), f, path_size);
         }
     }
     f(s);
@@ -84,11 +84,11 @@ inline bool euler_path(const Graph& g,
     typedef typename traits::vertex_descriptor vertex_desc;
     typedef typename traits::edge_descriptor edge_desc;
 
-    const std::size_t n = boost::num_vertices(g);
+    const std::size_t n = num_vertices(g);
     std::vector<std::vector<int> > adj(n, std::vector<int>(n));
-    BOOST_FOREACH (const edge_desc& e, boost::edges(g)) {
-        ++adj[boost::source(e, g)][boost::target(e, g)];
-        ++adj[boost::target(e, g)][boost::source(e, g)];
+    BOOST_FOREACH (const edge_desc& e, edges(g)) {
+        ++adj[source(e, g)][target(e, g)];
+        ++adj[target(e, g)][source(e, g)];
     }
 
     std::size_t path_size = 0;
