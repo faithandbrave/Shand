@@ -38,12 +38,12 @@ int main()
 
     const Graph g(edges.begin(), edges.end(), N);
 
-    BOOST_TEST(!shand::graph::is_euler_graph(g, A));
-    BOOST_TEST(!shand::graph::is_euler_graph(g, B));
-    BOOST_TEST(!shand::graph::is_euler_graph(g, C));
+    BOOST_TEST(!shand::graph::has_euler_path(g, A));
+    BOOST_TEST(!shand::graph::has_euler_path(g, B));
+    BOOST_TEST(!shand::graph::has_euler_path(g, C));
 
-    BOOST_TEST(shand::graph::is_euler_graph(g, D));
-    BOOST_TEST(shand::graph::is_euler_graph(g, E));
+    BOOST_TEST(shand::graph::has_euler_path(g, D));
+    BOOST_TEST(shand::graph::has_euler_path(g, E));
 
     return boost::report_errors();
 }

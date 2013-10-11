@@ -17,7 +17,7 @@ namespace shand { namespace graph {
 
 template <class Graph>
 inline bool
-    is_euler_graph(const Graph& g,
+    has_euler_path(const Graph& g,
                    typename boost::graph_traits<Graph>::vertex_descriptor s)
 {
     typedef boost::graph_traits<Graph> traits;
@@ -73,7 +73,7 @@ inline bool euler_path(const Graph& g,
 {
     BOOST_CONCEPT_ASSERT(( boost::VertexAndEdgeListGraphConcept<Graph> ));
 
-    if (!is_euler_graph(g, s))
+    if (!has_euler_path(g, s))
         return false;
 
     typedef boost::graph_traits<Graph> traits;
