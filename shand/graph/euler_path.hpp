@@ -6,7 +6,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <vector>
+#include <map>
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
 #include <boost/graph/adjacency_list.hpp>
@@ -35,22 +35,20 @@ inline bool
 
 namespace euler_detail {
 
-template <class Graph, class Adj, class UnaryFunction>
+template <class Graph, class Matrix, class UnaryFunction>
 inline void visit(const Graph& g,
-                 Adj& adj,
+                 Matrix& matrix,
                  typename boost::graph_traits<Graph>::vertex_descriptor s,
                  UnaryFunction f,
                  std::size_t& path_size)
 {
-    typedef boost::graph_traits<Graph> traits;
-    typedef typename traits::vertex_descriptor vertex_desc;
-    typedef typename traits::edge_descriptor edge_desc;
+    typedef typename boost::graph_traits<Graph>::edge_descriptor edge_desc;
 
     BOOST_FOREACH (const edge_desc& e, out_edges(s, g)) {
-        if (adj[source(e, g)][target(e, g)] > 0) {
-            --adj[source(e, g)][target(e, g)];
-            --adj[target(e, g)][source(e, g)];
-            visit(g, adj, target(e, g), f, path_size);
+        if (matrix[std::make_pair(source(e, g), target(e, g))] >= 0) {
+            --matrix[std::make_pair(source(e, g), target(e, g))];
+            --matrix[std::make_pair(target(e, g), source(e, g))];
+            visit(g, matrix, target(e, g), f, path_size);
         }
     }
     f(s);
@@ -76,19 +74,11 @@ inline bool euler_path(const Graph& g,
     if (!has_euler_path(g, s))
         return false;
 
-    typedef boost::graph_traits<Graph> traits;
-    typedef typename traits::vertex_descriptor vertex_desc;
-    typedef typename traits::edge_descriptor edge_desc;
-
-    const std::size_t n = num_vertices(g);
-    std::vector<std::vector<int> > adj(n, std::vector<int>(n));
-    BOOST_FOREACH (const edge_desc& e, edges(g)) {
-        ++adj[source(e, g)][target(e, g)];
-        ++adj[target(e, g)][source(e, g)];
-    }
+    typedef typename boost::graph_traits<Graph>::vertex_descriptor vertex_desc;
+    std::map<std::pair<vertex_desc, vertex_desc>, int> matrix;
 
     std::size_t path_size = 0;
-    visit(g, adj, s, f, path_size);
+    visit(g, matrix, s, f, path_size);
 
     return path_size == num_edges(g) + 1;
 }
