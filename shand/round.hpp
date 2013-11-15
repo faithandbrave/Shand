@@ -43,7 +43,10 @@ To round_to(From x)
 }
 
 // round to the nearest even
-// a.k.a banker's rounding
+//  a.k.a banker's rounding
+//
+// reference implementation:
+// http://home.roadrunner.com/~hinnant/duration_io/chrono_util.html
 template <class To, class From>
 To round_even_to(From x)
 {
