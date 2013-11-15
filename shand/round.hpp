@@ -13,6 +13,25 @@
 
 namespace shand {
 
+template <class To, class From>
+To ceil_to(From x)
+{
+    static_assert(std::is_floating_point<From>::value,
+                  "from type must be floating point type");
+
+    return static_cast<To>(std::ceil(x));
+}
+
+template <class To, class From>
+To floor_to(From x)
+{
+    static_assert(std::is_floating_point<From>::value,
+                  "from type must be floating point type");
+
+    return static_cast<To>(std::floor(x));
+}
+
+
 // round to the nearest integer value
 template <class To, class From>
 To round_to(From x)
@@ -31,7 +50,7 @@ To round_even_to(From x)
     static_assert(std::is_floating_point<From>::value,
                   "from type must be floating point type");
 
-    To t0 = static_cast<To>(x);
+    To t0 = floor_to<To>(x);
     To t1 = t0;
 
     ++t1;
@@ -47,24 +66,6 @@ To round_even_to(From x)
     else if (diff0 < diff1)
         return t0;
     return t1;
-}
-
-template <class To, class From>
-To ceil_to(From x)
-{
-    static_assert(std::is_floating_point<From>::value,
-                  "from type must be floating point type");
-
-    return static_cast<To>(std::ceil(x));
-}
-
-template <class To, class From>
-To floor_to(From x)
-{
-    static_assert(std::is_floating_point<From>::value,
-                  "from type must be floating point type");
-
-    return static_cast<To>(std::floor(x));
 }
 
 } // namespace shand

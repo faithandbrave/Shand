@@ -16,6 +16,9 @@ int main()
 
         const int y = shand::round_to<int>(1.5);
         BOOST_TEST(y == 2);
+
+        BOOST_TEST(shand::round_to<int>(-1.5) == -2);
+        BOOST_TEST(shand::round_to<int>(-1.7) == -2);
     }
     {
         const int x = shand::round_even_to<int>(1.5);
