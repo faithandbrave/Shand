@@ -11,11 +11,18 @@
 int main()
 {
     {
-        const int x = shand::round_to<int>(1.5);
+        const int x = shand::round_to<int>(1.4);
+        BOOST_TEST(x == 1);
+
+        const int y = shand::round_to<int>(1.5);
+        BOOST_TEST(y == 2);
+    }
+    {
+        const int x = shand::round_even_to<int>(1.5);
         BOOST_TEST(x == 2);
 
-        const int y = shand::round_to<int>(1.4);
-        BOOST_TEST(y == 1);
+        const int y = shand::round_even_to<int>(2.5);
+        BOOST_TEST(y == 2);
     }
     {
         const int x = shand::ceil_to<int>(1.4);
