@@ -42,6 +42,8 @@
     #include <boost/../libs/thread/src/pthread/thread.cpp>
 #endif
 
+#include <boost/../libs/thread/src/future.cpp>
+
 namespace boost {
 void tss_cleanup_implemented() {}
 }
