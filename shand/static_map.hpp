@@ -14,7 +14,7 @@
 
 namespace shand {
 
-template <class Key, class T, std::size_t N, class Compare=std::less<T>>
+template <class Key, class T, std::size_t N, class Compare=std::less<Key>>
 class static_map {
     using value_type = std::pair<Key, T>;
     boost::container::static_vector<value_type, N> cont_;
