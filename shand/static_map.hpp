@@ -10,7 +10,8 @@
 
 #include <initializer_list>
 #include <boost/container/static_vector.hpp>
-#include <boost/range/algorithm/find_if.hpp>
+#include <boost/range/algorithm/sort.hpp>
+#include <boost/range/algorithm/lower_bound.hpp>
 
 namespace shand {
 
@@ -20,18 +21,27 @@ class static_map {
     boost::container::static_vector<value_type, N> cont_;
 public:
     static_map(std::initializer_list<value_type> init)
-        : cont_(init.begin(), init.end()) {}
+        : cont_(init.begin(), init.end())
+    {
+        boost::sort(cont_, [](const value_type& a, const value_type& b) {
+            return Compare()(a.first, b.first); 
+        });
+    }
 
     template <class KeyType>
     const T& at(const KeyType& key) const
     {
-        auto it = boost::find_if(cont_, [key](const value_type& x) {
-            return !Compare()(x.first, key) && !Compare()(key, x.first);
-        });
-        if (it == cont_.end()) {
-            throw std::out_of_range("out of range error");
+        auto it = boost::lower_bound(cont_, key,
+                    [](const value_type& a, const KeyType& b) {
+                        return Compare()(a.first, b);
+                    });
+
+        if (it != cont_.end()) {
+            if (!Compare()(it->first, key) && !Compare()(key, it->first)) {
+                return it->second;
+            }
         }
-        return it->second;
+        throw std::out_of_range("out of range error");
     }
 };
 
