@@ -217,11 +217,9 @@ private:
         if (ref.size() < 3)
             return s;
 
-        if (ref[0] == static_cast<char>(0xEF) &&
-            ref[1] == static_cast<char>(0xBB) &&
-            ref[2] == static_cast<char>(0xBF)) {
+        if (ref.substr(0, 3) == "\xef\xbb\xbf")
             return s + 3;
-        }
+
         return s;
     }
 

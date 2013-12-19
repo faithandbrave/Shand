@@ -76,13 +76,7 @@ void empty_test()
 
 void bom_test()
 {
-    std::string s;
-    s.push_back(static_cast<char>(0xEF));
-    s.push_back(static_cast<char>(0xBB));
-    s.push_back(static_cast<char>(0xBF));
-    s += u8"あいうえお";
-
-    encoding_string<encoding::utf8> utf8 = s.c_str();
+    encoding_string<encoding::utf8> utf8 = u8"\xef\xbb\xbfあいうえお";
     BOOST_TEST(utf8 == encoding_string<encoding::utf8>(u8"あいうえお"));
 }
 
