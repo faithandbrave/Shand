@@ -94,7 +94,7 @@ private:
             const unsigned char c = data_.get()[pos_.get()];
             size = length_table()[c];
         }
-        return ElementStringType(data_.get(), pos_.get(), size);
+        return StringDataType(data_.get(), pos_.get(), size).c_str();
     }
 
     bool equal(const utf8_codeuinit_iterator& other) const
@@ -109,12 +109,12 @@ template <>
 class encoding_string<encoding::utf8> {
 public:
     using string_type = std::basic_string<char>;
-    using value_type = std::basic_string<char>;
+    using value_type = encoding_string<encoding::utf8>;
     using cchar_type = char;
     using iterator = utf8_detail::utf8_codeuinit_iterator<string_type, value_type>;
     using const_iterator = iterator;
 
-	encoding_string() {}
+    encoding_string() {}
     encoding_string(const char* s)
         : data_(s) {}
 
@@ -141,7 +141,7 @@ public:
             const unsigned char c = data_[i];
             const std::size_t n = utf8_detail::length_table()[c];
             if (len == index) {
-                return string_type(data_, i, n);
+                return string_type(data_, i, n).c_str();
             }
             i += n;
             len++;
