@@ -74,6 +74,18 @@ void empty_test()
     BOOST_TEST(empty.empty());
 }
 
+void bom_test()
+{
+    std::string s;
+    s.push_back(static_cast<char>(0xEF));
+    s.push_back(static_cast<char>(0xBB));
+    s.push_back(static_cast<char>(0xBF));
+    s += u8"あいうえお";
+
+    encoding_string<encoding::utf8> utf8 = s.c_str();
+    BOOST_TEST(utf8 == encoding_string<encoding::utf8>(u8"あいうえお"));
+}
+
 int main()
 {
     codeunit_size_test();
@@ -83,6 +95,7 @@ int main()
     codeunit_substr_range_test();
     codeunit_substr_start_test();
     empty_test();
+    bom_test();
 
     return boost::report_errors();
 }

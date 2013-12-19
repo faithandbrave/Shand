@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/optional.hpp>
+#include <boost/utility/string_ref.hpp>
 
 namespace shand {
 
@@ -116,7 +117,7 @@ public:
 
     encoding_string() {}
     encoding_string(const char* s)
-        : data_(s) {}
+        : data_(remove_bom(s)) {}
 
     std::size_t codeunit_size() const
     {
@@ -203,13 +204,27 @@ public:
     const cchar_type* c_str() const
     { return data_.c_str(); }
 
-	const string_type& raw_str() const
-	{ return data_; }
+    const string_type& raw_str() const
+    { return data_; }
 
     bool empty() const
     { return data_.empty(); }
 
 private:
+    const char* remove_bom(const char* s) const
+    {
+        boost::string_ref ref(s);
+        if (ref.size() < 3)
+            return s;
+
+        if (ref[0] == static_cast<char>(0xEF) &&
+            ref[1] == static_cast<char>(0xBB) &&
+            ref[2] == static_cast<char>(0xBF)) {
+            return s + 3;
+        }
+        return s;
+    }
+
     std::size_t char_size(std::size_t index) const
     {
         const unsigned char c = data_[index];
