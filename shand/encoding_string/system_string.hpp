@@ -17,12 +17,15 @@ public:
     using value_type = std::basic_string<char>;
     using cchar_type = char;
 
-	encoding_string() {}
+    encoding_string() {}
     encoding_string(const char* s)
         : data_(s) {}
 
     const cchar_type* c_str() const
     { return data_.c_str(); }
+
+    const string_type& raw_str() const
+    { return data_; }
 
     bool empty() const
     { return data_.empty(); }
@@ -30,6 +33,12 @@ public:
 private:
     string_type data_;
 };
+
+inline bool operator==(const encoding_string<encoding::system>& a, const encoding_string<encoding::system>& b)
+{ return a.raw_str() == b.raw_str(); }
+
+inline bool operator!=(const encoding_string<encoding::system>& a, const encoding_string<encoding::system>& b)
+{ return !(a == b); }
 
 } // namespace shand
 

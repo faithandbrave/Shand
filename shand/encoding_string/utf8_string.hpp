@@ -203,6 +203,9 @@ public:
     const cchar_type* c_str() const
     { return data_.c_str(); }
 
+	const string_type& raw_str() const
+	{ return data_; }
+
     bool empty() const
     { return data_.empty(); }
 
@@ -215,6 +218,12 @@ private:
 
     string_type data_;
 };
+
+inline bool operator==(const encoding_string<encoding::utf8>& a, const encoding_string<encoding::utf8>& b)
+{ return a.raw_str() == b.raw_str(); }
+
+inline bool operator!=(const encoding_string<encoding::utf8>& a, const encoding_string<encoding::utf8>& b)
+{ return !(a == b); }
 
 } // namespace shand
 
