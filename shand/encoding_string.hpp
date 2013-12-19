@@ -18,7 +18,7 @@ namespace encoding {
 struct utf16 {};
 struct utf8 {};
 struct utf32 {}; // not implemented
-struct system {}; // not implemented
+struct system {};
 
 } // namespace encoding
 
