@@ -21,6 +21,15 @@ namespace shand {
 template <class From, class To>
 class encoder;
 
+template <class Encoding>
+class encoder<Encoding, Encoding> {
+public:
+    static encoding_string<Encoding> encode(const encoding_string<Encoding>& s)
+    {
+        return s;
+    }
+};
+
 template <>
 class encoder<encoding::utf8, encoding::utf16> {
 public:
