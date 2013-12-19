@@ -26,19 +26,18 @@ class encoder<encoding::utf8, encoding::utf16> {
 public:
     static encoding_string<encoding::utf16> encode(const encoding_string<encoding::utf8>& utf8)
     {
+        if (utf8.empty())
+            return {};
+
         #if BOOST_COMP_MSVC
             const int len = ::MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
 
             std::wstring utf16(len, wchar_t());
 
             if (::MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, &utf16[0], utf16.size()) > 0)
-            {
                 return utf16.c_str();
-            }
             else
-            {
                 throw std::runtime_error("conversion error!");
-            }
         #else
             static_cast<void>(utf8);
             throw std::runtime_error("not implemented.");
@@ -49,25 +48,24 @@ public:
 template <>
 class encoder<encoding::utf8, encoding::system> {
 public:
-    static encoding_string<encoding::system> encode(const encoding_string<encoding::utf8>& s)
+    static encoding_string<encoding::system> encode(const encoding_string<encoding::utf8>& utf8)
     {
+        if (utf8.empty())
+            return {};
+
         #if BOOST_COMP_MSVC
-            encoding_string<encoding::utf16> utf16 = encoder<encoding::utf8, encoding::utf16>::encode(s);
+            encoding_string<encoding::utf16> utf16 = encoder<encoding::utf8, encoding::utf16>::encode(utf8);
 
             const int len = ::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, NULL, 0, NULL, NULL);
 
             std::string cp932(len, char());
 
             if (::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, &cp932[0], len, NULL, NULL) > 0)
-            {
                 return cp932.c_str();
-            }
             else
-            {
                 throw std::runtime_error("conversion error!");
-            }
         #else
-            return s.c_str();
+            return utf8.c_str();
         #endif
     }
 };

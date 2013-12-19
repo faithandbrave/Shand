@@ -114,6 +114,7 @@ public:
     using iterator = utf8_detail::utf8_codeuinit_iterator<string_type, value_type>;
     using const_iterator = iterator;
 
+	encoding_string() {}
     encoding_string(const char* s)
         : data_(s) {}
 
@@ -162,6 +163,9 @@ public:
 
     const cchar_type* c_str() const
     { return data_.c_str(); }
+
+    bool empty() const
+    { return data_.empty(); }
 
 private:
     string_type data_;

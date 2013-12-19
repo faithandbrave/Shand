@@ -15,13 +15,17 @@ class encoding_string<encoding::system> {
 public:
     using string_type = std::basic_string<char>;
     using value_type = std::basic_string<char>;
-	using cchar_type = char;
+    using cchar_type = char;
 
+	encoding_string() {}
     encoding_string(const char* s)
         : data_(s) {}
 
-	const cchar_type* c_str() const
-	{ return data_.c_str(); }
+    const cchar_type* c_str() const
+    { return data_.c_str(); }
+
+    bool empty() const
+    { return data_.empty(); }
 
 private:
     string_type data_;

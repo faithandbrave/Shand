@@ -15,18 +15,22 @@ template <>
 class encoding_string<encoding::utf16> {
 public:
 #if defined(BOOST_NO_CXX11_CHAR16_T)
-	using cchar_type = wchar_t;
+    using cchar_type = wchar_t;
 #else
-	using cchar_type = char16_t;
+    using cchar_type = char16_t;
 #endif
     using string_type = std::basic_string<cchar_type>;
     using value_type = std::basic_string<cchar_type>;
 
+	encoding_string() {}
     encoding_string(const cchar_type* s)
         : data_(s) {}
 
-	const cchar_type* c_str() const
-	{ return data_.c_str(); }
+    const cchar_type* c_str() const
+    { return data_.c_str(); }
+
+    bool empty() const
+    { return data_.c_str(); }
 
 private:
     string_type data_;
