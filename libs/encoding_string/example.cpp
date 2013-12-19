@@ -4,7 +4,7 @@
 int main()
 {
     using namespace shand;
-    encoding_string<encoding::utf8> s = u8"あいうえお";
+    const encoding_string<encoding::utf8> s = u8"あいうえお";
 
     // 文字数を取得
     std::cout << s.codeunit_size() << std::endl; // 5
@@ -24,6 +24,10 @@ int main()
     
     // システムの文字コードで出力
     // WindowsではCP932で出力する
-    std::cout << s << std::endl;
+    std::cout << s << std::endl; // "あいうえお"
+
+    // 部分文字列を取得
+    encoding_string<encoding::utf8> sub = s.codeunit_substr(2, 3);
+    std::cout << sub << std::endl; // "うえお"
 }
 

@@ -124,9 +124,8 @@ public:
         std::size_t len = 0;
         std::size_t i = 0;
         while (i < size) {
-            const unsigned char c = data_[i];
-            i += utf8_detail::length_table()[c];
-            len++;
+            i += char_size(i);
+            ++len;
         }
         return len;
     }
@@ -138,13 +137,53 @@ public:
         std::size_t len = 0;
         std::size_t i = 0;
         while (i < size) {
-            const unsigned char c = data_[i];
-            const std::size_t n = utf8_detail::length_table()[c];
+            const std::size_t n = char_size(i);
             if (len == index) {
                 return string_type(data_, i, n).c_str();
             }
             i += n;
-            len++;
+            ++len;
+        }
+        throw std::out_of_range("out of range");
+    }
+
+    encoding_string<encoding::utf8> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
+    {
+        const std::size_t size = data_.size();
+        std::size_t len = 0;
+        std::size_t i = 0;
+
+        boost::optional<std::size_t> start;
+        while (i < size) {
+            if (!start && len == index) {
+                start = i;
+            }
+            const std::size_t n = char_size(i);
+            i += n;
+            ++len;
+            if (!start)
+                continue;
+
+            --codeunit_size;
+            if (codeunit_size == 0) {
+                return data_.substr(start.get(), i).c_str();
+            }
+        }
+        throw std::out_of_range("out of range");
+    }
+
+    encoding_string<encoding::utf8> codeunit_substr(std::size_t index) const
+    {
+        const std::size_t size = data_.size();
+        std::size_t len = 0;
+        std::size_t i = 0;
+
+        while (i < size) {
+            if (len == index) {
+                return data_.substr(i).c_str();
+            }
+            i += char_size(i);
+            ++len;
         }
         throw std::out_of_range("out of range");
     }
@@ -168,6 +207,12 @@ public:
     { return data_.empty(); }
 
 private:
+    std::size_t char_size(std::size_t index) const
+    {
+        const unsigned char c = data_[index];
+        return utf8_detail::length_table()[c];
+    }
+
     string_type data_;
 };
 
