@@ -30,7 +30,7 @@ public:
     { return data_.c_str(); }
 
     bool empty() const
-    { return data_.c_str(); }
+    { return data_.empty(); }
 
 private:
     string_type data_;
