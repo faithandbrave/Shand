@@ -110,6 +110,7 @@ class encoding_string<encoding::utf8> {
 public:
     using string_type = std::basic_string<char>;
     using value_type = std::basic_string<char>;
+    using cchar_type = char;
     using iterator = utf8_detail::utf8_codeuinit_iterator<string_type, value_type>;
     using const_iterator = iterator;
 
@@ -158,6 +159,9 @@ public:
 
     const_iterator end() const
     { return const_iterator(); }
+
+    const cchar_type* c_str() const
+    { return data_.c_str(); }
 
 private:
     string_type data_;

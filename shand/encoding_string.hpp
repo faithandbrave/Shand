@@ -9,12 +9,14 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <iostream>
+
 namespace shand {
 
 namespace encoding {
 
+struct utf16 {};
 struct utf8 {};
-struct utf16 {}; // not implemented
 struct utf32 {}; // not implemented
 struct system {}; // not implemented
 
@@ -25,7 +27,27 @@ class encoding_string;
 
 } // namespace shand
 
+#include "./encoding_string/utf16_string.hpp"
 #include "./encoding_string/utf8_string.hpp"
+#include "./encoding_string/system_string.hpp"
+
+#include "./encoding_string/encoder.hpp"
+
+namespace shand {
+
+template <class To, class From>
+encoding_string<To> encode(const encoding_string<From>& from)
+{
+    return encoder<From, To>::encode(from);
+}
+
+template <class Encoding>
+std::ostream& operator<<(std::ostream& os, const encoding_string<Encoding>& s)
+{
+    return os << encode<encoding::system>(s).c_str();
+}
+
+} // namespace shand
 
 #endif // SHAND_ENCODING_STRING_INCLUDE
 
