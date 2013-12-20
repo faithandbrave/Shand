@@ -55,7 +55,7 @@ public:
         #if BOOST_OS_WINDOWS
             return windows_normalize(NormalizationC, utf8);
         #else
-            static_assert(false, "not implemented");
+            throw std::runtime_error("not implemented");
         #endif
     }
 
@@ -67,7 +67,7 @@ public:
         #if BOOST_OS_WINDOWS
             return windows_normalize(NormalizationD, utf8);
         #else
-            static_assert(false, "not implemented");
+            throw std::runtime_error("not implemented");
         #endif
     }
 
@@ -79,7 +79,7 @@ public:
         #if BOOST_OS_WINDOWS
             return windows_normalize(NormalizationKC, utf8);
         #else
-            static_assert(false, "not implemented");
+            throw std::runtime_error("not implemented");
         #endif
     }
 
@@ -91,7 +91,7 @@ public:
         #if BOOST_OS_WINDOWS
             return windows_normalize(NormalizationKD, utf8);
         #else
-            static_assert(false, "not implemented");
+            throw std::runtime_error("not implemented");
         #endif
     }
 };

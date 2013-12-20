@@ -6,8 +6,8 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <codecvt>
 #include <stdexcept>
+#include <boost/config.hpp>
 #include <boost/predef.h>
 #include "./utf16_string.hpp"
 #include "./utf8_string.hpp"
@@ -15,6 +15,10 @@
 
 #if BOOST_OS_WINDOWS
 #include <Windows.h>
+#endif
+
+#if !defined(BOOST_NO_CXX11_HDR_CODECVT)
+#include <codecvt>
 #endif
 
 namespace shand {
@@ -39,10 +43,13 @@ public:
         if (utf8.empty())
             return {};
 
+#if !defined(BOOST_NO_CXX11_HDR_CODECVT)
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
         const std::wstring utf16 = convert.from_bytes(utf8.c_str());
-
         return utf16.c_str();
+#else
+        throw std::runtime_error("not implemented");
+#endif
     }
 };
 
@@ -54,9 +61,13 @@ public:
         if (utf16.empty())
             return {};
 
+#if !defined(BOOST_NO_CXX11_HDR_CODECVT)
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
         const std::string utf8 = convert.to_bytes(utf16.c_str());
         return utf8.c_str();
+#else
+        throw std::runtime_error("not implemented");
+#endif
     }
 };
 
