@@ -32,8 +32,7 @@ public:
         std::size_t i = 0;
         std::size_t len = 0;
         while (i < size) {
-            const cchar_type& c = data_[i];
-            if (is_surrogate_pair(c)) {
+            if (i < size - 1 && is_surrogate_pair(data_[i], data_[i + 1])) {
                 ++i;
             }
             ++i;
@@ -52,8 +51,14 @@ public:
     { return data_.empty(); }
 
 private:
-    bool is_surrogate_pair(const cchar_type& c) const
+    bool is_high_surrogate(const cchar_type& c) const
     { return c >= static_cast<cchar_type>(0xD800) && c <= static_cast<cchar_type>(0xDBFF); }
+
+    bool is_low_surrogate(const cchar_type& c) const
+    { return c >= static_cast<cchar_type>(0xDC00) && c <= static_cast<cchar_type>(0xDFFF); }
+
+    bool is_surrogate_pair(const cchar_type& high, const cchar_type& low) const
+    { return is_high_surrogate(high) && is_low_surrogate(low); }
 
     string_type data_;
 };
