@@ -26,6 +26,22 @@ public:
     encoding_string(const cchar_type* s)
         : data_(s) {}
 
+    std::size_t codeunit_size() const
+    {
+        const std::size_t size = data_.size();
+        std::size_t i = 0;
+        std::size_t len = 0;
+        while (i < size) {
+            const cchar_type& c = data_[i];
+            if (is_surrogate_pair(c)) {
+                ++i;
+            }
+            ++i;
+            ++len;
+        }
+        return len;
+    }
+
     const cchar_type* c_str() const
     { return data_.c_str(); }
 
@@ -36,6 +52,9 @@ public:
     { return data_.empty(); }
 
 private:
+    bool is_surrogate_pair(const cchar_type& c) const
+    { return c >= static_cast<cchar_type>(0xD800) && c <= static_cast<cchar_type>(0xDBFF); }
+
     string_type data_;
 };
 
