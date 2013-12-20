@@ -57,28 +57,28 @@ namespace shand {
 template <class Encoding>
 encoding_string<Encoding> compose(const encoding_string<Encoding>& s)
 {
-	return normalizer<Encoding>::compose(s);
+    return normalizer<Encoding>::compose(s);
 }
 
 // NFD (Normalization Form Canonical Decomposition)
 template <class Encoding>
 encoding_string<Encoding> decompose(const encoding_string<Encoding>& s)
 {
-	return normalizer<Encoding>::decompose(s);
+    return normalizer<Encoding>::decompose(s);
 }
 
 // NFKC (Normalization Form Compatibility Composition)
 template <class Encoding>
 encoding_string<Encoding> compatible_compose(const encoding_string<Encoding>& s)
 {
-	return normalizer<Encoding>::compatible_compose(s);
+    return normalizer<Encoding>::compatible_compose(s);
 }
 
 // NFKD (Normalization Form Compatibility Decomposition)
 template <class Encoding>
 encoding_string<Encoding> compatible_decompose(const encoding_string<Encoding>& s)
 {
-	return normalizer<Encoding>::compatible_decompose(s);
+    return normalizer<Encoding>::compatible_decompose(s);
 }
 
 } // namespace shand

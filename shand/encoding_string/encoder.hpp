@@ -44,16 +44,16 @@ public:
             std::wstring utf16(len, wchar_t());
 
             if (::MultiByteToWideChar(CP_UTF8,
-						              0,
-									  utf8.c_str(),
-									  -1,
-									  &utf16[0],
-									  utf16.size()) > 0) {
+                                      0,
+                                      utf8.c_str(),
+                                      -1,
+                                      &utf16[0],
+                                      utf16.size()) > 0) {
                 return utf16.c_str();
-			}
+            }
             else {
                 throw std::runtime_error("conversion error!");
-			}
+            }
         #else
             throw std::runtime_error("not implemented.");
         #endif
@@ -63,33 +63,33 @@ public:
 template <>
 class encoder<encoding::utf16, encoding::utf8> {
 public:
-	static encoding_string<encoding::utf8> encode(const encoding_string<encoding::utf16>& utf16)
-	{
-		if (utf16.empty())
-			return {};
+    static encoding_string<encoding::utf8> encode(const encoding_string<encoding::utf16>& utf16)
+    {
+        if (utf16.empty())
+            return {};
 
-		#if BOOST_OS_WINDOWS
+        #if BOOST_OS_WINDOWS
             const int len = ::WideCharToMultiByte(CP_UTF8, 0, utf16.c_str(), -1, NULL, 0, NULL, NULL);
 
             std::string utf8(len, char());
 
             if (::WideCharToMultiByte(CP_UTF8,
-									  0,
-									  utf16.c_str(),
-									  -1,
-									  &utf8[0],
-									  len,
-									  NULL,
-									  NULL) > 0) {
+                                      0,
+                                      utf16.c_str(),
+                                      -1,
+                                      &utf8[0],
+                                      len,
+                                      NULL,
+                                      NULL) > 0) {
                 return utf8.c_str();
-			}
+            }
             else {
                 throw std::runtime_error("conversion error!");
-			}
+            }
         #else
             throw std::runtime_error("not implemented.");
         #endif
-	}
+    }
 };
 
 template <>

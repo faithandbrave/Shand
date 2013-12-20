@@ -22,15 +22,15 @@ public:
     using string_type = std::basic_string<cchar_type>;
     using value_type = std::basic_string<cchar_type>;
 
-	encoding_string() {}
+    encoding_string() {}
     encoding_string(const cchar_type* s)
         : data_(s) {}
 
     const cchar_type* c_str() const
     { return data_.c_str(); }
 
-	const string_type& raw_str() const
-	{ return data_; }
+    const string_type& raw_str() const
+    { return data_; }
 
     bool empty() const
     { return data_.empty(); }
