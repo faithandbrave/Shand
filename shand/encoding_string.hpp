@@ -54,6 +54,7 @@ std::ostream& operator<<(std::ostream& os, const encoding_string<Encoding>& s)
 namespace shand {
 
 // NFC (Normalization Form Canonical Composition)
+// Please don't use this function yet. imcomplete implementation.
 template <class Encoding>
 encoding_string<Encoding> compose(const encoding_string<Encoding>& s)
 {
@@ -61,6 +62,7 @@ encoding_string<Encoding> compose(const encoding_string<Encoding>& s)
 }
 
 // NFD (Normalization Form Canonical Decomposition)
+// Please don't use this function yet. imcomplete implementation.
 template <class Encoding>
 encoding_string<Encoding> decompose(const encoding_string<Encoding>& s)
 {
@@ -68,6 +70,7 @@ encoding_string<Encoding> decompose(const encoding_string<Encoding>& s)
 }
 
 // NFKC (Normalization Form Compatibility Composition)
+// Please don't use this function yet. imcomplete implementation.
 template <class Encoding>
 encoding_string<Encoding> compatible_compose(const encoding_string<Encoding>& s)
 {
@@ -75,6 +78,7 @@ encoding_string<Encoding> compatible_compose(const encoding_string<Encoding>& s)
 }
 
 // NFKD (Normalization Form Compatibility Decomposition)
+// Please don't use this function yet. imcomplete implementation.
 template <class Encoding>
 encoding_string<Encoding> compatible_decompose(const encoding_string<Encoding>& s)
 {
