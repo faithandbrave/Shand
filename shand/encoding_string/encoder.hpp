@@ -6,6 +6,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <codecvt>
 #include <stdexcept>
 #include <boost/predef.h>
 #include "./utf16_string.hpp"
@@ -38,25 +39,10 @@ public:
         if (utf8.empty())
             return {};
 
-        #if BOOST_OS_WINDOWS
-            const int len = ::MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
+        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
+        const std::wstring utf16 = convert.from_bytes(utf8.c_str());
 
-            std::wstring utf16(len, wchar_t());
-
-            if (::MultiByteToWideChar(CP_UTF8,
-                                      0,
-                                      utf8.c_str(),
-                                      -1,
-                                      &utf16[0],
-                                      utf16.size()) > 0) {
-                return utf16.c_str();
-            }
-            else {
-                throw std::runtime_error("conversion error!");
-            }
-        #else
-            throw std::runtime_error("not implemented.");
-        #endif
+        return utf16.c_str();
     }
 };
 
@@ -68,27 +54,9 @@ public:
         if (utf16.empty())
             return {};
 
-        #if BOOST_OS_WINDOWS
-            const int len = ::WideCharToMultiByte(CP_UTF8, 0, utf16.c_str(), -1, NULL, 0, NULL, NULL);
-
-            std::string utf8(len, char());
-
-            if (::WideCharToMultiByte(CP_UTF8,
-                                      0,
-                                      utf16.c_str(),
-                                      -1,
-                                      &utf8[0],
-                                      len,
-                                      NULL,
-                                      NULL) > 0) {
-                return utf8.c_str();
-            }
-            else {
-                throw std::runtime_error("conversion error!");
-            }
-        #else
-            throw std::runtime_error("not implemented.");
-        #endif
+        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
+        const std::string utf8 = convert.to_bytes(utf16.c_str());
+        return utf8.c_str();
     }
 };
 
