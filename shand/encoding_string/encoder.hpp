@@ -39,12 +39,12 @@ public:
             return {};
 
         #if BOOST_OS_WINDOWS
-            const int len = ::MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, utf8.c_str(), -1, NULL, 0);
+            const int len = ::MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
 
             std::wstring utf16(len, wchar_t());
 
             if (::MultiByteToWideChar(CP_UTF8,
-						              MB_PRECOMPOSED,
+						              0,
 									  utf8.c_str(),
 									  -1,
 									  &utf16[0],
