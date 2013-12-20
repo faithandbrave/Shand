@@ -12,7 +12,7 @@
 #include "./utf8_string.hpp"
 #include "./system_string.hpp"
 
-#if BOOST_COMP_MSVC
+#if BOOST_OS_WINDOWS
 #include <Windows.h>
 #endif
 
@@ -38,7 +38,7 @@ public:
         if (utf8.empty())
             return {};
 
-        #if BOOST_COMP_MSVC
+        #if BOOST_OS_WINDOWS
             const int len = ::MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
 
             std::wstring utf16(len, wchar_t());
@@ -62,7 +62,7 @@ public:
         if (utf8.empty())
             return {};
 
-        #if BOOST_COMP_MSVC
+        #if BOOST_OS_WINDOWS
             encoding_string<encoding::utf16> utf16 = encoder<encoding::utf8, encoding::utf16>::encode(utf8);
 
             const int len = ::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, NULL, 0, NULL, NULL);
