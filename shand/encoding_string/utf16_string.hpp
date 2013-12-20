@@ -29,6 +29,9 @@ public:
     const cchar_type* c_str() const
     { return data_.c_str(); }
 
+	const string_type& raw_str() const
+	{ return data_; }
+
     bool empty() const
     { return data_.empty(); }
 
