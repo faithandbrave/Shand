@@ -63,6 +63,12 @@ private:
     string_type data_;
 };
 
+inline bool operator==(const encoding_string<encoding::utf16>& a, const encoding_string<encoding::utf16>& b)
+{ return a.raw_str() == b.raw_str(); }
+
+inline bool operator!=(const encoding_string<encoding::utf16>& a, const encoding_string<encoding::utf16>& b)
+{ return !(a == b); }
+
 } // namespace shand
 
 #endif // SHAND_ENCODING_STRING_UTF16_INCLUDE

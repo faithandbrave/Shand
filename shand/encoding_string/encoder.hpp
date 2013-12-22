@@ -7,8 +7,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <stdexcept>
-#include <boost/config.hpp>
 #include <boost/predef.h>
+#include <boost/regex/pending/unicode_iterator.hpp>
 #include "./utf16_string.hpp"
 #include "./utf8_string.hpp"
 #include "./system_string.hpp"
@@ -17,14 +17,49 @@
 #include <Windows.h>
 #endif
 
-#if !defined(BOOST_NO_CXX11_HDR_CODECVT)
-#include <codecvt>
-#endif
+/* implementation status
+
+vertical   : from
+horizontal : to
+
+|        | 8  | 16 | 32 | system  |
+| 8      | -  | OK | OK | OK      |
+| 16     | OK | -  | OK | not Win |
+| 32     | OK | OK | -  | not Win |
+| system | NO | NO | NO | -       |
+
+*/
 
 namespace shand {
 
 template <class From, class To>
 class encoder;
+
+namespace encode_detail {
+
+template <class To, template <class, class> class Iterator, class From>
+encoding_string<To> boost_encode(const encoding_string<From>& from)
+{
+    if (from.empty())
+        return {};
+
+    using from_raw_string_type = typename encoding_string<From>::string_type;
+    using conversion_iterator = Iterator<
+        typename from_raw_string_type::const_iterator,
+        typename encoding_string<To>::cchar_type
+    >;
+
+    conversion_iterator first(from.raw_str().begin());
+    conversion_iterator last(from.raw_str().end());
+
+    typename encoding_string<To>::string_type result;
+    for (; first != last; ++first) {
+        result.push_back(*first);
+    }
+    return result.c_str();
+}
+
+} // namespace encode_detail
 
 template <class Encoding>
 class encoder<Encoding, Encoding> {
@@ -36,6 +71,42 @@ public:
 };
 
 template <>
+class encoder<encoding::utf8, encoding::utf32> {
+public:
+    static encoding_string<encoding::utf32> encode(const encoding_string<encoding::utf8>& utf8)
+    {
+        return encode_detail::boost_encode<encoding::utf32, boost::u8_to_u32_iterator>(utf8);
+    }
+};
+
+template <>
+class encoder<encoding::utf16, encoding::utf32> {
+public:
+    static encoding_string<encoding::utf32> encode(const encoding_string<encoding::utf16>& utf16)
+    {
+        return encode_detail::boost_encode<encoding::utf32, boost::u16_to_u32_iterator>(utf16);
+    }
+};
+
+template <>
+class encoder<encoding::utf32, encoding::utf8> {
+public:
+    static encoding_string<encoding::utf8> encode(const encoding_string<encoding::utf32>& utf32)
+    {
+        return encode_detail::boost_encode<encoding::utf8, boost::u32_to_u8_iterator>(utf32);
+    }
+};
+
+template <>
+class encoder<encoding::utf32, encoding::utf16> {
+public:
+    static encoding_string<encoding::utf16> encode(const encoding_string<encoding::utf32>& utf32)
+    {
+        return encode_detail::boost_encode<encoding::utf16, boost::u32_to_u16_iterator>(utf32);
+    }
+};
+
+template <>
 class encoder<encoding::utf8, encoding::utf16> {
 public:
     static encoding_string<encoding::utf16> encode(const encoding_string<encoding::utf8>& utf8)
@@ -43,13 +114,17 @@ public:
         if (utf8.empty())
             return {};
 
-#if !defined(BOOST_NO_CXX11_HDR_CODECVT)
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
-        const std::wstring utf16 = convert.from_bytes(utf8.c_str());
+        const encoding_string<encoding::utf32> utf32 = encoder<
+            encoding::utf8,
+            encoding::utf32
+        >::encode(utf8);
+
+        const encoding_string<encoding::utf16> utf16 = encoder<
+            encoding::utf32,
+            encoding::utf16
+        >::encode(utf32);
+
         return utf16.c_str();
-#else
-        throw std::runtime_error("not implemented");
-#endif
     }
 };
 
@@ -61,13 +136,17 @@ public:
         if (utf16.empty())
             return {};
 
-#if !defined(BOOST_NO_CXX11_HDR_CODECVT)
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
-        const std::string utf8 = convert.to_bytes(utf16.c_str());
+        const encoding_string<encoding::utf32> utf32 = encoder<
+            encoding::utf16,
+            encoding::utf32
+        >::encode(utf16);
+
+        const encoding_string<encoding::utf8> utf8 = encoder<
+            encoding::utf32,
+            encoding::utf8
+        >::encode(utf32);
+
         return utf8.c_str();
-#else
-        throw std::runtime_error("not implemented");
-#endif
     }
 };
 
@@ -92,6 +171,32 @@ public:
                 throw std::runtime_error("conversion error!");
         #else
             return utf8.c_str();
+        #endif
+    }
+};
+
+template <>
+class encoder<encoding::utf16, encoding::system> {
+public:
+    static encoding_string<encoding::system> encode(const encoding_string<encoding::utf16>& utf16)
+    {
+        #if BOOST_OS_WINDOWS
+            throw std::runtime_error("not implemented");
+        #else
+            return encoder<encoding::utf16, encoding::utf8>::encode(utf16).c_str();
+        #endif
+    }
+};
+
+template <>
+class encoder<encoding::utf32, encoding::system> {
+public:
+    static encoding_string<encoding::system> encode(const encoding_string<encoding::utf32>& utf32)
+    {
+        #if BOOST_OS_WINDOWS
+            throw std::runtime_error("not implemented");
+        #else
+            return encoder<encoding::utf32, encoding::utf8>::encode(utf32).c_str();
         #endif
     }
 };

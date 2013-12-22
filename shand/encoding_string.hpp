@@ -17,7 +17,7 @@ namespace encoding {
 
 struct utf16 {};
 struct utf8 {};
-struct utf32 {}; // not implemented
+struct utf32 {};
 struct system {};
 
 } // namespace encoding
@@ -29,6 +29,7 @@ class encoding_string;
 
 #include "./encoding_string/utf16_string.hpp"
 #include "./encoding_string/utf8_string.hpp"
+#include "./encoding_string/utf32_string.hpp"
 #include "./encoding_string/system_string.hpp"
 
 #include "./encoding_string/encoder.hpp"

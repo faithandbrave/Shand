@@ -46,7 +46,6 @@ void iteration_test()
 
 void ostream_test()
 {
-    // システムの文字コードで出力
     std::stringstream ss;
     ss << string;
 
