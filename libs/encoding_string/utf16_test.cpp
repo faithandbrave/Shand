@@ -33,6 +33,20 @@ void codeunit_at_test()
     BOOST_TEST(at == LITERAL("𠮟"));
 }
 
+void codeunit_substr_range_test()
+{
+    const encoding_string<encoding::utf16> s = LITERAL("あいうえお");
+    const encoding_string<encoding::utf16> sub = s.codeunit_substr(2, 3);
+    BOOST_TEST(sub == encoding_string<encoding::utf16>(LITERAL("うえお")));
+}
+
+void codeunit_substr_start_test()
+{
+    const encoding_string<encoding::utf16> s = LITERAL("あいうえお");
+    const encoding_string<encoding::utf16> sub = s.codeunit_substr(2);
+    BOOST_TEST(sub == encoding_string<encoding::utf16>(LITERAL("うえお")));
+}
+
 void ostream_test()
 {
     const encoding_string<encoding::utf16> s = LITERAL("あいうえお");
@@ -57,6 +71,8 @@ int main()
 {
     codeunit_size_test();
     codeunit_at_test();
+    codeunit_substr_range_test();
+    codeunit_substr_start_test();
     ostream_test();
     empty_test();
 

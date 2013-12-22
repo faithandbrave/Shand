@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <boost/config.hpp>
+#include <boost/optional.hpp>
 
 namespace shand {
 
@@ -51,6 +52,47 @@ public:
                 return data_.substr(i, n).c_str();
             }
             i += n;
+            ++len;
+        }
+        throw std::out_of_range("out of range");
+    }
+
+    encoding_string<encoding::utf16> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
+    {
+        const std::size_t size = data_.size();
+        std::size_t len = 0;
+        std::size_t i = 0;
+
+        boost::optional<std::size_t> start;
+        while (i < size) {
+            if (!start && len == index) {
+                start = i;
+            }
+            const std::size_t n = char_size(i);
+            i += n;
+            ++len;
+            if (!start)
+                continue;
+
+            --codeunit_size;
+            if (codeunit_size == 0) {
+                return data_.substr(start.get(), i).c_str();
+            }
+        }
+        throw std::out_of_range("out of range");
+    }
+
+    encoding_string<encoding::utf16> codeunit_substr(std::size_t index) const
+    {
+        const std::size_t size = data_.size();
+        std::size_t len = 0;
+        std::size_t i = 0;
+
+        while (i < size) {
+            if (len == index) {
+                return data_.substr(i).c_str();
+            }
+            i += char_size(i);
             ++len;
         }
         throw std::out_of_range("out of range");
