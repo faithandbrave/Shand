@@ -12,6 +12,7 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/optional.hpp>
 #include <boost/utility/string_ref.hpp>
+#include "./codeunit_iterator.hpp"
 
 namespace shand {
 
@@ -40,67 +41,12 @@ inline const char* length_table()
     return table;
 }
 
-template <class StringDataType, class ElementStringType>
-class utf8_codeuinit_iterator :
-    public boost::iterator_facade<
-        utf8_codeuinit_iterator<StringDataType, ElementStringType>,
-        ElementStringType,
-        boost::single_pass_traversal_tag,
-        ElementStringType
-    >
-{
-    boost::optional<StringDataType> data_;
-    boost::optional<std::size_t> pos_;
-    boost::optional<std::size_t> size_;
-public:
-    utf8_codeuinit_iterator() {}
-
-    utf8_codeuinit_iterator(const StringDataType& data)
-        : data_(data)
+struct utf8_size_getter {
+    std::size_t operator()(const std::basic_string<char>& data, std::size_t i) const
     {
-        if (data_.get().empty()) {
-            pos_ = boost::none;
-        }
-        else {
-            pos_ = 0;
-        }
-    }
-
-private:
-    friend class boost::iterator_core_access;
-
-    void increment()
-    {
-        assert(pos_);
-
-        const unsigned char c = data_.get()[pos_.get()];
+        const unsigned char c = data[i];
         const std::size_t size = length_table()[c];
-
-        pos_.get() += size;
-        size_ = size;
-
-        if (pos_.get() >= data_.get().size())
-            pos_ = boost::none;
-    }
-
-    ElementStringType dereference() const
-    {
-        assert(pos_);
-
-        std::size_t size = 0;
-        if (size_) {
-            size = size_.get();
-        }
-        else {
-            const unsigned char c = data_.get()[pos_.get()];
-            size = length_table()[c];
-        }
-        return StringDataType(data_.get(), pos_.get(), size).c_str();
-    }
-
-    bool equal(const utf8_codeuinit_iterator& other) const
-    {
-        return pos_ == other.pos_;
+        return size;
     }
 };
 
@@ -112,7 +58,7 @@ public:
     using string_type = std::basic_string<char>;
     using value_type = encoding_string<encoding::utf8>;
     using cchar_type = char;
-    using iterator = utf8_detail::utf8_codeuinit_iterator<string_type, value_type>;
+    using iterator = codeunit_iterator<string_type, value_type, utf8_detail::utf8_size_getter>;
     using const_iterator = iterator;
 
     encoding_string() {}

@@ -33,6 +33,26 @@ void codeunit_at_test()
     BOOST_TEST(at == LITERAL("𠮟"));
 }
 
+void iteration_test()
+{
+    const encoding_string<encoding::utf16> s = LITERAL("あいうえお");
+
+    std::vector<encoding_string<encoding::utf16>> cont;
+    for (decltype(s)::value_type c : s) {
+        cont.push_back(c);
+    }
+
+    const std::vector<encoding_string<encoding::utf16>> expected = {
+        LITERAL("あ"),
+        LITERAL("い"),
+        LITERAL("う"),
+        LITERAL("え"),
+        LITERAL("お")
+    };
+
+    BOOST_TEST(cont == expected);
+}
+
 void codeunit_substr_range_test()
 {
     const encoding_string<encoding::utf16> s = LITERAL("あいうえお");
@@ -71,6 +91,7 @@ int main()
 {
     codeunit_size_test();
     codeunit_at_test();
+    iteration_test();
     codeunit_substr_range_test();
     codeunit_substr_start_test();
     ostream_test();
