@@ -96,6 +96,8 @@ public:
 
     encoding_string<encoding::utf8> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
     {
+        assert(codeunit_size > 0);
+
         const std::size_t size = data_.size();
         std::size_t len = 0;
         std::size_t i = 0;

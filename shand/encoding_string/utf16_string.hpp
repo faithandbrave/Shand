@@ -6,6 +6,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <cassert>
 #include <stdexcept>
 #include <string>
 #include <boost/config.hpp>
@@ -86,6 +87,8 @@ public:
 
     encoding_string<encoding::utf16> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
     {
+        assert(codeunit_size > 0);
+
         const std::size_t size = data_.size();
         std::size_t len = 0;
         std::size_t i = 0;
