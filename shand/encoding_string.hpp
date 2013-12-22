@@ -54,8 +54,8 @@ encoding_string<To> encode(const encoding_string<From>& from)
     return encoder<From, To>::encode(from);
 }
 
-template <class Encoding>
-std::ostream& operator<<(std::ostream& os, const encoding_string<Encoding>& s)
+template <class CharT, class Encoding>
+std::basic_ostream<CharT>& operator<<(std::basic_ostream<CharT>& os, const encoding_string<Encoding>& s)
 {
     return os << encode<encoding::system>(s).c_str();
 }
