@@ -16,13 +16,21 @@
 using shand::encoding_string;
 namespace encoding = shand::encoding;
 
-void code_unit_size_test()
+void codeunit_size_test()
 {
     // the character is surrogate pair (4 bytes = 2 characters space)
     const encoding_string<encoding::utf16> s = LITERAL("𠮟");
 
     BOOST_TEST(s.raw_str().size() == 2);
     BOOST_TEST(s.codeunit_size() == 1);
+}
+
+void codeunit_at_test()
+{
+    const encoding_string<encoding::utf16> s = LITERAL("あい𠮟aa");
+    const encoding_string<encoding::utf16> at = s.codeunit_at(2);
+
+    BOOST_TEST(at == LITERAL("𠮟"));
 }
 
 void ostream_test()
@@ -47,7 +55,8 @@ void empty_test()
 
 int main()
 {
-    code_unit_size_test();
+    codeunit_size_test();
+    codeunit_at_test();
     ostream_test();
     empty_test();
 

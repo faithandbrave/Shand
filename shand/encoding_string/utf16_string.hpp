@@ -6,6 +6,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <stdexcept>
 #include <string>
 #include <boost/config.hpp>
 
@@ -32,13 +33,27 @@ public:
         std::size_t i = 0;
         std::size_t len = 0;
         while (i < size) {
-            if (i < size - 1 && is_surrogate_pair(data_[i], data_[i + 1])) {
-                ++i;
-            }
-            ++i;
+            i += char_size(i);
             ++len;
         }
         return len;
+    }
+
+    // O(N)
+    encoding_string<encoding::utf16> codeunit_at(std::size_t index) const
+    {
+        const std::size_t size = data_.size();
+        std::size_t i = 0;
+        std::size_t len = 0;
+        while (i < size) {
+            const std::size_t n = char_size(i);
+            if (len == index) {
+                return data_.substr(i, n).c_str();
+            }
+            i += n;
+            ++len;
+        }
+        throw std::out_of_range("out of range");
     }
 
     const cchar_type* c_str() const
@@ -59,6 +74,9 @@ private:
 
     bool is_surrogate_pair(const cchar_type& high, const cchar_type& low) const
     { return is_high_surrogate(high) && is_low_surrogate(low); }
+
+    std::size_t char_size(std::size_t i) const
+    { return (i < data_.size() - 1 && is_surrogate_pair(data_[i], data_[i + 1])) ? 2 : 1; }
 
     string_type data_;
 };
