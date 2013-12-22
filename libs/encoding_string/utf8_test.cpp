@@ -73,12 +73,32 @@ void empty_test()
     BOOST_TEST(empty.empty());
 }
 
-void endian_test()
+void bom_test()
 {
     encoding_string<encoding::utf8> utf8 = u8"\xef\xbb\xbfあいうえお";
 
-    BOOST_TEST(utf8.endian() == shand::endian::unknown);
-    BOOST_TEST(utf8 == encoding_string<encoding::utf8>(u8"あいうえお"));
+    // not delete BOM
+    BOOST_TEST(utf8 == encoding_string<encoding::utf8>(u8"\xef\xbb\xbfあいうえお"));
+
+    // ignore BOM
+    BOOST_TEST(utf8.codeunit_size() == 5);
+    BOOST_TEST(utf8.codeunit_at(2) == encoding_string<encoding::utf8>(u8"う"));
+    BOOST_TEST(utf8.codeunit_substr(2) == encoding_string<encoding::utf8>(u8"うえお"));
+
+    std::vector<encoding_string<encoding::utf8>> cont;
+    for (decltype(string)::value_type c : utf8) {
+        cont.push_back(c);
+    }
+
+    const std::vector<encoding_string<encoding::utf8>> expected = {
+        u8"あ",
+        u8"い",
+        u8"う",
+        u8"え",
+        u8"お"
+    };
+
+    BOOST_TEST(cont == expected);
 }
 
 int main()
@@ -90,7 +110,7 @@ int main()
     codeunit_substr_range_test();
     codeunit_substr_start_test();
     empty_test();
-    endian_test();
+    bom_test();
 
     return boost::report_errors();
 }

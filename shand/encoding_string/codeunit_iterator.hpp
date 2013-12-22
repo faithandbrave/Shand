@@ -15,10 +15,13 @@
 
 namespace shand {
 
-template <class StringDataType, class ElementStringType, class SizeGetter>
+template <class StringDataType,
+          class ElementStringType,
+          class SizeGetter,
+          class BomSkipper>
 class codeunit_iterator :
     public boost::iterator_facade<
-        codeunit_iterator<StringDataType, ElementStringType, SizeGetter>,
+        codeunit_iterator<StringDataType, ElementStringType, SizeGetter, BomSkipper>,
         ElementStringType,
         boost::single_pass_traversal_tag,
         ElementStringType
@@ -37,7 +40,7 @@ public:
             pos_ = boost::none;
         }
         else {
-            pos_ = 0;
+            pos_ = BomSkipper()(data);
         }
     }
 

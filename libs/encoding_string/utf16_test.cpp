@@ -87,18 +87,47 @@ void empty_test()
     BOOST_TEST(empty.empty());
 }
 
-void endian_test()
+void bom_test()
 {
-    const encoding_string<encoding::utf16> no_endian = LITERAL("あいうえお");
-    BOOST_TEST(no_endian.endian() == shand::endian::unknown);
+    const std::vector<const encoding_string<encoding::utf16>::cchar_type*> literal_list = {
+        LITERAL("あいうえお"),       // system endian
+        LITERAL("\xfeffあいうえお"), // big endian
+        LITERAL("\xfffeあいうえお")  // little endian
+    };
 
-    const encoding_string<encoding::utf16> big_endian = LITERAL("\xfeffあいうえお");
-    BOOST_TEST(big_endian.endian() == shand::endian::big);
-    BOOST_TEST(big_endian == encoding_string<encoding::utf16>(LITERAL("あいうえお")));
+    const std::vector<encoding_string<encoding::utf16>> utf16_list = {
+        literal_list[0],
+        literal_list[1],
+        literal_list[2]
+    };
 
-    const encoding_string<encoding::utf16> little_endian = LITERAL("\xfffeあいうえお");
-    BOOST_TEST(little_endian.endian() == shand::endian::little);
-    BOOST_TEST(little_endian == encoding_string<encoding::utf16>(LITERAL("あいうえお")));
+    for (std::size_t i = 0; i < utf16_list.size(); ++i) {
+        const auto& literal = literal_list[i];
+        const auto& utf16 = utf16_list[i];
+
+        // not delete BOM
+        BOOST_TEST(utf16 == encoding_string<encoding::utf16>(literal));
+
+        // ignore BOM
+        BOOST_TEST(utf16.codeunit_size() == 5);
+        BOOST_TEST(utf16.codeunit_at(2) == encoding_string<encoding::utf16>(LITERAL("う")));
+        BOOST_TEST(utf16.codeunit_substr(2) == encoding_string<encoding::utf16>(LITERAL("うえお")));
+
+        std::vector<encoding_string<encoding::utf16>> cont;
+        for (encoding_string<encoding::utf16>::value_type c : utf16) {
+            cont.push_back(c);
+        }
+
+        const std::vector<encoding_string<encoding::utf16>> expected = {
+            LITERAL("あ"),
+            LITERAL("い"),
+            LITERAL("う"),
+            LITERAL("え"),
+            LITERAL("お")
+        };
+
+        BOOST_TEST(cont == expected);
+    }
 }
 
 int main()
@@ -110,7 +139,7 @@ int main()
     codeunit_substr_start_test();
     ostream_test();
     empty_test();
-    endian_test();
+    bom_test();
 
     return boost::report_errors();
 }

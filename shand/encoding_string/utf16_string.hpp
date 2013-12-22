@@ -29,7 +29,32 @@ template <class CharT>
 bool is_surrogate_pair(const CharT& high, const CharT& low)
 { return is_high_surrogate(high) && is_low_surrogate(low); }
 
-struct utf16_size_getter {
+template <class String>
+inline std::size_t ignore_bom(const String& data)
+{
+    if (data.size() < 1)
+        return 0;
+
+    // big endian
+    if (data[0] == static_cast<typename String::value_type>(0xfeff))
+        return 1;
+
+    // little endian
+    if (data[0] == static_cast<typename String::value_type>(0xfffe))
+        return 1;
+
+    return 0;
+}
+
+struct bom_skipper {
+    template <class String>
+    std::size_t operator()(const String& data) const
+    {
+        return ignore_bom(data);
+    }
+};
+
+struct size_getter {
     template <class CharT>
     std::size_t operator()(const std::basic_string<CharT>& data, std::size_t i)
     {
@@ -49,17 +74,21 @@ public:
 #endif
     using string_type = std::basic_string<cchar_type>;
     using value_type = encoding_string<encoding::utf16>;
-    using iterator = codeunit_iterator<string_type, value_type, utf16_detail::utf16_size_getter>;
+    using iterator = codeunit_iterator<
+                        string_type,
+                        value_type,
+                        utf16_detail::size_getter,
+                        utf16_detail::bom_skipper>;
     using const_iterator = iterator;
 
     encoding_string() {}
     encoding_string(const cchar_type* s)
-        : data_(remove_bom(s)) {}
+        : data_(s) {}
 
     std::size_t codeunit_size() const
     {
         const std::size_t size = data_.size();
-        std::size_t i = 0;
+        std::size_t i = utf16_detail::ignore_bom(data_);
         std::size_t len = 0;
         while (i < size) {
             i += char_size(i);
@@ -72,7 +101,7 @@ public:
     encoding_string<encoding::utf16> codeunit_at(std::size_t index) const
     {
         const std::size_t size = data_.size();
-        std::size_t i = 0;
+        std::size_t i = utf16_detail::ignore_bom(data_);
         std::size_t len = 0;
         while (i < size) {
             const std::size_t n = char_size(i);
@@ -91,7 +120,7 @@ public:
 
         const std::size_t size = data_.size();
         std::size_t len = 0;
-        std::size_t i = 0;
+        std::size_t i = utf16_detail::ignore_bom(data_);
 
         boost::optional<std::size_t> start;
         while (i < size) {
@@ -116,7 +145,7 @@ public:
     {
         const std::size_t size = data_.size();
         std::size_t len = 0;
-        std::size_t i = 0;
+        std::size_t i = utf16_detail::ignore_bom(data_);
 
         while (i < size) {
             if (len == index) {
@@ -127,9 +156,6 @@ public:
         }
         throw std::out_of_range("out of range");
     }
-
-    shand::endian endian() const
-    { return endian_; }
 
     iterator begin()
     { return iterator(data_); }
@@ -153,32 +179,10 @@ public:
     { return data_.empty(); }
 
 private:
-    const cchar_type* remove_bom(const cchar_type* s)
-    {
-        boost::basic_string_ref<cchar_type> ref(s);
-        if (ref.size() < 1) {
-            endian_ = shand::endian::unknown;
-            return s;
-        }
-
-        if (ref[0] == 0xfeff) {
-            endian_ = shand::endian::big;
-            return s + 1;
-        }
-        if (ref[0] == 0xfffe) {
-            endian_ = shand::endian::little;
-            return s + 1;
-        }
-
-        endian_ = shand::endian::unknown;
-        return s;
-    }
-
     std::size_t char_size(std::size_t i) const
-    { return utf16_detail::utf16_size_getter()(data_, i); }
+    { return utf16_detail::size_getter()(data_, i); }
 
     string_type data_;
-    shand::endian endian_;
 };
 
 inline bool operator==(const encoding_string<encoding::utf16>& a, const encoding_string<encoding::utf16>& b)

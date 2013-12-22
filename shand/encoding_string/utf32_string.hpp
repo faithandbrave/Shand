@@ -12,6 +12,27 @@
 
 namespace shand {
 
+namespace utf32_detail {
+
+template <class String>
+std::size_t ignore_bom(const String& data)
+{
+    if (data.size() < 1)
+        return 0;
+
+    // big endian
+    if (data[0] == 0x0000feff)
+        return 1;
+
+    // little endian
+    if (data[0] == 0xfffe0000)
+        return 1;
+
+    return 0;
+}
+
+} // namespace utf32_detail
+
 template <>
 class encoding_string<encoding::utf32> {
 public:
@@ -25,10 +46,7 @@ public:
 
     encoding_string() {}
     encoding_string(const cchar_type* s)
-        : data_(remove_bom(s)) {}
-
-    shand::endian endian() const
-    { return endian_; }
+        : data_(s) {}
 
     const cchar_type* c_str() const
     { return data_.c_str(); }
@@ -40,28 +58,7 @@ public:
     { return data_.empty(); }
 
 private:
-    const cchar_type* remove_bom(const cchar_type* s)
-    {
-        boost::basic_string_ref<cchar_type> ref(s);
-        if (ref.size() < 1) {
-            endian_ = shand::endian::unknown;
-            return s;
-        }
-
-        if (ref[0] == 0x0000feff) {
-            endian_ = shand::endian::big;
-            return s + 1;
-        }
-        if (ref[0] == 0xfffe0000) {
-            endian_ = shand::endian::little;
-            return s + 1;
-        }
-
-        endian_ = shand::endian::unknown;
-        return s;
-    }
     string_type data_;
-    shand::endian endian_;
 };
 
 inline bool operator==(const encoding_string<encoding::utf32>& a, const encoding_string<encoding::utf32>& b)
