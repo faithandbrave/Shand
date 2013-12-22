@@ -22,6 +22,12 @@ struct system {};
 
 } // namespace encoding
 
+enum class endian {
+    little,
+    big,
+    unknown
+};
+
 template <class Encoding>
 class encoding_string;
 

@@ -73,9 +73,11 @@ void empty_test()
     BOOST_TEST(empty.empty());
 }
 
-void bom_test()
+void endian_test()
 {
     encoding_string<encoding::utf8> utf8 = u8"\xef\xbb\xbfあいうえお";
+
+    BOOST_TEST(utf8.endian() == shand::endian::unknown);
     BOOST_TEST(utf8 == encoding_string<encoding::utf8>(u8"あいうえお"));
 }
 
@@ -88,7 +90,7 @@ int main()
     codeunit_substr_range_test();
     codeunit_substr_start_test();
     empty_test();
-    bom_test();
+    endian_test();
 
     return boost::report_errors();
 }

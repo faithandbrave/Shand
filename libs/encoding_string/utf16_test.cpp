@@ -87,6 +87,20 @@ void empty_test()
     BOOST_TEST(empty.empty());
 }
 
+void endian_test()
+{
+    const encoding_string<encoding::utf16> no_endian = LITERAL("あいうえお");
+    BOOST_TEST(no_endian.endian() == shand::endian::unknown);
+
+    const encoding_string<encoding::utf16> big_endian = LITERAL("\xfeffあいうえお");
+    BOOST_TEST(big_endian.endian() == shand::endian::big);
+    BOOST_TEST(big_endian == encoding_string<encoding::utf16>(LITERAL("あいうえお")));
+
+    const encoding_string<encoding::utf16> little_endian = LITERAL("\xfffeあいうえお");
+    BOOST_TEST(little_endian.endian() == shand::endian::little);
+    BOOST_TEST(little_endian == encoding_string<encoding::utf16>(LITERAL("あいうえお")));
+}
+
 int main()
 {
     codeunit_size_test();
@@ -96,6 +110,7 @@ int main()
     codeunit_substr_start_test();
     ostream_test();
     empty_test();
+    endian_test();
 
     return boost::report_errors();
 }

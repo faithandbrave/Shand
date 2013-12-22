@@ -53,7 +53,7 @@ public:
 
     encoding_string() {}
     encoding_string(const cchar_type* s)
-        : data_(s) {}
+        : data_(remove_bom(s)) {}
 
     std::size_t codeunit_size() const
     {
@@ -125,6 +125,9 @@ public:
         throw std::out_of_range("out of range");
     }
 
+    shand::endian endian() const
+    { return endian_; }
+
     iterator begin()
     { return iterator(data_); }
 
@@ -147,10 +150,32 @@ public:
     { return data_.empty(); }
 
 private:
+    const cchar_type* remove_bom(const cchar_type* s)
+    {
+        boost::basic_string_ref<cchar_type> ref(s);
+        if (ref.size() < 1) {
+            endian_ = shand::endian::unknown;
+            return s;
+        }
+
+        if (ref[0] == 0xfeff) {
+            endian_ = shand::endian::big;
+            return s + 1;
+        }
+        if (ref[0] == 0xfffe) {
+            endian_ = shand::endian::little;
+            return s + 1;
+        }
+
+        endian_ = shand::endian::unknown;
+        return s;
+    }
+
     std::size_t char_size(std::size_t i) const
     { return utf16_detail::utf16_size_getter()(data_, i); }
 
     string_type data_;
+    shand::endian endian_;
 };
 
 inline bool operator==(const encoding_string<encoding::utf16>& a, const encoding_string<encoding::utf16>& b)

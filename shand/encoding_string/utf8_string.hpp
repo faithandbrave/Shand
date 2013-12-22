@@ -135,6 +135,9 @@ public:
         throw std::out_of_range("out of range");
     }
 
+    shand::endian endian() const
+    { return shand::endian::unknown; }
+
     iterator begin()
     { return iterator(data_); }
 
