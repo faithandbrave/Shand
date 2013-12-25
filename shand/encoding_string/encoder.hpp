@@ -22,11 +22,11 @@
 vertical   : from
 horizontal : to
 
-|        | 8  | 16 | 32 | system  |
-| 8      | -  | OK | OK | OK      |
-| 16     | OK | -  | OK | not Win |
-| 32     | OK | OK | -  | not Win |
-| system | NO | NO | NO | -       |
+|        | 8  | 16 | 32 | system |
+| 8      | -  | OK | OK | OK     |
+| 16     | OK | -  | OK | OK     |
+| 32     | OK | OK | -  | OK     |
+| system | NO | NO | NO | -      |
 
 */
 
@@ -181,7 +181,14 @@ public:
     static encoding_string<encoding::system> encode(const encoding_string<encoding::utf16>& utf16)
     {
         #if BOOST_OS_WINDOWS
-            throw std::runtime_error("not implemented");
+            const int len = ::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, NULL, 0, NULL, NULL);
+
+            std::string cp932(len, char());
+
+            if (::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, &cp932[0], len, NULL, NULL) > 0)
+                return cp932.c_str();
+            else
+                throw std::runtime_error("conversion error!");
         #else
             return encoder<encoding::utf16, encoding::utf8>::encode(utf16).c_str();
         #endif
@@ -194,7 +201,16 @@ public:
     static encoding_string<encoding::system> encode(const encoding_string<encoding::utf32>& utf32)
     {
         #if BOOST_OS_WINDOWS
-            throw std::runtime_error("not implemented");
+            encoding_string<encoding::utf16> utf16 = encoder<encoding::utf32, encoding::utf16>::encode(utf32);
+
+            const int len = ::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, NULL, 0, NULL, NULL);
+
+            std::string cp932(len, char());
+
+            if (::WideCharToMultiByte(CP_ACP, 0, utf16.c_str(), -1, &cp932[0], len, NULL, NULL) > 0)
+                return cp932.c_str();
+            else
+                throw std::runtime_error("conversion error!");
         #else
             return encoder<encoding::utf32, encoding::utf8>::encode(utf32).c_str();
         #endif
