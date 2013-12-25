@@ -46,9 +46,9 @@ std::size_t ignore_bom(const std::basic_string<char>& data)
     if (data.size() < 3)
         return 0;
 
-    if (data[0] == static_cast<char>(0xef) &&
-        data[1] == static_cast<char>(0xbb) &&
-        data[2] == static_cast<char>(0xbf))
+    if (static_cast<unsigned char>(data[0]) == 0xef &&
+        static_cast<unsigned char>(data[1]) == 0xbb &&
+        static_cast<unsigned char>(data[2]) == 0xbf)
         return 3;
 
     return 0;
