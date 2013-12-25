@@ -11,7 +11,6 @@
 
 // TODO:
 // - endian specified encoding. (now use system endian)
-// - UTF-32 string features : `codeunit_size()`, `codeunit_at()`, `codeunit_substr()`, iterator.
 // - documentation. use GitHub Wiki.
 
 #include <iostream>
