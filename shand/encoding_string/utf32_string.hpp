@@ -9,6 +9,7 @@
 #include <string>
 #include <boost/config.hpp>
 #include <boost/cstdint.hpp>
+#include "./codeunit_iterator.hpp"
 
 namespace shand {
 
@@ -31,6 +32,24 @@ std::size_t ignore_bom(const String& data)
     return 0;
 }
 
+struct bom_skipper {
+    template <class String>
+    std::size_t operator()(const String& data) const
+    {
+        return ignore_bom(data);
+    }
+};
+
+struct size_getter {
+    template <class String>
+    std::size_t operator()(const String& data, std::size_t i) const
+    {
+        static_cast<void>(data);
+        static_cast<void>(i);
+        return 1;
+    }
+};
+
 } // namespace utf32_detail
 
 template <>
@@ -42,11 +61,42 @@ public:
     using cchar_type = char32_t;
 #endif
     using string_type = std::basic_string<cchar_type>;
-    using value_type = std::basic_string<cchar_type>;
+    using value_type = encoding_string<encoding::utf32>;
+
+    using iterator = codeunit_iterator<
+                        string_type,
+                        value_type,
+                        utf32_detail::size_getter,
+                        utf32_detail::bom_skipper>;
+    using const_iterator = iterator;
 
     encoding_string() {}
     encoding_string(const cchar_type* s)
         : data_(s) {}
+
+    std::size_t codeunit_size() const
+    { return data_.size() - utf32_detail::ignore_bom(data_); }
+
+    encoding_string<encoding::utf32> codeunit_at(std::size_t index) const
+    { return string_type(1, data_.at(index + utf32_detail::ignore_bom(data_))).c_str(); }
+
+    encoding_string<encoding::utf32> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
+    { return data_.substr(index + utf32_detail::ignore_bom(data_), codeunit_size).c_str(); }
+
+    encoding_string<encoding::utf32> codeunit_substr(std::size_t index) const
+    { return data_.substr(index + utf32_detail::ignore_bom(data_)).c_str(); }
+
+    iterator begin()
+    { return iterator(data_); }
+
+    const_iterator begin() const
+    { return const_iterator(data_); }
+
+    iterator end()
+    { return iterator(); }
+
+    const_iterator end() const
+    { return const_iterator(); }
 
     const cchar_type* c_str() const
     { return data_.c_str(); }
