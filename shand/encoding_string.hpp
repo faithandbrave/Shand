@@ -10,7 +10,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // TODO:
-// - endian specified encoding. (now use system endian)
+// - add `encoding_file` class. The class manage endian and BOM.
 // - documentation. use GitHub Wiki.
 
 #include <iostream>
