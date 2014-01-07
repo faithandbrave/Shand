@@ -11,15 +11,14 @@
 #include <boost/predef.h>
 #include <string>
 
-// libstdc++ or libc++
-#if BOOST_COMP_GNUC || BOOST_COMP_CLANG
+#if BOOST_LIB_STD_GNU || BOOST_LIB_STD_CXX
 #include <cxxabi.h>
 #include <cstdlib> // std::free
 #endif
 
 namespace shand {
 
-#if BOOST_COMP_GNUC || BOOST_COMP_CLANG
+#if BOOST_LIB_STD_GNU || BOOST_LIB_STD_CXX
     template <class T>
     std::string demangle_typename()
     {
