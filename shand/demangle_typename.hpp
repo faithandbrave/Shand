@@ -11,7 +11,7 @@
 #include <boost/predef.h>
 #include <string>
 
-#if BOOST_LIB_STD_GNU || BOOST_LIB_STD_CXX
+#if defined(BOOST_LIB_STD_GNU) || defined(BOOST_LIB_STD_CXX)
 #include <cxxabi.h>
 #include <cstdlib> // std::free
 #endif
@@ -20,7 +20,7 @@
 
 namespace shand {
 
-#if BOOST_LIB_STD_GNU || BOOST_LIB_STD_CXX
+#if defined(BOOST_LIB_STD_GNU) || defined(BOOST_LIB_STD_CXX)
     template <class T>
     std::string demangle_typename()
     {
