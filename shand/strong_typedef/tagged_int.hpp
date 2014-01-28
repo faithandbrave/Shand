@@ -11,6 +11,7 @@
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/operators.hpp>
+#include <functional>
 
 namespace shand {
 
@@ -47,6 +48,22 @@ public:
 };
 
 } // namespace shand
+
+
+namespace std {
+
+template <class T>
+struct hash;
+
+template <class Integer, class Tag>
+struct hash<shand::tagged_int<Integer, Tag> > {
+    size_t operator()(const shand::tagged_int<Integer, Tag>& x) const BOOST_NOEXCEPT
+    {
+        return ::std::hash<Integer>()(x.get());
+    }
+};
+
+} // namespace std
 
 #endif
 
