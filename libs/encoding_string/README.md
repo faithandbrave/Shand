@@ -25,6 +25,6 @@
 - [基本的な使い方](./doc/basic_usage.md)
 - [リファレンス](./doc/reference.md)
 - 設計根拠
-- 将来の予定
+- [将来の予定](./doc/future_plan.md)
 
 
