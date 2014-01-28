@@ -69,6 +69,16 @@ bool is_zero_width_character(char32_t codeunit)
 ```
 
 
+##ICUベースの正規化
+
+ICUベースの、以下の実装を用意する：
+
+- `compose()`
+- `decompose()`
+- `compatibility_compose()`
+- `compatibility_decompose()`
+
+
 ##エンコード情報付きファイルクラス
 
 `encoding_string`クラスは、エンディアンの情報を扱わず、文字・文字列の情報のみを扱う。そのため、エンディアンの情報を吸収するクラスとして、`encoding_file<Encoding>`クラスを作成する予定。
