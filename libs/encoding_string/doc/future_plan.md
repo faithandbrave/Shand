@@ -68,3 +68,14 @@ bool is_zero_width_character(char32_t codeunit)
 }
 ```
 
+
+##エンコード情報付きファイルクラス
+
+`encoding_string`クラスは、エンディアンの情報を扱わず、文字・文字列の情報のみを扱う。そのため、エンディアンの情報を吸収するクラスとして、`encoding_file<Encoding>`クラスを作成する予定。
+
+
+#当面やらないもの
+
+- 正規表現 : Boost.RegexにICUのラッパーがあるので、それを使って十分なはず。十分でない場合は検討する。
+
+
