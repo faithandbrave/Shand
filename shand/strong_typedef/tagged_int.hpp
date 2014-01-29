@@ -50,10 +50,9 @@ public:
 } // namespace shand
 
 
-namespace std {
+#if !defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 
-template <class T>
-struct hash;
+namespace std {
 
 template <class Integer, class Tag>
 struct hash<shand::tagged_int<Integer, Tag> > {
@@ -63,7 +62,10 @@ struct hash<shand::tagged_int<Integer, Tag> > {
     }
 };
 
+
 } // namespace std
+
+#endif
 
 #endif
 
