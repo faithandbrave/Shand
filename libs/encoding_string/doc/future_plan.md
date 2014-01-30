@@ -45,15 +45,30 @@ bool is_variation_selector(char32_t codeunit)
 - 結合文字か判定する`is_combining_character()`
 
 ```cpp
+#include <string>
+#include <stdexcept>
+#include <unicode/normalizer2.h>
+
+// 結合文字か判定する
 bool is_combining_character(char32_t codeunit)
 {
-    icu::UCErrorCode error_code;
-    icu::Normalizer2* normalizer = icu::Normalizer2::getNFCInstance(error_code);
+    UErrorCode error_code = U_ZERO_ERROR;
+    const icu::Normalizer2* normalizer = icu::Normalizer2::getNFCInstance(error_code);
     if (U_FAILURE(error_code)) {
-        throw std::runtime_error("failed icu::Normalizer2::getNFCInstance()");
+        throw std::runtime_error(
+                std::string("failed icu::Normalizer2::getNFCInstance() : ") + u_errorName(error_code));
     }
 
-    return normalizer->getCombiningClass(codeunit) > 0;
+    return normalizer->getCombiningClass(UChar32(codeunit)) > 0;
+}
+
+#include <iostream>
+int main()
+{
+    std::cout << std::boolalpha;
+    std::cout << is_combining_character(U'a') << std::endl;          // false
+    std::cout << is_combining_character(U'\U0000032F') << std::endl; // true
+    std::cout << is_combining_character(U' ̎') << std::endl;          // true
 }
 ```
 
