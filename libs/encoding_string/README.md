@@ -23,6 +23,7 @@
 ##ドキュメント目次
 
 - [基本的な使い方](./doc/basic_usage.md)
+- [ビルド方法](./doc/build.md)
 - [リファレンス](./doc/reference.md)
 - 設計根拠
 - [将来の予定](./doc/future_plan.md)
