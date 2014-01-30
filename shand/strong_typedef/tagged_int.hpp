@@ -3,7 +3,7 @@
 
 // strong typedef for integer types.
 //
-// Copyright Akira Takahashi 2012
+// Copyright Akira Takahashi 2012-2014.
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -11,6 +11,7 @@
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/operators.hpp>
+#include <boost/functional/hash.hpp>
 #include <functional>
 
 namespace shand {
@@ -47,9 +48,17 @@ public:
     tagged_int& operator--() { --value_; return *this; }
 };
 
+// Boost hash support
+template <class Integer, class Tag>
+std::size_t hash_value(const tagged_int<Integer, Tag>& x)
+{
+    return boost::hash_value(x.get());
+}
+
 } // namespace shand
 
 
+// Standard hash support
 #if !defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
 
 namespace std {
