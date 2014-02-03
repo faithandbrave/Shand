@@ -1,15 +1,20 @@
 #ifndef SHAND_SHARED_ARRAY_INCLUDE
 #define SHAND_SHARED_ARRAY_INCLUDE
 
+// (C) Copyright Greg Colvin and Beman Dawes 1998, 1999.
+// Copyright (c) 2001, 2002 Peter Dimov
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //----------------------------------------------------------//
 //															//
-//	ƒNƒ‰ƒX–¼ : shared_array<Type>							//
-//	—p    “r : QÆƒJƒEƒ“ƒg•t‚«ƒXƒ}[ƒgƒ|ƒCƒ“ƒ^‚Ì”z—ñ”Å		//
+//	ã‚¯ãƒ©ã‚¹å : shared_array<Type>							//
+//	ç”¨    é€” : å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆä»˜ãã‚¹ãƒãƒ¼ãƒˆãƒã‚¤ãƒ³ã‚¿ã®é…åˆ—ç‰ˆ		//
 //															//
-// Version : 1.00 2007/06/22 ì¬							//
+// Version : 1.00 2007/06/22 ä½œæˆ							//
 //															//
-//				Programmed By Akira.T						//
-//		Copyright(C) 2007 Akira.T All rights reserved		//
 //----------------------------------------------------------//
 
 
@@ -19,8 +24,8 @@ namespace shand {
 
 template <class Type>
 class shared_array {
-	Type*	object_;	// ¶‚Ìƒ|ƒCƒ“ƒ^
-	int*	counter_;	// QÆƒJƒEƒ“ƒ^
+	Type*	object_;	// ç”Ÿã®ãƒã‚¤ãƒ³ã‚¿
+	int*	counter_;	// å‚ç…§ã‚«ã‚¦ãƒ³ã‚¿
 
 public:
 	typedef Type element_type;
@@ -38,10 +43,10 @@ public:
 
 	~shared_array() { release(); }
 
-	// ƒ|ƒCƒ“ƒ^æ“¾
+	// ãƒã‚¤ãƒ³ã‚¿å–å¾—
 	Type* get() const { return object_; }
 
-	// QÆƒJƒEƒ“ƒgæ“¾
+	// å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆå–å¾—
 	long use_count() const
 	{
 		if (!counter_)
@@ -49,7 +54,7 @@ public:
 		return *counter_;
 	}
 
-	// QÆæ‚ª1‚Â‚©”»’f
+	// å‚ç…§å…ˆãŒ1ã¤ã‹åˆ¤æ–­
 	bool unique() const { return use_count() == 1; }
 
 	shared_array& operator=(const shared_array& rhs) { set(rhs); return *this; }
@@ -78,7 +83,7 @@ private:
 
 	void release()
 	{
-		// QÆƒJƒEƒ“ƒ^‚ğŒ¸‚ç‚·
+		// å‚ç…§ã‚«ã‚¦ãƒ³ã‚¿ã‚’æ¸›ã‚‰ã™
 		if (counter_ != 0 && --*counter_ == 0) {
 			delete[] object_;
 			delete   counter_;

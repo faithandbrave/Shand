@@ -1,23 +1,28 @@
 #ifndef _DATETIME_H_
 #define _DATETIME_H_
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 #include "cstring_format.h"
 
 
 //----------------------------------------------//
-// –¼Ì : GetDateTimeString()					//
-// —p“r : ƒtƒH[ƒ}ƒbƒgw’è‚µ‚½“ú•¶š—ñæ“¾	//
-// ˆø” : strFormat	: “úƒtƒH[ƒ}ƒbƒg			//
-//						%Y : ”N	YYYY			//
-//						%m : Œ	mm				//
-//						%D : “ú DD				//
-//						%H :  HH				//
-//						%M : •ª MM				//
-//						%S : •b SS				//
-//		  tmDateTime: w’èŠÔ(–¢w’è‚ÍŒ»İ“ú)//
-// –ß’l : “ú•¶š—ñ							//
-// ƒƒ‚ : WinCE‚ÅCOleDateTime::Format(...)‚ª	//
-//		  –¢ƒTƒ|[ƒg‚Ì‚½‚ßì¬					//
+// åç§° : GetDateTimeString()					//
+// ç”¨é€” : ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæŒ‡å®šã—ãŸæ—¥æ™‚æ–‡å­—åˆ—å–å¾—	//
+// å¼•æ•° : strFormat	: æ—¥æ™‚ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ			//
+//						%Y : å¹´	YYYY			//
+//						%m : æœˆ	mm				//
+//						%D : æ—¥ DD				//
+//						%H : æ™‚ HH				//
+//						%M : åˆ† MM				//
+//						%S : ç§’ SS				//
+//		  tmDateTime: æŒ‡å®šæ™‚é–“(æœªæŒ‡å®šã¯ç¾åœ¨æ—¥æ™‚)//
+// æˆ»å€¤ : æ—¥æ™‚æ–‡å­—åˆ—							//
+// ãƒ¡ãƒ¢ : WinCEã§COleDateTime::Format(...)ãŒ	//
+//		  æœªã‚µãƒãƒ¼ãƒˆã®ãŸã‚ä½œæˆ					//
 //----------------------------------------------//
 inline CString GetDateTimeString(CString strFormat,
 								 const COleDateTime &tmDateTime=COleDateTime::GetCurrentTime())

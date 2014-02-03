@@ -1,6 +1,16 @@
 #ifndef SHAND_ENABLE_IF_INCLUDE
 #define SHAND_ENABLE_IF_INCLUDE
 
+// Copyright 2003 (c) The Trustees of Indiana University.
+////    Authors: Jaakko Jarvi (jajarvi at osl.iu.edu)
+//             Jeremiah Willcock (jewillco at osl.iu.edu)
+//             Andrew Lumsdaine (lums at osl.iu.edu)
+// 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 namespace shand {
 
 // enable_if

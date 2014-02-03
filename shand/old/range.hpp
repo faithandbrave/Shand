@@ -1,10 +1,15 @@
 #ifndef SHAND_RANGE_INCLUDE
 #define SHAND_RANGE_INCLUDE
 
+// Copyright Akira Takahashi 2009
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 #include <functional>   // std::tr1::result_of
 #include <type_traits>  // std::tr1::remove_cv, std::tr1::remove_reference
 
-// TR1ƒ‰ƒCƒuƒ‰ƒŠ‚ª‚È‚¢ŠÂ‹«‚Å‚Íª‚Ì‘ã‚í‚è‚É‚±‚Á‚¿
+// TR1ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒãªã„ç’°å¢ƒã§ã¯â†‘ã®ä»£ã‚ã‚Šã«ã“ã£ã¡
 //#include <boost/tr1/functional.hpp>
 //#include <boost/tr1/type_traits.hpp>
 

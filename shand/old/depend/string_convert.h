@@ -1,7 +1,13 @@
+// Copyright Akira Takahashi 2006
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
+
 #ifndef _STRING_CONVERT_H_
 #define _STRING_CONVERT_H_
 
-//¦ MFC, ATL/WTL—p
+//â€» MFC, ATL/WTLç”¨
 
 #pragma warning(disable : 4530)
 #include <string>
@@ -12,15 +18,15 @@
 #include <atlconv.h>
 
 //--------------------------------------//
-// char* ¨ std::string‚Ö‚ÌƒLƒƒƒXƒg		//
-// \‘¢‘Ì‚Ìƒƒ“ƒo•¶š—ñ‚©‚ç‚Ì•ÏŠ·‚Ég—p	//
+// char* â†’ std::stringã¸ã®ã‚­ãƒ£ã‚¹ãƒˆ		//
+// æ§‹é€ ä½“ã®ãƒ¡ãƒ³ãƒæ–‡å­—åˆ—ã‹ã‚‰ã®å¤‰æ›ã«ä½¿ç”¨	//
 //--------------------------------------//
 #define STRING_CAST(String) std::string(String, String + sizeof(String))
 #define CHAR_CAST(Character) std::string(1, Character)
 
 
 //------------------------------------------//
-// ‰E‚Ì‹ó”’‚ğœ‹							//
+// å³ã®ç©ºç™½ã‚’é™¤å»							//
 //------------------------------------------//
 template<class String>
 inline String TrimRight(String& strSrc)
@@ -31,7 +37,7 @@ inline String TrimRight(String& strSrc)
 
 
 //------------------------------------------//
-// ¶‚Ì‹ó”’‚ğœ‹							//
+// å·¦ã®ç©ºç™½ã‚’é™¤å»							//
 //------------------------------------------//
 template<class String>
 inline String TrimLeft(String& strSrc)
@@ -42,10 +48,10 @@ inline String TrimLeft(String& strSrc)
 
 
 //------------------------------------------//
-// –¼Ì : ToMultStr()						//
-// —p“r : wchar_t*(Unicode) ¨ char*(ANSI)	//
-// ˆø” : Unicode•¶š—ñ						//
-// –ß’l : ASNI•¶š—ñ						//
+// åç§° : ToMultStr()						//
+// ç”¨é€” : wchar_t*(Unicode) â†’ char*(ANSI)	//
+// å¼•æ•° : Unicodeæ–‡å­—åˆ—						//
+// æˆ»å€¤ : ASNIæ–‡å­—åˆ—						//
 //------------------------------------------//
 inline std::string ToMultStr(const std::wstring &strWide)
 {
@@ -55,10 +61,10 @@ inline std::string ToMultStr(const std::wstring &strWide)
 
 
 //------------------------------------------//
-// –¼Ì : ToWideStr()						//
-// —p“r : char*(ASNI) ¨ wchar_t*(Unicode)	//
-// ˆø” : ANSI•¶š—ñ						//
-// –ß’l : Unicode•¶š—ñ						//
+// åç§° : ToWideStr()						//
+// ç”¨é€” : char*(ASNI) â†’ wchar_t*(Unicode)	//
+// å¼•æ•° : ANSIæ–‡å­—åˆ—						//
+// æˆ»å€¤ : Unicodeæ–‡å­—åˆ—						//
 //------------------------------------------//
 inline std::wstring ToWideStr(const std::string &strMult)
 {
@@ -68,10 +74,10 @@ inline std::wstring ToWideStr(const std::string &strMult)
 
 
 //------------------------------------------//
-// –¼Ì : ToWideInt()						//
-// —p“r : char*(ASNI) ¨ int				//
-// ˆø” : ANSI•¶š—ñ						//
-// –ß’l : •ÏŠ·‚³‚ê‚½®”’l					//
+// åç§° : ToWideInt()						//
+// ç”¨é€” : char*(ASNI) â†’ int				//
+// å¼•æ•° : ANSIæ–‡å­—åˆ—						//
+// æˆ»å€¤ : å¤‰æ›ã•ã‚ŒãŸæ•´æ•°å€¤					//
 //------------------------------------------//
 inline int ToWideInt(const std::string &strMult)
 {
@@ -80,10 +86,10 @@ inline int ToWideInt(const std::string &strMult)
 
 
 //------------------------------------------//
-// –¼Ì : ToWideInt()						//
-// —p“r : char*(ASNI) ¨ long				//
-// ˆø” : ANSI•¶š—ñ						//
-// –ß’l : •ÏŠ·‚³‚ê‚½®”’l					//
+// åç§° : ToWideInt()						//
+// ç”¨é€” : char*(ASNI) â†’ long				//
+// å¼•æ•° : ANSIæ–‡å­—åˆ—						//
+// æˆ»å€¤ : å¤‰æ›ã•ã‚ŒãŸæ•´æ•°å€¤					//
 //------------------------------------------//
 inline long ToWideLong(const std::string &strMult)
 {
@@ -92,10 +98,10 @@ inline long ToWideLong(const std::string &strMult)
 
 /*
 //------------------------------------------//
-// –¼Ì : ToWideDouble()					//
-// —p“r : char*(ASNI) ¨ double				//
-// ˆø” : ANSI•¶š—ñ						//
-// –ß’l : •ÏŠ·‚³‚ê‚½¬”’l					//
+// åç§° : ToWideDouble()					//
+// ç”¨é€” : char*(ASNI) â†’ double				//
+// å¼•æ•° : ANSIæ–‡å­—åˆ—						//
+// æˆ»å€¤ : å¤‰æ›ã•ã‚ŒãŸå°æ•°å€¤					//
 //------------------------------------------//
 inline double ToWideDouble(const std::string &strMult)
 {
@@ -104,12 +110,12 @@ inline double ToWideDouble(const std::string &strMult)
 */
 
 //------------------------------------------//
-// –¼Ì : ToMemWideStr()					//
-// —p“r : wchar_t*(Unicode) ¨ char*(ANSI)	//
-//		  w’è‚³‚ê‚½•¶š”ƒXƒy[ƒX–„‚ß‚é	//
-// ˆø” : strWide	: Unicode•¶š—ñ			//
-//		  nMemCount	: ‚O–„‚ß‚·‚éŒ…”		//
-// –ß’l : ANSI•¶š—ñ						//
+// åç§° : ToMemWideStr()					//
+// ç”¨é€” : wchar_t*(Unicode) â†’ char*(ANSI)	//
+//		  æŒ‡å®šã•ã‚ŒãŸæ–‡å­—æ•°ã‚¹ãƒšãƒ¼ã‚¹åŸ‹ã‚ã‚‹	//
+// å¼•æ•° : strWide	: Unicodeæ–‡å­—åˆ—			//
+//		  nMemCount	: ï¼åŸ‹ã‚ã™ã‚‹æ¡æ•°		//
+// æˆ»å€¤ : ANSIæ–‡å­—åˆ—						//
 //------------------------------------------//
 inline std::string ToMemMultStr(const std::wstring &strWide, int nMemCount)
 {
@@ -124,12 +130,12 @@ inline std::string ToMemMultStr(const std::wstring &strWide, int nMemCount)
 
 
 //------------------------------------------//
-// –¼Ì : ToMemWideStr()					//
-// —p“r : int ¨ char*(ANSI)				//
-//		  w’è‚³‚ê‚½•¶š”‚O–„‚ß‚é			//
-// ˆø” : nWide		: •ÏŠ·‚·‚é®”’l		//
-//		  nMemCount : ‚O–„‚ßŒ…”			//
-// –ß’l : ANSI•¶š—ñ						//
+// åç§° : ToMemWideStr()					//
+// ç”¨é€” : int â†’ char*(ANSI)				//
+//		  æŒ‡å®šã•ã‚ŒãŸæ–‡å­—æ•°ï¼åŸ‹ã‚ã‚‹			//
+// å¼•æ•° : nWide		: å¤‰æ›ã™ã‚‹æ•´æ•°å€¤		//
+//		  nMemCount : ï¼åŸ‹ã‚æ¡æ•°			//
+// æˆ»å€¤ : ANSIæ–‡å­—åˆ—						//
 //------------------------------------------//
 inline std::string ToMemMultStr(int nWide, int nMemCount)
 {
@@ -147,11 +153,11 @@ inline std::string ToMemMultStr(int nWide, int nMemCount)
 
 
 //------------------------------------------//
-// –¼Ì : WriteWideString()					//
-// —p“r : ƒƒCƒh•¶š—ñ‘‚İ				//
-// ˆø” : pTargetFile	: ‘‚«‚Şƒtƒ@ƒCƒ‹	//
-//		  pszWriteBuff	: ‘‚«‚Ş•¶š—ñ	//
-// –ß’l : ‚È‚µ								//
+// åç§° : WriteWideString()					//
+// ç”¨é€” : ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—æ›¸è¾¼ã¿				//
+// å¼•æ•° : pTargetFile	: æ›¸ãè¾¼ã‚€ãƒ•ã‚¡ã‚¤ãƒ«	//
+//		  pszWriteBuff	: æ›¸ãè¾¼ã‚€æ–‡å­—åˆ—	//
+// æˆ»å€¤ : ãªã—								//
 //------------------------------------------//
 inline void WriteWideString(CFile *pTargetFile, const wchar_t* pszWriteBuff)
 {

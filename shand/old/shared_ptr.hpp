@@ -1,20 +1,25 @@
 #ifndef SHAND_SHARED_POINTER_INCLUDE
 #define SHAND_SHARED_POINTER_INCLUDE
 
+// (C) Copyright Greg Colvin and Beman Dawes 1998, 1999.
+// Copyright (c) 2001-2008 Peter Dimov
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //------------------------------------------------------------------//
-//																	//
-//	ƒNƒ‰ƒX–¼ : shared_ptr<Type>										//
-//	—p    “r : QÆƒJƒEƒ“ƒg•t‚«ƒXƒ}[ƒgƒ|ƒCƒ“ƒ^						//
-//																	//
-// Version : 1.00 2007/06/22 ì¬									//
-//			 1.10 2007/07/12 ƒJƒXƒ^ƒ€íœq‚ğw’è‚Å‚«‚é‚æ‚¤‚É‚µ‚½	//
-//			 1.11 2007/07/18 ƒJƒXƒ^ƒ€íœqì¬‚Ì—áŠOˆ—’Ç‰Á		//
-//							 shared_ptr<void>‚ğì¬‚Å‚«‚é‚æ‚¤‚É‚µ‚½	//
-//			 1.12 2007/10/25 ƒJƒXƒ^ƒ€íœq‚Ìƒ|ƒCƒ“ƒ^‚Ì‚¿•û•ÏX	//
-//			 1.13 2007/10/29 reset’Ç‰Á								//
-//																	//
-//				Programmed By Akira.T								//
-//		Copyright(C) 2007 Akira.T All rights reserved				//
+//                                                                  //
+//  ã‚¯ãƒ©ã‚¹å : shared_ptr<Type>                                     //
+//  ç”¨    é€” : å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆä»˜ãã‚¹ãƒãƒ¼ãƒˆãƒã‚¤ãƒ³ã‚¿                     //
+//                                                                  //
+// Version : 1.00 2007/06/22 ä½œæˆ                                   //
+//           1.10 2007/07/12 ã‚«ã‚¹ã‚¿ãƒ å‰Šé™¤å­ã‚’æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã—ãŸ   //
+//           1.11 2007/07/18 ã‚«ã‚¹ã‚¿ãƒ å‰Šé™¤å­ä½œæˆæ™‚ã®ä¾‹å¤–å‡¦ç†è¿½åŠ      //
+//                           shared_ptr<void>ã‚’ä½œæˆã§ãã‚‹ã‚ˆã†ã«ã—ãŸ //
+//           1.12 2007/10/25 ã‚«ã‚¹ã‚¿ãƒ å‰Šé™¤å­ã®ãƒã‚¤ãƒ³ã‚¿ã®æŒã¡æ–¹å¤‰æ›´   //
+//           1.13 2007/10/29 resetè¿½åŠ                               //
+//                                                                  //
 //------------------------------------------------------------------//
 
 #include <functional> // less
@@ -23,7 +28,7 @@ namespace shand {
 
 namespace detail {
 
-// shared_ptr<void>‚ğì¬‚·‚é‚½‚ß‚ÉQÆŒ^ì¬
+// shared_ptr<void>ã‚’ä½œæˆã™ã‚‹ãŸã‚ã«å‚ç…§å‹ä½œæˆ
 template<class T> struct shared_ptr_traits
 {
     typedef T& reference;
@@ -53,29 +58,29 @@ template<> struct shared_ptr_traits<void const volatile>
 
 #endif
 
-// ƒJƒXƒ^ƒ€íœq
+// ã‚«ã‚¹ã‚¿ãƒ å‰Šé™¤å­
 template <typename Type>
 class shared_deleter_base {
 public:
-	shared_deleter_base() {}
-	virtual ~shared_deleter_base() {}
-	virtual void destroy() = 0;
+    shared_deleter_base() {}
+    virtual ~shared_deleter_base() {}
+    virtual void destroy() = 0;
 };
 
 template <typename Type, typename Deleter>
 class shared_deleter : public shared_deleter_base<Type> {
-	Type*	object_;
-	Deleter deleter_;
+    Type*   object_;
+    Deleter deleter_;
 public:
-	shared_deleter(Type *object, Deleter deleter)
-		: object_(object), deleter_(deleter) {}
+    shared_deleter(Type *object, Deleter deleter)
+        : object_(object), deleter_(deleter) {}
 
-	virtual ~shared_deleter() {}
+    virtual ~shared_deleter() {}
 
-	virtual void destroy()
-	{
-		deleter_(object_);
-	}
+    virtual void destroy()
+    {
+        deleter_(object_);
+    }
 };
 
 } // namespace detail
@@ -83,125 +88,125 @@ public:
 
 template <class Type>
 class shared_ptr {
-	Type*								object_;	// ƒ|ƒCƒ“ƒ^
-	int*								counter_;	// QÆƒJƒEƒ“ƒ^
-	detail::shared_deleter_base<Type>*	deleter_;	// ƒJƒXƒ^ƒ€íœq
+    Type*                               object_;    // ãƒã‚¤ãƒ³ã‚¿
+    int*                                counter_;   // å‚ç…§ã‚«ã‚¦ãƒ³ã‚¿
+    detail::shared_deleter_base<Type>*  deleter_;   // ã‚«ã‚¹ã‚¿ãƒ å‰Šé™¤å­
 
 public:
-	typedef Type element_type;
-	typedef Type value_type;
-	typedef Type* pointer;
-	typedef typename detail::shared_ptr_traits<Type>::reference reference;
+    typedef Type element_type;
+    typedef Type value_type;
+    typedef Type* pointer;
+    typedef typename detail::shared_ptr_traits<Type>::reference reference;
 
-	shared_ptr()
-		: object_(0), counter_(new int(1)), deleter_(0) {}
+    shared_ptr()
+        : object_(0), counter_(new int(1)), deleter_(0) {}
 
-	shared_ptr(const shared_ptr& src)
-		: object_(0), counter_(0), deleter_(0) { set(src); }
+    shared_ptr(const shared_ptr& src)
+        : object_(0), counter_(0), deleter_(0) { set(src); }
 
-	explicit shared_ptr(Type* object)
-		: object_(object), counter_(new int(1)), deleter_(0) {}
+    explicit shared_ptr(Type* object)
+        : object_(object), counter_(new int(1)), deleter_(0) {}
 
-	// íœqw’è‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	template <class Deleter>
-	shared_ptr(Type* object, Deleter deleter)
-		: object_(object), counter_(new int(1)), deleter_(0)
-	{
-		try {
-			deleter_ = new detail::shared_deleter<Type, Deleter>(object_, deleter);
-		}
-		catch(...) {
-			deleter(object_);
-			delete counter_;
-			throw;
-		}
-	}
+    // å‰Šé™¤å­æŒ‡å®šã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+    template <class Deleter>
+    shared_ptr(Type* object, Deleter deleter)
+        : object_(object), counter_(new int(1)), deleter_(0)
+    {
+        try {
+            deleter_ = new detail::shared_deleter<Type, Deleter>(object_, deleter);
+        }
+        catch(...) {
+            deleter(object_);
+            delete counter_;
+            throw;
+        }
+    }
 
-	~shared_ptr() { release(); }
+    ~shared_ptr() { release(); }
 
-	void reset()
-	{
-		release();
-	}
+    void reset()
+    {
+        release();
+    }
 
-	template <class Object>
-	void reset(Object *object)
-	{
-		release();
-		object_		= object;
-		counter_	= new int(1);
-		deleter_	= 0;
-	}
+    template <class Object>
+    void reset(Object *object)
+    {
+        release();
+        object_     = object;
+        counter_    = new int(1);
+        deleter_    = 0;
+    }
 
-	template <class Object, class Deleter>
-	void reset(Object *object, Deleter deleter)
-	{
-		reset(object);
+    template <class Object, class Deleter>
+    void reset(Object *object, Deleter deleter)
+    {
+        reset(object);
 
-		try {
-			deleter_ = new detail::shared_deleter<Type, Deleter>(object_, deleter);
-		}
-		catch(...) {
-			deleter(object_);
-			delete counter_;
-			throw;
-		}
-	}
+        try {
+            deleter_ = new detail::shared_deleter<Type, Deleter>(object_, deleter);
+        }
+        catch(...) {
+            deleter(object_);
+            delete counter_;
+            throw;
+        }
+    }
 
-	// ƒ|ƒCƒ“ƒ^‚Ìæ“¾
-	Type* get() const { return object_; }
+    // ãƒã‚¤ãƒ³ã‚¿ã®å–å¾—
+    Type* get() const { return object_; }
 
-	// QÆƒJƒEƒ“ƒgæ“¾
-	long use_count() const
-	{
-		if (!counter_)
-			return 0; 
-		return *counter_;
-	}
+    // å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆå–å¾—
+    long use_count() const
+    {
+        if (!counter_)
+            return 0; 
+        return *counter_;
+    }
 
-	// QÆæ‚ª1‚Â‚©”»’f
-	bool unique() const { return use_count() == 1; }
+    // å‚ç…§å…ˆãŒ1ã¤ã‹åˆ¤æ–­
+    bool unique() const { return use_count() == 1; }
 
-	shared_ptr& operator=(const shared_ptr& rhs) { set(rhs); return *this; }
+    shared_ptr& operator=(const shared_ptr& rhs) { set(rhs); return *this; }
 
-	Type*     operator->() const { return get(); }
-	reference operator*()  const { return *get(); }
-	bool      operator!()  const { return object_ == 0; }
+    Type*     operator->() const { return get(); }
+    reference operator*()  const { return *get(); }
+    bool      operator!()  const { return object_ == 0; }
 
-	operator bool() const { return object_ != 0; }
+    operator bool() const { return object_ != 0; }
 
 private:
-	void set(const shared_ptr& src)
-	{
-		if (this != &src) {
-			// ‰ğ•ú‚µ‚ÄV‚µ‚¢ƒXƒ}[ƒgƒ|ƒCƒ“ƒ^‚ğì¬
-			release();
-			object_  = src.object_;
-			counter_ = src.counter_;
-			deleter_ = src.deleter_;
+    void set(const shared_ptr& src)
+    {
+        if (this != &src) {
+            // è§£æ”¾ã—ã¦æ–°ã—ã„ã‚¹ãƒãƒ¼ãƒˆãƒã‚¤ãƒ³ã‚¿ã‚’ä½œæˆ
+            release();
+            object_  = src.object_;
+            counter_ = src.counter_;
+            deleter_ = src.deleter_;
 
-			// QÆƒJƒEƒ“ƒg‚ğ‘‚â‚·
-			if (counter_ != 0)
-				++*counter_;
-		}
-	}
+            // å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆã‚’å¢—ã‚„ã™
+            if (counter_ != 0)
+                ++*counter_;
+        }
+    }
 
-	void release()
-	{
-		if (counter_ != 0 && --*counter_ == 0) {
-			if (deleter_) {
-				deleter_->destroy();
-				delete deleter_;
-			}
-			else {
-				delete object_;
-			}
-			delete counter_;
-		}
-		object_ = 0;
-		counter_ = 0;
-		deleter_ = 0;
-	}
+    void release()
+    {
+        if (counter_ != 0 && --*counter_ == 0) {
+            if (deleter_) {
+                deleter_->destroy();
+                delete deleter_;
+            }
+            else {
+                delete object_;
+            }
+            delete counter_;
+        }
+        object_ = 0;
+        counter_ = 0;
+        deleter_ = 0;
+    }
 
 };
 
@@ -217,7 +222,7 @@ inline bool operator!=(shared_ptr<Type> const & lhs, shared_ptr<Type> const & rh
     return lhs.get() != rhs.get();
 }
 
-// mapŠi”[—p
+// mapæ ¼ç´ç”¨
 template<class Type>
 inline bool operator<(shared_ptr<Type> const & lhs, shared_ptr<Type> const & rhs)
 {

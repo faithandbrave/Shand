@@ -1,19 +1,21 @@
 #ifndef SHAND_ALGORITHM_INCLUDE
 #define SHAND_ALGORITHM_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //----------------------------------------------------------------------//
-// Name : ƒAƒ‹ƒSƒŠƒYƒ€                                                  //
+// Name : ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ                                                   //
 //                                                                      //
-// Version : 1.00 2007/05/17 ì¬, mem_find                             //
-//           1.01 2007/05/24 mem_find(ƒƒ“ƒoŠÖ””Å)ì¬                 //
-//           1.02 2007/09/19 ‚¢‚ë‚¢‚ë + is_sorted’Ç‰Á                   //
-//           1.03 2007/10/03 SFINAE”ÅƒAƒ‹ƒSƒŠƒYƒ€’Ç‰Á                   //
-//           1.04 2007/11/02 erase_if’Ç‰Á                               //
-//           1.05 2007/11/22 SFINAE‚Ì—]Œv‚Èˆ—íœ                     //
-//           1.06 2007/11/27 SFINAE”ÅƒAƒ‹ƒSƒŠƒYƒ€‚ğBoost.Range•—‚É•ÏX  //
-//                                                                      //
-//              Programmed By Akira.T                                   //
-//      Copyright(C) 2007 Akira.T All rights reserved                   //
+// Version : 1.00 2007/05/17 ä½œæˆ, mem_find                             //
+//           1.01 2007/05/24 mem_find(ãƒ¡ãƒ³ãƒé–¢æ•°ç‰ˆ)ä½œæˆ                 //
+//           1.02 2007/09/19 ã„ã‚ã„ã‚ + is_sortedè¿½åŠ                    //
+//           1.03 2007/10/03 SFINAEç‰ˆã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ è¿½åŠ                    //
+//           1.04 2007/11/02 erase_ifè¿½åŠ                                //
+//           1.05 2007/11/22 SFINAEã®ä½™è¨ˆãªå‡¦ç†å‰Šé™¤                     //
+//           1.06 2007/11/27 SFINAEç‰ˆã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã‚’Boost.Rangeé¢¨ã«å¤‰æ›´  //
 //                                                                      //
 //----------------------------------------------------------------------//
 
@@ -25,7 +27,7 @@
 #include <utility>
 
 
-// SFINAE‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚éƒRƒ“ƒpƒCƒ‰‚©
+// SFINAEã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã‹
 #if !defined(_MSC_VER) || (_MSC_VER > 1300)  // 1300 == VC++ 7.0
     #define SHAND_SUPPORT_SFINAE
 #endif
@@ -37,7 +39,7 @@ namespace shand {
 
 #ifdef SHAND_SUPPORT_SFINAE
 
-// ”½•œq‚ÌŒ^æ“¾
+// åå¾©å­ã®å‹å–å¾—
 template <class Container>
 struct range_iterator {
     typedef typename Container::iterator type;
@@ -64,21 +66,21 @@ struct range_iterator< char* >
     typedef char* type;
 };
 
-// ”z—ñ - æ“ª—v‘f‚Ö‚Ìƒ|ƒCƒ“ƒ^æ“¾
+// é…åˆ— - å…ˆé ­è¦ç´ ã¸ã®ãƒã‚¤ãƒ³ã‚¿å–å¾—
 template <class Type, int Size>
 inline Type* begin(Type (&ar)[Size])
 {
     return ar;
 }
 
-// ”z—ñ - ÅŒã”ö—v‘f‚Ö‚Ìƒ|ƒCƒ“ƒ^æ“¾
+// é…åˆ— - æœ€å¾Œå°¾è¦ç´ ã¸ã®ãƒã‚¤ãƒ³ã‚¿å–å¾—
 template <class Type, int Size>
 inline Type* end(Type (&ar)[Size])
 {
     return ar + Size;
 }
 
-// ƒRƒ“ƒeƒi - æ“ªƒCƒeƒŒ[ƒ^æ“¾
+// ã‚³ãƒ³ãƒ†ãƒŠ - å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 template <class Container>
 inline typename Container::iterator begin(Container& c)
 {
@@ -91,7 +93,7 @@ inline typename Container::const_iterator begin(const Container& c)
     return c.begin();
 }
 
-// ƒRƒ“ƒeƒi - ÅŒã”öƒCƒeƒŒ[ƒ^æ“¾
+// ã‚³ãƒ³ãƒ†ãƒŠ - æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 template <class Container>
 inline typename Container::iterator end(Container& c)
 {
@@ -125,13 +127,13 @@ inline Iterator end(const std::pair<Iterator, Iterator>& p)
 
 
 //------------------------------------------//
-// –¼Ì : mem_find()                        //
-// —p“r : ƒƒ“ƒo•Ï”‚ÌŒŸõ                  //
-// ˆø” : first     : æ“ªƒCƒeƒŒ[ƒ^        //
-//        last      : ÅŒã”öƒCƒeƒŒ[ƒ^      //
-//        target    : ŒŸõ‚·‚é’l            //
-//        member    : ƒƒ“ƒo•Ï”‚Ö‚Ìƒ|ƒCƒ“ƒ^//
-// –ß’l : ŠY“–ƒCƒeƒŒ[ƒ^                    //
+// åç§° : mem_find()                        //
+// ç”¨é€” : ãƒ¡ãƒ³ãƒå¤‰æ•°ã®æ¤œç´¢                  //
+// å¼•æ•° : first     : å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿        //
+//        last      : æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿      //
+//        target    : æ¤œç´¢ã™ã‚‹å€¤            //
+//        member    : ãƒ¡ãƒ³ãƒå¤‰æ•°ã¸ã®ãƒã‚¤ãƒ³ã‚¿//
+// æˆ»å€¤ : è©²å½“ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿                    //
 //------------------------------------------//
 template <class Iterator, class Target, class Type, class ClassName>
 inline Iterator mem_find(Iterator first, Iterator last, const Target& target, Type ClassName::*member)
@@ -189,13 +191,13 @@ inline SHAND_RANGE_CITERATOR mem_find(const Container& c, const Target& value, T
 
 
 //------------------------------------------------------//
-// –¼Ì : mem_find()                                    //
-// —p“r : ƒƒ“ƒo•Ï”‚ÌŒŸõ(ƒƒ“ƒoŠÖ””Å, ”ñŒöŠJƒƒ“ƒo—p)//
-// ˆø” : first     : æ“ªƒCƒeƒŒ[ƒ^                    //
-//        last      : ÅŒã”öƒCƒeƒŒ[ƒ^                  //
-//        target    : ŒŸõ‚·‚é’l                        //
-//        member    : ƒƒ“ƒo•Ï”æ“¾ƒQƒbƒ^[‚Ö‚Ìƒ|ƒCƒ“ƒ^//
-// –ß’l : ŠY“–ƒCƒeƒŒ[ƒ^                                //
+// åç§° : mem_find()                                    //
+// ç”¨é€” : ãƒ¡ãƒ³ãƒå¤‰æ•°ã®æ¤œç´¢(ãƒ¡ãƒ³ãƒé–¢æ•°ç‰ˆ, éå…¬é–‹ãƒ¡ãƒ³ãƒç”¨)//
+// å¼•æ•° : first     : å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿                    //
+//        last      : æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿                  //
+//        target    : æ¤œç´¢ã™ã‚‹å€¤                        //
+//        member    : ãƒ¡ãƒ³ãƒå¤‰æ•°å–å¾—ã‚²ãƒƒã‚¿ãƒ¼ã¸ã®ãƒã‚¤ãƒ³ã‚¿//
+// æˆ»å€¤ : è©²å½“ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿                                //
 //------------------------------------------------------//
 template <class Iterator, class Target, class Type, class ClassName>
 inline Iterator mem_find(Iterator first, Iterator last, const Target& target, Type (ClassName::*member)())
@@ -266,9 +268,9 @@ inline SHAND_RANGE_CITERATOR mem_find(const Container& c, const Target& target, 
 //   v.push_back(hoge("Sum"));                                              //
 //                                                                          //
 //   if (mem_find(v.begin(), v.end(), "Akira", &hoge::get_name) != v.end()) //
-//     cout << "ŠY“–‚ ‚è" << endl;                                          //
+//     cout << "è©²å½“ã‚ã‚Š" << endl;                                          //
 //   else                                                                   //
-//     cout << "ŠY“–‚È‚µ" << endl;                                          //
+//     cout << "è©²å½“ãªã—" << endl;                                          //
 //                                                                          //
 //   return 0;                                                              //
 // }                                                                        //
@@ -276,12 +278,12 @@ inline SHAND_RANGE_CITERATOR mem_find(const Container& c, const Target& target, 
 
 
 //----------------------------------------------//
-// –¼Ì : chain_count()                         //
-// —p“r : “¯‚¶—v‘f‚ª˜A‘±‚µ‚Ä‚¢‚éŒÂ”‚ğ”‚¦‚é    //
-// ˆø” : first : ŒŸõ‘ÎÛ‚Ìæ“ªƒCƒeƒŒ[ƒ^      //
-//        last  : ŒŸõ‘ÎÛ‚ÌÅŒã”öƒCƒeƒŒ[ƒ^    //
-//        value : ŒŸõ‚·‚é—v‘f                  //
-// –ß’l : ˜A‘±‚µ‚½ŒÂ”                          //
+// åç§° : chain_count()                         //
+// ç”¨é€” : åŒã˜è¦ç´ ãŒé€£ç¶šã—ã¦ã„ã‚‹å€‹æ•°ã‚’æ•°ãˆã‚‹    //
+// å¼•æ•° : first : æ¤œç´¢å¯¾è±¡ã®å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿      //
+//        last  : æ¤œç´¢å¯¾è±¡ã®æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿    //
+//        value : æ¤œç´¢ã™ã‚‹è¦ç´                   //
+// æˆ»å€¤ : é€£ç¶šã—ãŸå€‹æ•°                          //
 //----------------------------------------------//
 template<class FwdIter, class Type>
 inline int chain_count(FwdIter first, FwdIter last, const Type& value)
@@ -321,11 +323,11 @@ inline int chain_count(const Container& c, const Type& value)
 
 
 //----------------------------------------------//
-// –¼Ì : size_split()                          //
-// —p“r : •¶š—ñ‚ğw’è‚³‚ê‚½•¶š”‚Å•ªŠ„        //
-// ˆø” : target : ‘ÎÛ•¶š—ñ                   //
-//        size   : •ªŠ„ƒTƒCƒY                   //
-// –ß’l : •ªŠ„‚³‚ê‚½•¶š—ñ                      //
+// åç§° : size_split()                          //
+// ç”¨é€” : æ–‡å­—åˆ—ã‚’æŒ‡å®šã•ã‚ŒãŸæ–‡å­—æ•°ã§åˆ†å‰²        //
+// å¼•æ•° : target : å¯¾è±¡æ–‡å­—åˆ—                   //
+//        size   : åˆ†å‰²ã‚µã‚¤ã‚º                   //
+// æˆ»å€¤ : åˆ†å‰²ã•ã‚ŒãŸæ–‡å­—åˆ—                      //
 //----------------------------------------------//
 template <class TString>
 inline std::vector<TString> size_split(const TString& target, int size)
@@ -347,13 +349,13 @@ inline std::vector<TString> size_split(const TString& target, int size)
 
 
 //----------------------------------------------//
-// –¼Ì : unique_count()                        //
-// —p“r : d•¡‚µ‚Ä‚È‚¢”æ“¾                    //
-// ˆø” : first : æ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^        //
-//        last  : ÅŒã”ö—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^      //
-//        pred  : ğŒŠÖ”(ƒIƒuƒWƒFƒNƒg)        //
-// –ß’l : d•¡”                                //
-// ’ˆÓ : ƒ\[ƒgÏ‚İƒRƒ“ƒeƒi‚Å‚ ‚é•K—v‚ª‚ ‚é    //
+// åç§° : unique_count()                        //
+// ç”¨é€” : é‡è¤‡ã—ã¦ãªã„æ•°å–å¾—                    //
+// å¼•æ•° : first : å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿        //
+//        last  : æœ€å¾Œå°¾è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿      //
+//        pred  : æ¡ä»¶é–¢æ•°(ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ)        //
+// æˆ»å€¤ : é‡è¤‡æ•°                                //
+// æ³¨æ„ : ã‚½ãƒ¼ãƒˆæ¸ˆã¿ã‚³ãƒ³ãƒ†ãƒŠã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹    //
 //----------------------------------------------//
 template <class FwdIter>
 inline size_t unique_count(FwdIter first, FwdIter last)
@@ -391,13 +393,13 @@ inline size_t unique_count(const Container& c, Pred pred)
 
 
 //----------------------------------------------//
-// –¼Ì : overlap_count()                       //
-// —p“r : d•¡”æ“¾                            //
-// ˆø” : first : æ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^        //
-//        last  : ÅŒã”ö—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^      //
-//        pred  : ğŒŠÖ”(ƒIƒuƒWƒFƒNƒg)        //
-// –ß’l : d•¡”                                //
-// ’ˆÓ : ƒ\[ƒgÏ‚İƒRƒ“ƒeƒi‚Å‚ ‚é•K—v‚ª‚ ‚é    //
+// åç§° : overlap_count()                       //
+// ç”¨é€” : é‡è¤‡æ•°å–å¾—                            //
+// å¼•æ•° : first : å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿        //
+//        last  : æœ€å¾Œå°¾è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿      //
+//        pred  : æ¡ä»¶é–¢æ•°(ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ)        //
+// æˆ»å€¤ : é‡è¤‡æ•°                                //
+// æ³¨æ„ : ã‚½ãƒ¼ãƒˆæ¸ˆã¿ã‚³ãƒ³ãƒ†ãƒŠã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹    //
 //----------------------------------------------//
 template <class FwdIter>
 inline size_t overlap_count(FwdIter first, FwdIter last)
@@ -427,12 +429,12 @@ inline size_t overlap_count(const Container& c, Pred pred)
 
 
 //--------------------------------------------------//
-// –¼Ì : is_sorted()                               //
-// —p“r : ”ÍˆÍ‚ªƒ\[ƒgÏ‚İ‚©’²‚×‚é                  //
-// ˆø” : first : æ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^            //
-//        last  : ÅŒã”ö—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^          //
-//        pred  : ğŒŠÖ”                          //
-// –ß’l : true:ƒ\[ƒgÏ‚İ false:ƒ\[ƒgÏ‚İ‚Å‚Í‚È‚¢  //
+// åç§° : is_sorted()                               //
+// ç”¨é€” : ç¯„å›²ãŒã‚½ãƒ¼ãƒˆæ¸ˆã¿ã‹èª¿ã¹ã‚‹                  //
+// å¼•æ•° : first : å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿            //
+//        last  : æœ€å¾Œå°¾è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿          //
+//        pred  : æ¡ä»¶é–¢æ•°                          //
+// æˆ»å€¤ : true:ã‚½ãƒ¼ãƒˆæ¸ˆã¿ false:ã‚½ãƒ¼ãƒˆæ¸ˆã¿ã§ã¯ãªã„  //
 //--------------------------------------------------//
 template <class FwdIter, class Pred>
 inline bool is_sorted(FwdIter first, FwdIter last, Pred pred)
@@ -464,10 +466,10 @@ inline bool is_sorted(const Container& c, Pred pred)
 
 
 //--------------------------------------------------------------//
-// –¼Ì : erase_if()                                            //
-// —p“r : ***.erase(remove_if(begin, end, pred), end);‚ÌŠÈ—ª”Å  //
-// ˆø” : pred‚ÅğŒw’è‚³‚ê‚½—v‘f‚ğíœ                        //
-// –ß’l : ‚È‚µ                                                  //
+// åç§° : erase_if()                                            //
+// ç”¨é€” : ***.erase(remove_if(begin, end, pred), end);ã®ç°¡ç•¥ç‰ˆ  //
+// å¼•æ•° : predã§æ¡ä»¶æŒ‡å®šã•ã‚ŒãŸè¦ç´ ã‚’å‰Šé™¤                        //
+// æˆ»å€¤ : ãªã—                                                  //
 //--------------------------------------------------------------//
 template<class Container, class Pred>
 inline void erase_if(Container& c, Pred pred)
@@ -477,7 +479,7 @@ inline void erase_if(Container& c, Pred pred)
 
 
 
-// SFINAE”ÅSTLƒAƒ‹ƒSƒŠƒYƒ€ -----------------------------
+// SFINAEç‰ˆSTLã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ  -----------------------------
 #ifdef SHAND_SUPPORT_SFINAE
 
 // for_each

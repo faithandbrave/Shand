@@ -1,15 +1,18 @@
 #ifndef SHAND_TUPLE_INCLUDE
 #define SHAND_TUPLE_INCLUDE
 
+// Copyright (C) 1999, 2000 Jaakko Jarvi (jaakko.jarvi@cs.utu.fi)
+// Copyright Akira Takahashi 2013
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //------------------------------------------------------//
 // Name : tuple											//
-// Desc : ‘½d‘ã“üƒNƒ‰ƒX								//
-// Note : boost::tuples::tuple‚ªŒ³ƒlƒ^					//
+// Desc : å¤šé‡ä»£å…¥ã‚¯ãƒ©ã‚¹								//
+// Note : boost::tuples::tupleãŒå…ƒãƒã‚¿					//
 //														//
-// Version : 1.00 2006/10/19 ì¬						//
-//														//
-//				Programmed By Akira.T					//
-//		Copyright(C) 2006 Akira.T All rights reserved	//
+// Version : 1.00 2006/10/19 ä½œæˆ						//
 //														//
 //------------------------------------------------------//
 

@@ -1,16 +1,19 @@
 #ifndef SHAND_COUNTING_INCLUDE
 #define SHAND_COUNTING_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //------------------------------------------------------------------//
 //																	//
-//	ŠÖ ” –¼ : count_range(int first, int last), zero_to(int last)	//
-//	—p    “r : foreach•¶—pƒCƒ“ƒfƒbƒNƒX”Ô†¶¬						//
+//	é–¢ æ•° å : count_range(int first, int last), zero_to(int last)	//
+//	ç”¨    é€” : foreachæ–‡ç”¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ç”Ÿæˆ						//
 //																	//
-// Version : 1.00 2007/10/29 ì¬									//
-//			 1.01 2007/11/02 STLƒAƒ‹ƒSƒŠƒYƒ€‚É‚à“K—p‰Â‚É‚µ‚½		//
+// Version : 1.00 2007/10/29 ä½œæˆ									//
+//			 1.01 2007/11/02 STLã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã«ã‚‚é©ç”¨å¯ã«ã—ãŸ		//
 //																	//
-//				Programmed By Akira.T								//
-//		Copyright(C) 2007 Akira.T All rights reserved				//
 //------------------------------------------------------------------//
 
 
@@ -89,7 +92,7 @@ inline count_range_t<Incrementable> count_range(Incrementable first, Incrementab
 //----------------------------------------------------------//
 // vector<int> v;											//
 //															//
-// // generate 0`9											//
+// // generate 0ã€œ9											//
 // foreach (int index, zero_to(10)) // count_range(0, 10)	//
 //     v.push_back(index);									//
 //															//

@@ -1,14 +1,27 @@
 #ifndef	SHAND_ARRAY_INCLUDE
 #define SHAND_ARRAY_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
+// The original author site is at: http://www.josuttis.com/
+//
+// (C) Copyright Nicolai M. Josuttis 2001.
+//
+// Distributed under the Boost Software License, Version 1.0. (See
+// accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //----------------------------------------------------------//
 // Name : array<Type, Size>									//
-// Desc : ŒÅ’è’·”z—ñƒNƒ‰ƒX									//
-// Note : ’Êí‚Ì”z—ñ‚ğAvector‚Ì‚æ‚¤‚Ég‚¦‚éƒNƒ‰ƒX			//
-//			Œ³ƒlƒ^‚Íboost::array							//
+// Desc : å›ºå®šé•·é…åˆ—ã‚¯ãƒ©ã‚¹									//
+// Note : é€šå¸¸ã®é…åˆ—ã‚’ã€vectorã®ã‚ˆã†ã«ä½¿ãˆã‚‹ã‚¯ãƒ©ã‚¹			//
+//			å…ƒãƒã‚¿ã¯boost::array							//
 //															//
-// Version : 1.00 2006/12/14 ì¬							//
-//			 1.01 2007.05/15 reverse_iterator‚ğVC6‚É‘Î‰	//
+// Version : 1.00 2006/12/14 ä½œæˆ							//
+//			 1.01 2007.05/15 reverse_iteratorã‚’VC6ã«å¯¾å¿œ	//
 //															//
 //				Programmed By Akira.T						//
 //		Copyright(C) 2006-2007 Akira.T All rights reserved	//
@@ -41,7 +54,7 @@ public:
 #endif
 
 public:
-	// “Yš‚Å‚Ì—v‘fQÆ
+	// æ·»å­—ã§ã®è¦ç´ å‚ç…§
 	Type& operator[](int index)
 	{
 		return element_[index];
@@ -52,14 +65,14 @@ public:
 		return element_[index];
 	}
 
-	// ”z—ñƒTƒCƒYæ“¾
+	// é…åˆ—ã‚µã‚¤ã‚ºå–å¾—
 	int size() const { return Size;	}
 
-	// æ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^æ“¾
+	// å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 	iterator		begin()			{ return element_; }
 	const_iterator	begin() const	{ return element_; }
 
-	// ÅŒã”ö—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^æ“¾
+	// æœ€å¾Œå°¾è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 	iterator		end()			{ return element_ + Size; }
 	const_iterator	end() const		{ return element_ + Size; }
 
@@ -70,7 +83,7 @@ public:
 	const_reverse_iterator	rend() const	{ return const_reverse_iterator(begin()); }
 };
 
-// ”äŠr‰‰Zq
+// æ¯”è¼ƒæ¼”ç®—å­
 template <typename Type, size_t Size>
 bool operator== (const shand::array<Type, Size> &lhs, const shand::array<Type, Size> &rhs)
 {
@@ -112,16 +125,16 @@ bool operator>= (const shand::array<Type, Size> &lhs, const shand::array<Type, S
 //==============================================================//
 //						How to use								//
 //==============================================================//
-// array<int, 4> ar; // intŒ^4‚Â‚Ì”z—ñì¬						//
+// array<int, 4> ar; // intå‹4ã¤ã®é…åˆ—ä½œæˆ						//
 //																//
-// for (int i = 0; i < ar.size(); i++)	// ”z—ñƒTƒCƒY‚Ìæ“¾‰Â	//
-//     ar[i] = i;	// ƒCƒ“ƒfƒbƒNƒX‚ÌQÆ						//
+// for (int i = 0; i < ar.size(); i++)	// é…åˆ—ã‚µã‚¤ã‚ºã®å–å¾—å¯	//
+//     ar[i] = i;	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å‚ç…§						//
 //																//
-// // ƒCƒeƒŒ[ƒ^‚É‚æ‚éQÆ										//
+// // ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã«ã‚ˆã‚‹å‚ç…§										//
 // for_each(ar.begin(), ar.end(), disp_function);				//
 //																//
 //==============================================================//
-// // CŒ¾Œê‚Ì”z—ñ‚Æ“¯—l‚Ì‰Šú‰»qƒŠƒXƒg‚Å‚Ì‰Šú‰»‚ª‰Â”\			//
+// // Cè¨€èªã®é…åˆ—ã¨åŒæ§˜ã®åˆæœŸåŒ–å­ãƒªã‚¹ãƒˆã§ã®åˆæœŸåŒ–ãŒå¯èƒ½			//
 // array<int, 3> ar = {3, 1, 4};								//
 //																//
 //==============================================================//

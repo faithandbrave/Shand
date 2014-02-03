@@ -1,18 +1,19 @@
 #ifndef SHAND_XML_PARSER_INCLUDE
 #define SHAND_XML_PARSER_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
 
 //------------------------------------------------------//
 // Name : xml_parser									//
-// Desc : ŠÈˆÕXMLƒp[ƒT[								//
-// Note : ƒcƒŠ[\‘¢‚âDTD“™‚ğ–³‹‚µ‚Ä‚¢‚é‚Ì‚Å			//
-//		  ŠÈ’P‚È‚±‚Æ‚µ‚©‚Å‚«‚Ü‚¹‚ñ						//
-//		  iniƒtƒ@ƒCƒ‹‚âCSV‚Ì‘ã‚í‚è’ö“x‚Ég‚¢‚Ü‚·		//
+// Desc : ç°¡æ˜“XMLãƒ‘ãƒ¼ã‚µãƒ¼								//
+// Note : ãƒ„ãƒªãƒ¼æ§‹é€ ã‚„DTDç­‰ã‚’ç„¡è¦–ã—ã¦ã„ã‚‹ã®ã§			//
+//		  ç°¡å˜ãªã“ã¨ã—ã‹ã§ãã¾ã›ã‚“						//
+//		  iniãƒ•ã‚¡ã‚¤ãƒ«ã‚„CSVã®ä»£ã‚ã‚Šç¨‹åº¦ã«ä½¿ã„ã¾ã™		//
 //														//
-// Version : 0.80 2007/05/30 ì¬						//
-//														//
-//				Programmed By Akira.T					//
-//		Copyright(C) 2007 Akira.T All rights reserved	//
+// Version : 0.80 2007/05/30 ä½œæˆ						//
 //														//
 //------------------------------------------------------//
 
@@ -42,24 +43,24 @@ inline int chain_count_work(FwdIter first, FwdIter last, const Type& value)
 } // namesapace detail
 
 //------------------------------//
-// XML—v‘f						//
+// XMLè¦ç´ 						//
 //------------------------------//
 struct xml_element {
 	typedef std::pair<std::string, std::string> element_type;
 	typedef std::map<std::string, std::string>	attribute_type;
 
-	element_type	element;	// —v‘f
-	attribute_type	attribute;	// ‘®«
+	element_type	element;	// è¦ç´ 
+	attribute_type	attribute;	// å±æ€§
 };
 
 
 //------------------------------//
-// XML‘‚«‚İ					//
+// XMLæ›¸ãè¾¼ã¿					//
 //------------------------------//
 class xml_writer {
-	std::ofstream	file_;		// o—Íƒtƒ@ƒCƒ‹
-	std::string		root_;		// Root—v‘f–¼
-	int				indent_;	// ƒCƒ“ƒfƒ“ƒg”
+	std::ofstream	file_;		// å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«
+	std::string		root_;		// Rootè¦ç´ å
+	int				indent_;	// ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆæ•°
 
 public:
 	xml_writer() : file_(), root_(""), indent_(2) {}
@@ -76,36 +77,36 @@ public:
 	}
 
 	//----------------------------------//
-	// –¼Ì : open()					//
-	// —p“r : ƒtƒ@ƒCƒ‹ŠJ‚­				//
-	// ˆø” : file_name : ƒtƒ@ƒCƒ‹–¼	//
-	//		  root		: Root—v‘f–¼	//
-	// –ß’l : true:³í false:¸”s		//
+	// åç§° : open()					//
+	// ç”¨é€” : ãƒ•ã‚¡ã‚¤ãƒ«é–‹ã				//
+	// å¼•æ•° : file_name : ãƒ•ã‚¡ã‚¤ãƒ«å	//
+	//		  root		: Rootè¦ç´ å	//
+	// æˆ»å€¤ : true:æ­£å¸¸ false:å¤±æ•—		//
 	//----------------------------------//
 	bool open(const std::string& path, const std::string& root)
 	{
 		file_.open(path.c_str());
 
-		// ƒI[ƒvƒ“¸”s
+		// ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—
 		if (!file_.is_open())
 			return false;
 
 		root_ = root;
 
-		// XMLéŒ¾o—Í
+		// XMLå®£è¨€å‡ºåŠ›
 		file_ << "<?xml version=\"1.0\" encoding=\"shift_jis\"?>" << std::endl;
 
-		// Root—v‘fo—Í
+		// Rootè¦ç´ å‡ºåŠ›
 		file_ << "<" << root_ << ">" << std::endl;
 
 		return true;
 	}
 
 	//----------------------------------//
-	// –¼Ì : close()					//
-	// —p“r : ƒtƒ@ƒCƒ‹•Â‚¶‚é			//
-	// ˆø” : ‚È‚µ						//
-	// –ß’l : ‚È‚µ						//
+	// åç§° : close()					//
+	// ç”¨é€” : ãƒ•ã‚¡ã‚¤ãƒ«é–‰ã˜ã‚‹			//
+	// å¼•æ•° : ãªã—						//
+	// æˆ»å€¤ : ãªã—						//
 	//----------------------------------//
 	void close()
 	{
@@ -117,11 +118,11 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : is_open()					//
-	// —p“r : ƒtƒ@ƒCƒ‹‚ªŠJ‚©‚ê‚Ä‚¢‚é‚©	//
-	// ˆø” : ‚È‚µ						//
-	// –ß’l : true  : ŠJ‚¢‚Ä‚¢‚é		//
-	//		  false : •Â‚¶‚Ä‚¢‚é		//
+	// åç§° : is_open()					//
+	// ç”¨é€” : ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‹ã‚Œã¦ã„ã‚‹ã‹	//
+	// å¼•æ•° : ãªã—						//
+	// æˆ»å€¤ : true  : é–‹ã„ã¦ã„ã‚‹		//
+	//		  false : é–‰ã˜ã¦ã„ã‚‹		//
 	//----------------------------------//
 	bool is_open() const
 	{
@@ -130,10 +131,10 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : head()					//
-	// —p“r : ŠJnƒ^ƒOo—Í				//
-	// ˆø” : ŠJnƒ^ƒO(—v‘f–¼)			//
-	// –ß’l : ©•ª‚Ö‚ÌQÆ				//
+	// åç§° : head()					//
+	// ç”¨é€” : é–‹å§‹ã‚¿ã‚°å‡ºåŠ›				//
+	// å¼•æ•° : é–‹å§‹ã‚¿ã‚°(è¦ç´ å)			//
+	// æˆ»å€¤ : è‡ªåˆ†ã¸ã®å‚ç…§				//
 	//----------------------------------//
 	void head(const std::string& element)
 	{
@@ -144,10 +145,10 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : tail()					//
-	// —p“r : I—¹ƒ^ƒOo—Í				//
-	// ˆø” : I—¹ƒ^ƒO(—v‘f–¼)			//
-	// –ß’l : ©•ª‚Ö‚ÌQÆ				//
+	// åç§° : tail()					//
+	// ç”¨é€” : çµ‚äº†ã‚¿ã‚°å‡ºåŠ›				//
+	// å¼•æ•° : çµ‚äº†ã‚¿ã‚°(è¦ç´ å)			//
+	// æˆ»å€¤ : è‡ªåˆ†ã¸ã®å‚ç…§				//
 	//----------------------------------//
 	void tail(const std::string& element)
 	{
@@ -159,23 +160,23 @@ public:
 	}
 
 	//----------------------------------//
-	// –¼Ì : operator<< ()				//
-	// —p“r : XML—v‘fo—Í(‘®«ŠÜ‚Ş)		//
-	// ˆø” : XML—v‘f					//
-	// –ß’l : ©•ª‚Ö‚ÌQÆ				//
+	// åç§° : operator<< ()				//
+	// ç”¨é€” : XMLè¦ç´ å‡ºåŠ›(å±æ€§å«ã‚€)		//
+	// å¼•æ•° : XMLè¦ç´ 					//
+	// æˆ»å€¤ : è‡ªåˆ†ã¸ã®å‚ç…§				//
 	//----------------------------------//
 	xml_writer& operator<<(const xml_element& element)
 	{
-		// —v‘f–¼o—Í
+		// è¦ç´ åå‡ºåŠ›
 		file_ << indent() << "<" << element.element.first;
 
-		// ‘®«o—Í
+		// å±æ€§å‡ºåŠ›
 		typedef std::map<std::string, std::string>::const_iterator Iterator;
 		for (Iterator first = element.attribute.begin(), last = element.attribute.end(); first != last; ++first) {
 			file_ << " " << first->first << "=\"" << first->second << "\"";
 		}
 
-		// —v‘fI—¹ƒ^ƒOo—Í
+		// è¦ç´ çµ‚äº†ã‚¿ã‚°å‡ºåŠ›
 		if (element.element.second.empty())
 			file_ << "/>" << std::endl;
 		else
@@ -197,8 +198,8 @@ private:
 // xml_element create_element(const string& name, const string& age)				//
 // {																				//
 //     xml_element elem;															//
-//     elem.element          = pair<string, string>("Person", name); // —v‘fì¬	//
-//     elem.attribute["Age"] = age;                                  // ‘®«ì¬	//
+//     elem.element          = pair<string, string>("Person", name); // è¦ç´ ä½œæˆ	//
+//     elem.attribute["Age"] = age;                                  // å±æ€§ä½œæˆ	//
 //																					//
 //     return elem;																	//
 // }																				//
@@ -226,12 +227,12 @@ private:
 
 
 //------------------------------//
-// XML“Ç‚İ‚İ					//
+// XMLèª­ã¿è¾¼ã¿					//
 //------------------------------//
 class xml_reader {
-	std::ifstream			file_;		// XMLƒtƒ@ƒCƒ‹
-	std::queue<xml_element>	element_;	// ‘S—v‘f
-	std::string				xmldoc_;	// XML•¶‘
+	std::ifstream			file_;		// XMLãƒ•ã‚¡ã‚¤ãƒ«
+	std::queue<xml_element>	element_;	// å…¨è¦ç´ 
+	std::string				xmldoc_;	// XMLæ–‡æ›¸
 
 public:
 	xml_reader() {}
@@ -248,10 +249,10 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : open()					//
-	// —p“r : ƒtƒ@ƒCƒ‹ŠJ‚­				//
-	// ˆø” : ƒtƒ@ƒCƒ‹–¼				//
-	// –ß’l : true:³í false:¸”s		//
+	// åç§° : open()					//
+	// ç”¨é€” : ãƒ•ã‚¡ã‚¤ãƒ«é–‹ã				//
+	// å¼•æ•° : ãƒ•ã‚¡ã‚¤ãƒ«å				//
+	// æˆ»å€¤ : true:æ­£å¸¸ false:å¤±æ•—		//
 	//----------------------------------//
 	bool open(const std::string& path)
 	{
@@ -260,19 +261,19 @@ public:
 		if (!file_.is_open())
 			return false;
 
-		// XML•¶‘“Ç
+		// XMLæ–‡æ›¸èª­è¾¼
 		std::string xmldoc = read();
 		xmldoc_ = xmldoc;
 
-		// ‰üs‚Æƒ^ƒu•¶š‚ğƒXƒy[ƒX‚É’uŠ·
+		// æ”¹è¡Œã¨ã‚¿ãƒ–æ–‡å­—ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã«ç½®æ›
 		xmldoc = replace(xmldoc, "\r", " ");
 		xmldoc = replace(xmldoc, "\n", " ");
 		xmldoc = replace(xmldoc, "\t", " ");
 
-		// •s—v‚ÈƒXƒy[ƒXíœ
+		// ä¸è¦ãªã‚¹ãƒšãƒ¼ã‚¹å‰Šé™¤
 		xmldoc = remove_trash_space(xmldoc);
 
-		// —v‘f‰ğÍ
+		// è¦ç´ è§£æ
 		element_analysis(xmldoc);
 
 		return true;
@@ -280,10 +281,10 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : close()					//
-	// —p“r : ƒtƒ@ƒCƒ‹•Â‚¶‚é			//
-	// ˆø” : ‚È‚µ						//
-	// –ß’l : ‚È‚µ						//
+	// åç§° : close()					//
+	// ç”¨é€” : ãƒ•ã‚¡ã‚¤ãƒ«é–‰ã˜ã‚‹			//
+	// å¼•æ•° : ãªã—						//
+	// æˆ»å€¤ : ãªã—						//
 	//----------------------------------//
 	void close()
 	{
@@ -293,11 +294,11 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : is_open()					//
-	// —p“r : ƒtƒ@ƒCƒ‹‚ªŠJ‚©‚ê‚Ä‚¢‚é‚©	//
-	// ˆø” : ‚È‚µ						//
-	// –ß’l : true  : ŠJ‚¢‚Ä‚¢‚é		//
-	//		  false : •Â‚¶‚Ä‚¢‚é		//
+	// åç§° : is_open()					//
+	// ç”¨é€” : ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‹ã‚Œã¦ã„ã‚‹ã‹	//
+	// å¼•æ•° : ãªã—						//
+	// æˆ»å€¤ : true  : é–‹ã„ã¦ã„ã‚‹		//
+	//		  false : é–‰ã˜ã¦ã„ã‚‹		//
 	//----------------------------------//
 	bool is_open() const
 	{
@@ -306,11 +307,11 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : operator>>()				//
-	// —p“r : XML—v‘fæ‚èo‚µ			//
-	// ˆø” : ’ŠoæXML—v‘f				//
-	// –ß’l : true  : æ“¾¬Œ÷			//
-	//		  false : æ“¾¸”s			//
+	// åç§° : operator>>()				//
+	// ç”¨é€” : XMLè¦ç´ å–ã‚Šå‡ºã—			//
+	// å¼•æ•° : æŠ½å‡ºå…ˆXMLè¦ç´ 				//
+	// æˆ»å€¤ : true  : å–å¾—æˆåŠŸ			//
+	//		  false : å–å¾—å¤±æ•—			//
 	//----------------------------------//
 	bool operator>>(xml_element& element)
 	{
@@ -324,10 +325,10 @@ public:
 
 
 	//----------------------------------//
-	// –¼Ì : document()				//
-	// —p“r : XML•¶‘æ“¾				//
-	// ˆø” : ‚È‚µ						//
-	// –ß’l : XML•¶‘					//
+	// åç§° : document()				//
+	// ç”¨é€” : XMLæ–‡æ›¸å–å¾—				//
+	// å¼•æ•° : ãªã—						//
+	// æˆ»å€¤ : XMLæ–‡æ›¸					//
 	//----------------------------------//
 	std::string document() const
 	{
@@ -337,10 +338,10 @@ public:
 private:
 
 	//----------------------------------//
-	// –¼Ì : read()					//
-	// —p“r : XML•¶‘“Ç				//
-	// ˆø” : ‚È‚µ						//
-	// –ß’l : XML•¶‘					//
+	// åç§° : read()					//
+	// ç”¨é€” : XMLæ–‡æ›¸èª­è¾¼				//
+	// å¼•æ•° : ãªã—						//
+	// æˆ»å€¤ : XMLæ–‡æ›¸					//
 	//----------------------------------//
 	std::string read()
 	{
@@ -355,12 +356,12 @@ private:
 
 
 	//----------------------------------//
-	// –¼Ì : replace()					//
-	// —p“r : •¶š—ñ’uŠ·				//
-	// ˆø” : target : ‘ÎÛ•¶š—ñ		//
-	//		  before : ’uŠ·Œ³•¶š—ñ		//
-	//		  after  : ’uŠ·Œã•¶š—ñ		//
-	// –ß’l : ’uŠ·Ï‚İ•¶š—ñ			//
+	// åç§° : replace()					//
+	// ç”¨é€” : æ–‡å­—åˆ—ç½®æ›				//
+	// å¼•æ•° : target : å¯¾è±¡æ–‡å­—åˆ—		//
+	//		  before : ç½®æ›å…ƒæ–‡å­—åˆ—		//
+	//		  after  : ç½®æ›å¾Œæ–‡å­—åˆ—		//
+	// æˆ»å€¤ : ç½®æ›æ¸ˆã¿æ–‡å­—åˆ—			//
 	//----------------------------------//
 	static std::string replace(const std::string &target, const std::string& before, const std::string& after)
 	{
@@ -378,10 +379,10 @@ private:
 
 
 	//----------------------------------//
-	// –¼Ì : remove_trash_space()		//
-	// —p“r : •s—v‚ÈƒXƒy[ƒXíœ		//
-	// ˆø” : ‘ÎÛ•¶š—ñ				//
-	// –ß’l : ˆ—Œã•¶š—ñ				//
+	// åç§° : remove_trash_space()		//
+	// ç”¨é€” : ä¸è¦ãªã‚¹ãƒšãƒ¼ã‚¹å‰Šé™¤		//
+	// å¼•æ•° : å¯¾è±¡æ–‡å­—åˆ—				//
+	// æˆ»å€¤ : å‡¦ç†å¾Œæ–‡å­—åˆ—				//
 	//----------------------------------//
 	static std::string remove_trash_space(const std::string& target)
 	{
@@ -395,13 +396,13 @@ private:
 			 if (find_index == std::string::npos)
 				 continue;
 
-			 // "< " ‚Æ "> "‚ÌƒXƒy[ƒXíœ
+			 // "< " ã¨ "> "ã®ã‚¹ãƒšãƒ¼ã‚¹å‰Šé™¤
 			 if (find_index > 0) {
 				if (result[find_index -1] == '<' || result[find_index -1] == '>')
 					is_remove = true;
 			 }
 
-			 // " <" ‚Æ " >"‚ÌƒXƒy[ƒXíœ
+			 // " <" ã¨ " >"ã®ã‚¹ãƒšãƒ¼ã‚¹å‰Šé™¤
 			 if (result.length() > find_index + 1) {
 				 if (result[find_index +1] == '<' || result[find_index +1] == '>' || result[find_index +1] == ' ')
 					is_remove = true;
@@ -416,10 +417,10 @@ private:
 
 
 	//----------------------------------//
-	// –¼Ì : element_analysis()		//
-	// —p“r : —v‘f‰ğÍ					//
-	// ˆø” : ‰ğÍ—pXML•¶‘				//
-	// –ß’l : ‚È‚µ						//
+	// åç§° : element_analysis()		//
+	// ç”¨é€” : è¦ç´ è§£æ					//
+	// å¼•æ•° : è§£æç”¨XMLæ–‡æ›¸				//
+	// æˆ»å€¤ : ãªã—						//
 	//----------------------------------//
 	void element_analysis(const std::string& xmldoc)
 	{
@@ -427,7 +428,7 @@ private:
 		#define not_found std::string::npos
 
 		for (size_type index = 0; index < xmldoc.length(); ++index) {
-			// —v‘f–¼ŒŸõ
+			// è¦ç´ åæ¤œç´¢
 			size_type start	= xmldoc.find_first_of('<', index);
 			if (start == not_found)
 				break;
@@ -436,10 +437,10 @@ private:
 			if (end == not_found)
 				break;
 
-			// —v‘f–¼’Šo
+			// è¦ç´ åæŠ½å‡º
 			std::string	element_name = xmldoc.substr(start, end - start + 1);
 
-			// —v‘fŒŸõ
+			// è¦ç´ æ¤œç´¢
 			size_type start_elem = end + 1;
 			if (start_elem >= xmldoc.length())
 				break;
@@ -449,10 +450,10 @@ private:
 				break;
 
 			std::string elem;
-			// ‹ó—v‘f
+			// ç©ºè¦ç´ 
 			if (element_name.find("/>") != not_found)
 				elem = "";
-			// —v‘f’Šo
+			// è¦ç´ æŠ½å‡º
 			else
 				elem = xmldoc.substr(start_elem, end_elem - start_elem);
 
@@ -466,11 +467,11 @@ private:
 
 
 	//----------------------------------//
-	// –¼Ì : attribute_analysis()		//
-	// —p“r : ‘®«‰ğÍ					//
-	// ˆø” : element		: —v‘f–¼	//
-	//		  element_value : —v‘f		//
-	// –ß’l : ‚È‚µ						//
+	// åç§° : attribute_analysis()		//
+	// ç”¨é€” : å±æ€§è§£æ					//
+	// å¼•æ•° : element		: è¦ç´ å	//
+	//		  element_value : è¦ç´ 		//
+	// æˆ»å€¤ : ãªã—						//
 	//----------------------------------//
 	void attribute_analysis(const std::string& element, const std::string& element_value)
 	{
@@ -480,33 +481,33 @@ private:
 		xml_element xmlelem;
 		bool		no_attribute = false;
 
-		// —v‘f–¼ŒŸõ
+		// è¦ç´ åæ¤œç´¢
 		size_type	start_elem	= 1;
 		size_type	end_elem	= element.find_first_of(' ', start_elem);
 		if (end_elem == not_found) {
-			no_attribute = true; // ‘®«‚È‚µ
+			no_attribute = true; // å±æ€§ãªã—
 			end_elem = element.find_first_of('>', start_elem);
 		}
 
-		// —v‘f–¼’Šo
+		// è¦ç´ åæŠ½å‡º
 		std::string elem_name	= element.substr(start_elem, end_elem - start_elem);
 
-		// —v‘fİ’è
+		// è¦ç´ è¨­å®š
 		xmlelem.element.first	= replace(elem_name, " ", "");
 		xmlelem.element.second	= normalize(element_value);
 
-		// ‘®«‚È‚µ
+		// å±æ€§ãªã—
 		if (no_attribute) {
 			if(!element_value.empty())
 				element_.push(xmlelem);
 			return;
 		}
 
-		// ‘®«ŒŸõ
+		// å±æ€§æ¤œç´¢
 		for (size_type index = 0; index < element.length(); ++index) {
 			xml_element::attribute_type attribute;
 
-			// ‘®«–¼
+			// å±æ€§å
 			size_type start_name = element.find_first_of(' ', index);
 			if (start_name == not_found)
 				break;
@@ -517,19 +518,19 @@ private:
 			if (end_name == not_found)
 				break;
 
-			// ‘®«–¼’Šo
+			// å±æ€§åæŠ½å‡º
 			std::string attribute_name = element.substr(start_name, end_name - start_name);
 
-			// ‘®«’lŒŸõ
+			// å±æ€§å€¤æ¤œç´¢
 			size_type start_value = end_name + 2;
 			size_type end_value   = element.find_first_of('\"', start_value);
 			if (end_value == not_found)
 				break;
 
-			// ‘®«’l’Šo
+			// å±æ€§å€¤æŠ½å‡º
 			std::string attribute_value = element.substr(start_value, end_value - start_value);
 
-			// ƒXƒy[ƒXíœ
+			// ã‚¹ãƒšãƒ¼ã‚¹å‰Šé™¤
 			attribute_name  = replace(attribute_name, " ", "");
 			attribute_value = normalize(attribute_value);
 
@@ -538,31 +539,31 @@ private:
 			index = end_value;
 		}
 
-		// —v‘f’Ç‰Á
+		// è¦ç´ è¿½åŠ 
 		element_.push(xmlelem);
 	}
 
 
 	//----------------------------------//
-	// –¼Ì : is_element_name()			//
-	// —p“r : —v‘f–¼‚©”»’f				//
-	// ˆø” : —v‘f–¼					//
-	// –ß’l : true  : —v‘f–¼			//
-	//		  false : —v‘f–¼‚Å‚Í‚È‚¢	//
+	// åç§° : is_element_name()			//
+	// ç”¨é€” : è¦ç´ åã‹åˆ¤æ–­				//
+	// å¼•æ•° : è¦ç´ å					//
+	// æˆ»å€¤ : true  : è¦ç´ å			//
+	//		  false : è¦ç´ åã§ã¯ãªã„	//
 	//----------------------------------//
 	static bool is_element_name(const std::string& element_name)
 	{
 		std::string::size_type length = element_name.length();
 
-		// ƒRƒƒ“ƒg
+		// ã‚³ãƒ¡ãƒ³ãƒˆ
 		if (length >= 3 && element_name.substr(0, 4) == "<!--")
 			return false;
 
-		// I—¹ƒ^ƒO
+		// çµ‚äº†ã‚¿ã‚°
 		if (length >= 2 && element_name.substr(0, 2) == "</")
 			return false;
 
-		// XMLéŒ¾
+		// XMLå®£è¨€
 		if (length >= 2 && element_name.substr(0, 2) == "<?")
 			return false;
 
@@ -571,16 +572,16 @@ private:
 
 
 	//----------------------------------//
-	// –¼Ì : normalize()				//
-	// —p“r : ³‹K‰»					//
-	// ˆø” : ³‹K‰»‘ÎÛ				//
-	// –ß’l : ³‹K‰»Œã•¶š—ñ			//
+	// åç§° : normalize()				//
+	// ç”¨é€” : æ­£è¦åŒ–					//
+	// å¼•æ•° : æ­£è¦åŒ–å¯¾è±¡				//
+	// æˆ»å€¤ : æ­£è¦åŒ–å¾Œæ–‡å­—åˆ—			//
 	//----------------------------------//
 	static std::string normalize(const std::string& target)
 	{
 		std::string result = target;
 
-		// •¡”‚Ìu”¼ŠpƒXƒy[ƒXvuƒ^ƒuvu‰üsv‚ğ1”¼ŠpƒXƒy[ƒX‚É’uŠ·
+		// è¤‡æ•°ã®ã€ŒåŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã€ã€Œã‚¿ãƒ–ã€ã€Œæ”¹è¡Œã€ã‚’1åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã«ç½®æ›
 		for (;;) {
 			int count = detail::chain_count_work(result.begin(), result.end(), ' ');
 			if (count < 2)
@@ -600,9 +601,9 @@ private:
 //==================================================================================//
 // int main()																		//
 // {																				//
-//     map<string, xml_element> addr_book; // ƒAƒhƒŒƒX’ 							//
+//     map<string, xml_element> addr_book; // ã‚¢ãƒ‰ãƒ¬ã‚¹å¸³							//
 //																					//
-//     // “Ç																		//
+//     // èª­è¾¼																		//
 //     xml_reader  xi("c:\\test.xml");												//
 //     xml_element person;															//
 //																					//
@@ -610,7 +611,7 @@ private:
 //         addr_book[person.attribute.find("No")->second] = person;					//
 //     }																			//
 //																					//
-//     // ˆê——•\¦																	//
+//     // ä¸€è¦§è¡¨ç¤º																	//
 //     typedef map<string, xml_element>::iterator Iterator;							//
 //     for (Iterator it = addr_book.begin(); it != addr_book.end(); ++it) {			//
 //         cout << it->second.attribute.find("No")->second   << " "		// No		//

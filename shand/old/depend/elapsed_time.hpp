@@ -1,14 +1,16 @@
-// ¦ Windows—p
+// Copyright Akira Takahashi 2006
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
+// â€» Windowsç”¨
 
 //------------------------------------------------------//
 // Name : CElapsedTime									//
-// Desc : Œo‰ßŠÔ‘ª’èƒNƒ‰ƒX							//
+// Desc : çµŒéæ™‚é–“æ¸¬å®šã‚¯ãƒ©ã‚¹							//
 //														//
-// Version : 1.00 2006/08/01 ì¬						//
-//			 1.01 2006/12/14 Unicode‚É‘Î‰				//
-//														//
-//				Programmed By Akira.T					//
-//		Copyright(C) 2006 Akira.T All rights reserved	//
+// Version : 1.00 2006/08/01 ä½œæˆ						//
+//			 1.01 2006/12/14 Unicodeã«å¯¾å¿œ				//
 //														//
 //------------------------------------------------------//
 
@@ -19,10 +21,10 @@
 #include <windows.h>
 #include <tchar.h>
 
-// Œo‰ßŠÔ‘ª’èƒNƒ‰ƒX
+// çµŒéæ™‚é–“æ¸¬å®šã‚¯ãƒ©ã‚¹
 class CElapsedTime {
 private:
-	DWORD	m_dwStartTime;	// ŠJnŠÔ
+	DWORD	m_dwStartTime;	// é–‹å§‹æ™‚é–“
 public:
 	CElapsedTime()
 		: m_dwStartTime(GetTickCount())
@@ -36,43 +38,43 @@ public:
 		m_dwStartTime = GetTickCount();
 	}
 
-	// Œo‰ßŠÔæ“¾
+	// çµŒéæ™‚é–“å–å¾—
 	double GetElapsedTime() const
 	{
 		return static_cast<double>(GetTickCount() - m_dwStartTime)/1000;
 	}
 
-	// Œo‰ßŠÔ•\¦
+	// çµŒéæ™‚é–“è¡¨ç¤º
 	void DispElapsedTime()
 	{
 		std::basic_ostringstream<TCHAR> strTime;
-		strTime << GetElapsedTime() << _T("•b");
+		strTime << GetElapsedTime() << _T("ç§’");
 		MessageBox(NULL, strTime.str().c_str(), _T("ElapsedTime"), MB_OK);
 	}
 };
 
 #endif	//_ELAPSED_TIME_HPP_
 
-//-----g—p—á-----------------------------------|
+//-----ä½¿ç”¨ä¾‹-----------------------------------|
 //												|
-//	CElapedTime tmElapsed;	// Œo‰ßŠÔ			|
+//	CElapedTime tmElapsed;	// çµŒéæ™‚é–“			|
 //												|
-//	```ŠÔ‚Ì‚©‚©‚éˆ—```				|
+//	ã€œã€œã€œæ™‚é–“ã®ã‹ã‹ã‚‹å‡¦ç†ã€œã€œã€œ				|
 //												|
-//	// Œo‰ßŠÔ‚ğƒ|ƒbƒvƒAƒbƒv•\¦				|
+//	// çµŒéæ™‚é–“ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—è¡¨ç¤º				|
 //	tmElapsed.DispElapsedTime();				|
 //												|
 //----------------------------------------------|
 
-//-----g—p—á-----------------------------------|
+//-----ä½¿ç”¨ä¾‹-----------------------------------|
 //												|
-//	CElapedTime tmElapsed;	// Œo‰ßŠÔ			|
+//	CElapedTime tmElapsed;	// çµŒéæ™‚é–“			|
 //												|
-//	```ŠÔ‚Ì‚©‚©‚éˆ—```				|
+//	ã€œã€œã€œæ™‚é–“ã®ã‹ã‹ã‚‹å‡¦ç†ã€œã€œã€œ				|
 //												|
-//	// Œo‰ßŠÔæ“¾								|
-//	`` = tmElapsed.GetElapsedTime();			|
+//	// çµŒéæ™‚é–“å–å¾—								|
+//	ã€œã€œ = tmElapsed.GetElapsedTime();			|
 //												|
-//	``Œo‰ßŠÔ‚ğg‚Á‚½ˆ—					|
+//	ã€œã€œçµŒéæ™‚é–“ã‚’ä½¿ã£ãŸå‡¦ç†					|
 //												|
 //----------------------------------------------|

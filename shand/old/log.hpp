@@ -1,12 +1,14 @@
+// Copyright Akira Takahashi 2006
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //------------------------------------------------------//
 // Name : simple_log									//
-// Desc : ŠÈˆÕƒƒOo—Í									//
-// Note : o—Íƒtƒ@ƒCƒ‹–¼‚Í log.txt						//
+// Desc : ç°¡æ˜“ãƒ­ã‚°å‡ºåŠ›									//
+// Note : å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åã¯ log.txt						//
 //														//
-// Version : 1.00 2006/08/04 ì¬						//
-//														//
-//				Programmed By Akira.T					//
-//		Copyright(C) 2006 Akira.T All rights reserved	//
+// Version : 1.00 2006/08/04 ä½œæˆ						//
 //														//
 //------------------------------------------------------//
 

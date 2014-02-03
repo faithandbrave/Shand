@@ -1,15 +1,17 @@
 #ifndef SHAND_STRING_ALGORITHM_INCLUDE
 #define SHAND_STRING_ALGORITHM_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //------------------------------------------------------//
 // Name : string_algorithm								//
-// Desc : •¶š—ñŠÖ˜AƒAƒ‹ƒSƒŠƒYƒ€						//
+// Desc : æ–‡å­—åˆ—é–¢é€£ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ 						//
 //														//
-// Version : 1.00 2007/05/17 ì¬						//
-// Version : 1.01 2007/10/25 Simple Numeric Access’Ç‰Á	//
-//														//
-//				Programmed By Akira.T					//
-//		Copyright(C) 2007 Akira.T All rights reserved	//
+// Version : 1.00 2007/05/17 ä½œæˆ						//
+// Version : 1.01 2007/10/25 Simple Numeric Accessè¿½åŠ 	//
 //														//
 //------------------------------------------------------//
 
@@ -20,7 +22,7 @@
 
 namespace shand {
 
-// string ¨ wstring
+// string â†’ wstring
 inline std::wstring to_wstr(const std::string& astr)
 {
 	setlocale(LC_ALL, "japanese");
@@ -31,7 +33,7 @@ inline std::wstring to_wstr(const std::string& astr)
 }
 
 
-// wstring ¨ string
+// wstring â†’ string
 inline std::string to_astr(const std::wstring& wstr)
 {
 	setlocale(LC_ALL, "japanese");
@@ -42,7 +44,7 @@ inline std::string to_astr(const std::wstring& wstr)
 }
 
 
-// wstring ¨ string(‹ó”’–„‚ß)
+// wstring â†’ string(ç©ºç™½åŸ‹ã‚)
 inline std::string to_fill_astr(const std::wstring& wstr, int fill_size)
 {
 	std::string astr = to_astr(wstr);
@@ -54,23 +56,23 @@ inline std::string to_fill_astr(const std::wstring& wstr, int fill_size)
 }
 
 
-// ‰E‚Ì—]”’‚ğíœ
+// å³ã®ä½™ç™½ã‚’å‰Šé™¤
 inline std::string  trim_right(std::string& source)  { source.erase(source.find_last_not_of(' ')+1);  return source; }
 inline std::wstring trim_right(std::wstring& source) { source.erase(source.find_last_not_of(L' ')+1); return source; }
 
 
-// ¶‚Ì—]”’‚ğíœ
+// å·¦ã®ä½™ç™½ã‚’å‰Šé™¤
 inline std::string  trim_left(std::string& source)  { source.erase(0, source.find_first_not_of(' '));  return source; }
 inline std::wstring trim_left(std::wstring& source) { source.erase(0, source.find_first_not_of(L' ')); return source; }
 
 
 //--------------------------------------------------//
-// –¼Ì : replace()									//
-// —p“r : •¶š—ñ’uŠ·								//
-// ˆø” : token  : ’uŠ·‚·‚é•¶š—ñ					//
-//		  oldstr : ’uŠ·‘ÎÛ							//
-//		  newstr : ’uŠ·•¶š—ñ						//
-// –ß’l : ’uŠ·Œã•¶š—ñ								//
+// åç§° : replace()									//
+// ç”¨é€” : æ–‡å­—åˆ—ç½®æ›								//
+// å¼•æ•° : token  : ç½®æ›ã™ã‚‹æ–‡å­—åˆ—					//
+//		  oldstr : ç½®æ›å¯¾è±¡							//
+//		  newstr : ç½®æ›æ–‡å­—åˆ—						//
+// æˆ»å€¤ : ç½®æ›å¾Œæ–‡å­—åˆ—								//
 //--------------------------------------------------//
 template <class TString>
 TString replace(const TString &target, const TString &oldstr, const TString &newstr)
@@ -95,10 +97,10 @@ TString replace(const TString &target, const TString &oldstr, const TString &new
 
 
 //--------------------------------------------------//
-// –¼Ì : to_string() / to_wstring()				//
-// —p“r : w’è‚³‚ê‚½’l‚ğ•¶š—ñ‚É•ÏŠ·				//
-// ˆø” : •¶š—ñ•ÏŠ·‚·‚é’l							//
-// –ß’l : •ÏŠ·Œã•¶š—ñ								//
+// åç§° : to_string() / to_wstring()				//
+// ç”¨é€” : æŒ‡å®šã•ã‚ŒãŸå€¤ã‚’æ–‡å­—åˆ—ã«å¤‰æ›				//
+// å¼•æ•° : æ–‡å­—åˆ—å¤‰æ›ã™ã‚‹å€¤							//
+// æˆ»å€¤ : å¤‰æ›å¾Œæ–‡å­—åˆ—								//
 //--------------------------------------------------//
 template <class Type>
 inline std::string to_string(const Type& target)

@@ -1,6 +1,12 @@
 #ifndef	SHAND_TOKENIZER_INCLUDE
 #define SHAND_TOKENIZER_INCLUDE
 
+// (c) Copyright Jeremy Siek and John R. Bandela 2001. 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 #include <tchar.h>
 
 #pragma warning(disable : 4786)
@@ -10,11 +16,11 @@
 
 //------------------------------------------------------//
 //														//
-//	ƒNƒ‰ƒX–¼ : ctokenizer<String>						//
-//				String‚É‚ÍAˆÈ‰º‚Ì‚Ç‚¿‚ç‚©‚ğw’è		//
+//	ã‚¯ãƒ©ã‚¹å : ctokenizer<String>						//
+//				Stringã«ã¯ã€ä»¥ä¸‹ã®ã©ã¡ã‚‰ã‹ã‚’æŒ‡å®š		//
 //					std::string							//
 //					std::wstring						//
-//	—p    “r : ƒg[ƒNƒ“•ªŠ„ƒNƒ‰ƒX						//
+//	ç”¨    é€” : ãƒˆãƒ¼ã‚¯ãƒ³åˆ†å‰²ã‚¯ãƒ©ã‚¹						//
 //														//
 //------------------------------------------------------//
 
@@ -26,7 +32,7 @@ class ctokenizer {};
 
 //======================================================//
 //														//
-// std::string”Å										//
+// std::stringç‰ˆ										//
 // char													//
 //														//
 //======================================================//
@@ -50,10 +56,10 @@ public:
 
 private:
 	std::string::size_type		cur_;
-	std::string					token_;		// ƒg[ƒNƒ“•ªŠ„‘ÎÛ‚Æ‚È‚é•¶š—ñ
-	std::string					delim_;		// ƒg[ƒNƒ“‚ğ‹æØ‚é•¶š‚ÌW‡
-	bool						ret_;		// ‹æØ‚è•¶š‚ğƒg[ƒNƒ“‚Æ‚µ‚Äˆµ‚¤‚È‚çtrue
-	std::vector<std::string>	vtoken_;	// •ªŠ„‚³‚ê‚½‘S•¶š—ñ
+	std::string					token_;		// ãƒˆãƒ¼ã‚¯ãƒ³åˆ†å‰²å¯¾è±¡ã¨ãªã‚‹æ–‡å­—åˆ—
+	std::string					delim_;		// ãƒˆãƒ¼ã‚¯ãƒ³ã‚’åŒºåˆ‡ã‚‹æ–‡å­—ã®é›†åˆ
+	bool						ret_;		// åŒºåˆ‡ã‚Šæ–‡å­—ã‚’ãƒˆãƒ¼ã‚¯ãƒ³ã¨ã—ã¦æ‰±ã†ãªã‚‰true
+	std::vector<std::string>	vtoken_;	// åˆ†å‰²ã•ã‚ŒãŸå…¨æ–‡å­—åˆ—
 
 private:
 	void skip()
@@ -70,10 +76,10 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : create_array()							//
-	// —p“r : •ªŠ„•¶š—ñ”z—ñì¬						//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : ‚È‚µ										//
+	// åç§° : create_array()							//
+	// ç”¨é€” : åˆ†å‰²æ–‡å­—åˆ—é…åˆ—ä½œæˆ						//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : ãªã—										//
 	//--------------------------------------------------//
 	void create_array()
 	{
@@ -84,11 +90,11 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : is_create()								//
-	// —p“r : ƒg[ƒNƒ“ì¬‚·‚éH						//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : true :ƒg[ƒNƒ“‚ª‹ó						//
-	//		  false:ƒg[ƒNƒ“‚ ‚è						//
+	// åç§° : is_create()								//
+	// ç”¨é€” : ãƒˆãƒ¼ã‚¯ãƒ³ä½œæˆã™ã‚‹ï¼Ÿ						//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : true :ãƒˆãƒ¼ã‚¯ãƒ³ãŒç©º						//
+	//		  false:ãƒˆãƒ¼ã‚¯ãƒ³ã‚ã‚Š						//
 	//--------------------------------------------------//
 	bool is_create()
 	{
@@ -97,10 +103,10 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : next()									//
-	// —p“r : Ø‚èo‚³‚ê‚½ƒg[ƒNƒ“æ“¾					//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : Ø‚èo‚³‚ê‚½ƒg[ƒNƒ“						//
+	// åç§° : next()									//
+	// ç”¨é€” : åˆ‡ã‚Šå‡ºã•ã‚ŒãŸãƒˆãƒ¼ã‚¯ãƒ³å–å¾—					//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : åˆ‡ã‚Šå‡ºã•ã‚ŒãŸãƒˆãƒ¼ã‚¯ãƒ³						//
 	//--------------------------------------------------//
 	std::string next()
 	{
@@ -109,11 +115,11 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : next_range()								//
-	// —p“r : ƒg[ƒNƒ“‚ğØ‚èo‚µA‚»‚ÌˆÊ’u‚Æ’·‚³‚ğæ“¾	//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : range.first	: ƒg[ƒNƒ“‚ÌŠJnˆÊ’u		//
-	//		  range.second	: ƒg[ƒNƒ“‚Ì’·‚³			//
+	// åç§° : next_range()								//
+	// ç”¨é€” : ãƒˆãƒ¼ã‚¯ãƒ³ã‚’åˆ‡ã‚Šå‡ºã—ã€ãã®ä½ç½®ã¨é•·ã•ã‚’å–å¾—	//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : range.first	: ãƒˆãƒ¼ã‚¯ãƒ³ã®é–‹å§‹ä½ç½®		//
+	//		  range.second	: ãƒˆãƒ¼ã‚¯ãƒ³ã®é•·ã•			//
 	//--------------------------------------------------//
 	range_type next_range()
 	{
@@ -138,12 +144,12 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : replace()									//
-	// —p“r : •¶š—ñ’uŠ·								//
-	// ˆø” : token  : ’uŠ·‚·‚é•¶š—ñ					//
-	//		  oldstr : ’uŠ·‘ÎÛ							//
-	//		  newstr : ’uŠ·•¶š—ñ						//
-	// –ß’l : ’uŠ·Œã•¶š—ñ								//
+	// åç§° : replace()									//
+	// ç”¨é€” : æ–‡å­—åˆ—ç½®æ›								//
+	// å¼•æ•° : token  : ç½®æ›ã™ã‚‹æ–‡å­—åˆ—					//
+	//		  oldstr : ç½®æ›å¯¾è±¡							//
+	//		  newstr : ç½®æ›æ–‡å­—åˆ—						//
+	// æˆ»å€¤ : ç½®æ›å¾Œæ–‡å­—åˆ—								//
 	//--------------------------------------------------//
 	std::string replace(const std::string &token, const std::string &oldstr, const std::string &newstr)
 	{
@@ -160,23 +166,23 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : empty_replace()							//
-	// —p“r : ‹ó•¶š‚ğ" "‚É’uŠ·							//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : ‚È‚µ										//
+	// åç§° : empty_replace()							//
+	// ç”¨é€” : ç©ºæ–‡å­—ã‚’" "ã«ç½®æ›							//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : ãªã—										//
 	//--------------------------------------------------//
 	void empty_replace()
 	{
 		if (token_.length() <= 0)
 			return;
 
-		// Å‰‚Ì•¶š‚ªƒZƒpƒŒ[ƒ^
+		// æœ€åˆã®æ–‡å­—ãŒã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿
 		if (token_.find(delim_, 0) == 0)
 			token_ = " " + token_;
 
 		std::string newtoken;
 
-		// ",," ¨ ", ,"
+		// ",," â†’ ", ,"
 		newtoken	= replace(token_, delim_ + delim_, delim_ + " " + delim_);
 		token_		= "";
 		token_		= newtoken;
@@ -185,7 +191,7 @@ private:
 		token_		= "";
 		token_		= newtoken;
 
-		// ‰üs•¶š’uŠ·
+		// æ”¹è¡Œæ–‡å­—ç½®æ›
 		newtoken	= replace(token_, "\r", "");
 		token_		= "";
 		token_		= newtoken;
@@ -204,10 +210,10 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : delim_replace()							//
-	// —p“r : ‰üsƒR[ƒh’uŠ·							//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : ‰üsƒR[ƒh’uŠ·Ï‚İ•¶š—ñ					//
+	// åç§° : delim_replace()							//
+	// ç”¨é€” : æ”¹è¡Œã‚³ãƒ¼ãƒ‰ç½®æ›							//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : æ”¹è¡Œã‚³ãƒ¼ãƒ‰ç½®æ›æ¸ˆã¿æ–‡å­—åˆ—					//
 	//--------------------------------------------------//
 	std::string delim_replace()
 	{
@@ -225,17 +231,17 @@ private:
 	}
 public:
 	//--------------------------------------------------//
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^								//
-	// token	: ƒg[ƒNƒ“•¶š—ñ						//
-	// delim	: ‹æØ‚è•¶š‚ÌW‡(ƒZƒpƒŒ[ƒ^)			//
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿								//
+	// token	: ãƒˆãƒ¼ã‚¯ãƒ³æ–‡å­—åˆ—						//
+	// delim	: åŒºåˆ‡ã‚Šæ–‡å­—ã®é›†åˆ(ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿)			//
 	//--------------------------------------------------//
 	ctokenizer(const std::string& token, const std::string& delim, bool ret=false)
 		: cur_(0), token_(token), delim_(delim), ret_(ret)
 	{
-		// ‹ó•¶š’uŠ·
+		// ç©ºæ–‡å­—ç½®æ›
 		empty_replace();
 
-		// ƒg[ƒNƒ“•ªŠ„
+		// ãƒˆãƒ¼ã‚¯ãƒ³åˆ†å‰²
 		create_array();
 
 		cur_ = 0;
@@ -256,7 +262,7 @@ public:
 		return vtoken_[index];
 	}
 
-	// vector‚É•ÏŠ·
+	// vectorã«å¤‰æ›
 	const std::vector<std::string>& c_vector() const
 	{
 		return vtoken_;
@@ -267,31 +273,31 @@ public:
 		return vtoken_;
 	}
 
-	// ƒg[ƒNƒ“•ÏX
+	// ãƒˆãƒ¼ã‚¯ãƒ³å¤‰æ›´
 	void token(const std::string& token)
 	{
 		*this	= ctokenizer(token, delim_);
 		cur_	= 0;
 	}
 
-	// ƒfƒŠƒ~ƒ^•ÏX
+	// ãƒ‡ãƒªãƒŸã‚¿å¤‰æ›´
 	void delimiter(const std::string& delim, bool ret=false)
 	{
 		*this = ctokenizer(token_, delim, ret);
 		cur_ = 0;
 	}
 
-	// •ªŠ„”æ“¾
+	// åˆ†å‰²æ•°å–å¾—
 	size_t size() const { return vtoken_.size(); }
 
-	// ƒg[ƒNƒ“‚ª‹ó‚©”»’f
+	// ãƒˆãƒ¼ã‚¯ãƒ³ãŒç©ºã‹åˆ¤æ–­
 	bool is_empty() const { return size() <= 0; }
 
-	// æ“ªƒCƒeƒŒ[ƒ^æ“¾
+	// å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 	iterator				begin()			{ return vtoken_.begin(); }
 	const_iterator			begin() const	{ return vtoken_.begin(); }
 
-	// ÅŒã”öƒCƒeƒŒ[ƒ^æ“¾
+	// æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 	iterator				end()			{ return vtoken_.end(); }
 	const_iterator			end() const		{ return vtoken_.end(); }
 
@@ -313,7 +319,7 @@ public:
 
 //======================================================//
 //														//
-// std::wstring”Å										//
+// std::wstringç‰ˆ										//
 // wchar_t												//
 //														//
 //======================================================//
@@ -338,10 +344,10 @@ public:
 
 private:
 	std::wstring::size_type		cur_;
-	std::wstring				token_;		// ƒg[ƒNƒ“•ªŠ„‘ÎÛ‚Æ‚È‚é•¶š—ñ
-	std::wstring				delim_;		// ƒg[ƒNƒ“‚ğ‹æØ‚é•¶š‚ÌW‡
-	bool						ret_;		// ‹æØ‚è•¶š‚ğƒg[ƒNƒ“‚Æ‚µ‚Äˆµ‚¤‚È‚çtrue
-	std::vector<std::wstring>	vtoken_;	// •ªŠ„‚³‚ê‚½‘S•¶š—ñ
+	std::wstring				token_;		// ãƒˆãƒ¼ã‚¯ãƒ³åˆ†å‰²å¯¾è±¡ã¨ãªã‚‹æ–‡å­—åˆ—
+	std::wstring				delim_;		// ãƒˆãƒ¼ã‚¯ãƒ³ã‚’åŒºåˆ‡ã‚‹æ–‡å­—ã®é›†åˆ
+	bool						ret_;		// åŒºåˆ‡ã‚Šæ–‡å­—ã‚’ãƒˆãƒ¼ã‚¯ãƒ³ã¨ã—ã¦æ‰±ã†ãªã‚‰true
+	std::vector<std::wstring>	vtoken_;	// åˆ†å‰²ã•ã‚ŒãŸå…¨æ–‡å­—åˆ—
 
 private:
 	void skip()
@@ -358,10 +364,10 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : create_array()							//
-	// —p“r : •ªŠ„•¶š—ñ”z—ñì¬						//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : ‚È‚µ										//
+	// åç§° : create_array()							//
+	// ç”¨é€” : åˆ†å‰²æ–‡å­—åˆ—é…åˆ—ä½œæˆ						//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : ãªã—										//
 	//--------------------------------------------------//
 	void create_array()
 	{
@@ -372,11 +378,11 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : is_create()								//
-	// —p“r : ƒg[ƒNƒ“ì¬‚·‚éH						//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : true :ƒg[ƒNƒ“‚ª‹ó						//
-	//		  false:ƒg[ƒNƒ“‚ ‚è						//
+	// åç§° : is_create()								//
+	// ç”¨é€” : ãƒˆãƒ¼ã‚¯ãƒ³ä½œæˆã™ã‚‹ï¼Ÿ						//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : true :ãƒˆãƒ¼ã‚¯ãƒ³ãŒç©º						//
+	//		  false:ãƒˆãƒ¼ã‚¯ãƒ³ã‚ã‚Š						//
 	//--------------------------------------------------//
 	bool is_create()
 	{
@@ -385,10 +391,10 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : next()									//
-	// —p“r : Ø‚èo‚³‚ê‚½ƒg[ƒNƒ“æ“¾					//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : Ø‚èo‚³‚ê‚½ƒg[ƒNƒ“						//
+	// åç§° : next()									//
+	// ç”¨é€” : åˆ‡ã‚Šå‡ºã•ã‚ŒãŸãƒˆãƒ¼ã‚¯ãƒ³å–å¾—					//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : åˆ‡ã‚Šå‡ºã•ã‚ŒãŸãƒˆãƒ¼ã‚¯ãƒ³						//
 	//--------------------------------------------------//
 	std::wstring next()
 	{
@@ -397,11 +403,11 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : next_range()								//
-	// —p“r : ƒg[ƒNƒ“‚ğØ‚èo‚µA‚»‚ÌˆÊ’u‚Æ’·‚³‚ğæ“¾	//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : range.first	: ƒg[ƒNƒ“‚ÌŠJnˆÊ’u		//
-	//		  range.second	: ƒg[ƒNƒ“‚Ì’·‚³			//
+	// åç§° : next_range()								//
+	// ç”¨é€” : ãƒˆãƒ¼ã‚¯ãƒ³ã‚’åˆ‡ã‚Šå‡ºã—ã€ãã®ä½ç½®ã¨é•·ã•ã‚’å–å¾—	//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : range.first	: ãƒˆãƒ¼ã‚¯ãƒ³ã®é–‹å§‹ä½ç½®		//
+	//		  range.second	: ãƒˆãƒ¼ã‚¯ãƒ³ã®é•·ã•			//
 	//--------------------------------------------------//
 	range_type next_range()
 	{
@@ -426,12 +432,12 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : replace()									//
-	// —p“r : •¶š—ñ’uŠ·								//
-	// ˆø” : token  : ’uŠ·‚·‚é•¶š—ñ					//
-	//		  oldstr : ’uŠ·‘ÎÛ							//
-	//		  newstr : ’uŠ·•¶š—ñ						//
-	// –ß’l : ’uŠ·Œã•¶š—ñ								//
+	// åç§° : replace()									//
+	// ç”¨é€” : æ–‡å­—åˆ—ç½®æ›								//
+	// å¼•æ•° : token  : ç½®æ›ã™ã‚‹æ–‡å­—åˆ—					//
+	//		  oldstr : ç½®æ›å¯¾è±¡							//
+	//		  newstr : ç½®æ›æ–‡å­—åˆ—						//
+	// æˆ»å€¤ : ç½®æ›å¾Œæ–‡å­—åˆ—								//
 	//--------------------------------------------------//
 	std::wstring replace(const std::wstring &token, const std::wstring &oldstr, const std::wstring &newstr)
 	{
@@ -448,28 +454,28 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : empty_replace()							//
-	// —p“r : ‹ó•¶š‚ğ" "‚É’uŠ·							//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : ‚È‚µ										//
+	// åç§° : empty_replace()							//
+	// ç”¨é€” : ç©ºæ–‡å­—ã‚’" "ã«ç½®æ›							//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : ãªã—										//
 	//--------------------------------------------------//
 	void empty_replace()
 	{
 		if (token_.length() <= 0)
 			return;
 
-		// Å‰‚Ì•¶š‚ªƒZƒpƒŒ[ƒ^
+		// æœ€åˆã®æ–‡å­—ãŒã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿
 		if (token_.find(delim_, 0) == 0)
 			token_ = L" " + token_;
 
 		std::wstring newtoken;
 
-		// ",," ¨ ", ,"
+		// ",," â†’ ", ,"
 		newtoken	= replace(token_, delim_ + delim_, delim_ + L" " + delim_);
 		token_		= L"";
 		token_		= newtoken;
 
-		// ‰üs•¶š’uŠ·
+		// æ”¹è¡Œæ–‡å­—ç½®æ›
 		newtoken	= replace(token_, L"\r", L"");
 		token_		= L"";
 		token_		= newtoken;
@@ -488,10 +494,10 @@ private:
 	}
 
 	//--------------------------------------------------//
-	// –¼Ì : delim_replace()							//
-	// —p“r : ‰üsƒR[ƒh’uŠ·							//
-	// ˆø” : ‚È‚µ										//
-	// –ß’l : ‰üsƒR[ƒh’uŠ·Ï‚İ•¶š—ñ					//
+	// åç§° : delim_replace()							//
+	// ç”¨é€” : æ”¹è¡Œã‚³ãƒ¼ãƒ‰ç½®æ›							//
+	// å¼•æ•° : ãªã—										//
+	// æˆ»å€¤ : æ”¹è¡Œã‚³ãƒ¼ãƒ‰ç½®æ›æ¸ˆã¿æ–‡å­—åˆ—					//
 	//--------------------------------------------------//
 	std::wstring delim_replace()
 	{
@@ -509,17 +515,17 @@ private:
 	}
 public:
 	//--------------------------------------------------//
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^								//
-	// token	: ƒg[ƒNƒ“•¶š—ñ						//
-	// delim	: ‹æØ‚è•¶š‚ÌW‡(ƒZƒpƒŒ[ƒ^)			//
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿								//
+	// token	: ãƒˆãƒ¼ã‚¯ãƒ³æ–‡å­—åˆ—						//
+	// delim	: åŒºåˆ‡ã‚Šæ–‡å­—ã®é›†åˆ(ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿)			//
 	//--------------------------------------------------//
 	ctokenizer(const std::wstring& token, const std::wstring& delim, bool ret=false)
 		: cur_(0), token_(token), delim_(delim), ret_(ret)
 	{
-		// ‹ó•¶š’uŠ·
+		// ç©ºæ–‡å­—ç½®æ›
 		empty_replace();
 
-		// ƒg[ƒNƒ“•ªŠ„
+		// ãƒˆãƒ¼ã‚¯ãƒ³åˆ†å‰²
 		create_array();
 
 		cur_ = 0;
@@ -540,7 +546,7 @@ public:
 		return vtoken_[index];
 	}
 
-	// vector‚É•ÏŠ·
+	// vectorã«å¤‰æ›
 	const std::vector<std::wstring>& c_vector() const
 	{
 		return vtoken_;
@@ -551,31 +557,31 @@ public:
 		return vtoken_;
 	}
 
-	// ƒg[ƒNƒ“•ÏX
+	// ãƒˆãƒ¼ã‚¯ãƒ³å¤‰æ›´
 	void token(const std::wstring& token)
 	{
 		*this	= ctokenizer(token, delim_);
 		cur_	= 0;
 	}
 
-	// ƒfƒŠƒ~ƒ^•ÏX
+	// ãƒ‡ãƒªãƒŸã‚¿å¤‰æ›´
 	void delimiter(const std::wstring& delim, bool ret=false)
 	{
 		*this = ctokenizer(token_, delim, ret);
 		cur_ = 0;
 	}
 
-	// •ªŠ„”æ“¾
+	// åˆ†å‰²æ•°å–å¾—
 	size_t size() const	{return vtoken_.size();	}
 
-	// ƒg[ƒNƒ“‚ª‹ó‚©”»’f
+	// ãƒˆãƒ¼ã‚¯ãƒ³ãŒç©ºã‹åˆ¤æ–­
 	bool is_empty() const {	return size() <= 0;	}
 
-	// æ“ªƒCƒeƒŒ[ƒ^æ“¾
+	// å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 	iterator				begin()			{ return vtoken_.begin(); }
 	const_iterator			begin() const	{ return vtoken_.begin(); }
 
-	// ÅŒã”öƒCƒeƒŒ[ƒ^æ“¾
+	// æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—
 	iterator				end()			{ return vtoken_.end(); }
 	const_iterator			end() const		{ return vtoken_.end(); }
 
@@ -599,7 +605,7 @@ typedef ctokenizer<std::basic_string<TCHAR> >	tokenizer;
 //----------------------------------------------------------------------//
 // Sample                                                               //
 //======================================================================//
-// tokenizer token("123,456,789", ","); // ƒg[ƒNƒ“‚ğu,v‚Å•ªŠ„        //
+// tokenizer token("123,456,789", ","); // ãƒˆãƒ¼ã‚¯ãƒ³ã‚’ã€Œ,ã€ã§åˆ†å‰²        //
 //                                                                      //
 // for (tokenizer::iterator it = token.begin(); it != token.end(); ++it)//
 //   cout << *it << endl;                                               //
@@ -614,17 +620,17 @@ typedef ctokenizer<std::basic_string<TCHAR> >	tokenizer;
 //----------------------------------------------------------------------//
 // Reference                                                            //
 //======================================================================//
-// int token_size = token.size();             // •ªŠ„”æ“¾             //
+// int token_size = token.size();             // åˆ†å‰²æ•°å–å¾—             //
 //                                                                      //
-// bool token_empty = token.is_empty();       // ƒg[ƒNƒ“‚ª‹ó‚©”»’f     //
+// bool token_empty = token.is_empty();       // ãƒˆãƒ¼ã‚¯ãƒ³ãŒç©ºã‹åˆ¤æ–­     //
 //                                                                      //
-// token.token("abc,def,ghi");                // ƒg[ƒNƒ“•ÏX           //
+// token.token("abc,def,ghi");                // ãƒˆãƒ¼ã‚¯ãƒ³å¤‰æ›´           //
 //                                                                      //
-// token.delimiter(".");                      // ƒfƒŠƒ~ƒ^‚ğu.v‚É•ÏX  //
+// token.delimiter(".");                      // ãƒ‡ãƒªãƒŸã‚¿ã‚’ã€Œ.ã€ã«å¤‰æ›´  //
 //                                                                      //
-// tokenizer::iterator first = token.begin(); // æ“ªƒCƒeƒŒ[ƒ^æ“¾     //
+// tokenizer::iterator first = token.begin(); // å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—     //
 //                                                                      //
-// tokenizer::iterator last  = token.end();   // ÅŒã”öƒCƒeƒŒ[ƒ^æ“¾   //
+// tokenizer::iterator last  = token.end();   // æœ€å¾Œå°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—   //
 //                                                                      //
 //======================================================================//
 

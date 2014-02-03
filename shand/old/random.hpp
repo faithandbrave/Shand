@@ -1,6 +1,11 @@
 #ifndef SHAND_RANDOM_INCLUDE
 #define SHAND_RANDOM_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
@@ -271,7 +276,7 @@ public:
 };
 
 
-// ÉÅÉãÉZÉìÉkÅEÉcÉCÉXÉ^Å[Ç≈ÇÃrandom_shuffle
+// „É°„É´„Çª„É≥„Éå„Éª„ÉÑ„Ç§„Çπ„Çø„Éº„Åß„ÅÆrandom_shuffle
 template <class RandomAccessIterator>
 inline void mt_random_shuffle(RandomAccessIterator first, RandomAccessIterator last)
 {
@@ -281,14 +286,14 @@ inline void mt_random_shuffle(RandomAccessIterator first, RandomAccessIterator l
 
 
 
-// SFINAEÇÉTÉ|Å[ÉgÇµÇƒÇ¢ÇÈÉRÉìÉpÉCÉâÇ©ÅH
+// SFINAE„Çí„Çµ„Éù„Éº„Éà„Åó„Å¶„ÅÑ„Çã„Ç≥„É≥„Éë„Ç§„É©„ÅãÔºü
 #if !defined(_MSC_VER) || (_MSC_VER > 1300)  // 1300 == VC++ 7.0
 	#define SHAND_SUPPORT_SFINAE
 #endif
 
 #ifdef SHAND_SUPPORT_SFINAE
 
-// SFINAEî≈mt_random_shuffle
+// SFINAEÁâàmt_random_shuffle
 template <class Type, int Size>
 inline void mt_random_shuffle(Type (&ar)[Size])
 {

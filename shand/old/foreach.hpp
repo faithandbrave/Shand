@@ -1,6 +1,12 @@
 #ifndef SHAND_FOREACH_INCLUDE
 #define SHAND_FOREACH_INCLUDE
 
+// Copyright 2004 Eric Niebler.
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 namespace shand { namespace foreach_detail {
 
 struct static_any_base {

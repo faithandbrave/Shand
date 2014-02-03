@@ -1,6 +1,12 @@
 #ifndef SHAND_TYPE_TRAITS_INCLUDE
 #define SHAND_TYPE_TRAITS_INCLUDE
 
+// (C) Copyright John Maddock 2000.
+// Copyright Akira Takahashi 2009
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 namespace shand {
 
 namespace detail {
@@ -33,7 +39,7 @@ struct integral_constant {
 typedef integral_constant<bool, true>  true_type;
 typedef integral_constant<bool, false> false_type;
 
-// w’è‚³‚ê‚½Œ^‚ğ“Áê‰»
+// æŒ‡å®šã•ã‚ŒãŸå‹ã‚’ç‰¹æ®ŠåŒ–
 #define SHAND_TRAITS_SPEC0(Spec, Value) \
     template <> \
     struct Spec : public integral_constant<bool, Value> {};
@@ -46,7 +52,7 @@ typedef integral_constant<bool, false> false_type;
     template <typename Type, typename ClassName> \
     struct Spec : public integral_constant<bool, Value> {};
 
-// Type, Type const, Type volatile, Type const volatile‚Ì4‚Â‚ğˆê‹C‚É“Áê‰»
+// Type, Type const, Type volatile, Type const volatileã®4ã¤ã‚’ä¸€æ°—ã«ç‰¹æ®ŠåŒ–
 #define SHAND_TRAITS_SPEC(Order, Traits, SpecialType, Value)              \
     SHAND_TRAITS_SPEC##Order##(Traits<SpecialType>,                Value) \
     SHAND_TRAITS_SPEC##Order##(Traits<SpecialType const>,          Value) \
@@ -54,12 +60,12 @@ typedef integral_constant<bool, false> false_type;
     SHAND_TRAITS_SPEC##Order##(Traits<SpecialType const volatile>, Value)
 
 
-// is_void : voidŒ^
+// is_void : voidå‹
 template <typename Type>
 struct is_void : public false_type {};
 SHAND_TRAITS_SPEC(0, is_void, void, true)
 
-// is_integral : ®”Œ^
+// is_integral : æ•´æ•°å‹
 template <typename Type>
 struct is_integral : public false_type {};
 SHAND_TRAITS_SPEC(0, is_integral, bool,               true)
@@ -76,14 +82,14 @@ SHAND_TRAITS_SPEC(0, is_integral, unsigned long,      true)
 SHAND_TRAITS_SPEC(0, is_integral, long long,          true)
 SHAND_TRAITS_SPEC(0, is_integral, unsigned long long, true)
 
-// is_float : •‚“®¬”“_Œ^
+// is_float : æµ®å‹•å°æ•°ç‚¹å‹
 template <typename Type>
 struct is_float : public false_type {};
 SHAND_TRAITS_SPEC(0, is_float, float,       true)
 SHAND_TRAITS_SPEC(0, is_float, double,      true)
 SHAND_TRAITS_SPEC(0, is_float, long double, true)
 
-// is_array : ”z—ñŒ^
+// is_array : é…åˆ—å‹
 template <typename Type>
 struct is_array : public false_type {};
 
@@ -93,33 +99,33 @@ struct is_array<Type[Size]> : public true_type {};
 template <typename Type>
 struct is_array<Type[]> : public true_type {};
 
-// is_reference : QÆŒ^
+// is_reference : å‚ç…§å‹
 template <typename Type>
 struct is_reference : public false_type {};
 
 template <typename Type>
 struct is_reference<Type&> : public true_type {};
 
-// is_pointer : ƒ|ƒCƒ“ƒ^Œ^
+// is_pointer : ãƒã‚¤ãƒ³ã‚¿å‹
 template <typename Type>
 struct is_pointer : false_type {};
 SHAND_TRAITS_SPEC(1, is_pointer, Type*, true)
 
-// is_const : constCü‚³‚ê‚½Œ^
+// is_const : constä¿®é£¾ã•ã‚ŒãŸå‹
 template <typename Type>
 struct is_const : public false_type {};
 
 template <typename Type>
 struct is_const<Type const> : public true_type {};
 
-// is_volatile : volatileCü‚³‚ê‚½Œ^
+// is_volatile : volatileä¿®é£¾ã•ã‚ŒãŸå‹
 template <typename Type>
 struct is_volatile : public false_type {};
 
 template <typename Type>
 struct is_volatile<Type volatile> : true_type {};
 
-// is_same : “¯‚¶Œ^
+// is_same : åŒã˜å‹
 template <typename, typename>
 struct is_same : public false_type {};
 
@@ -145,7 +151,7 @@ namespace detail {
     struct is_union_or_class : public integral_constant<bool, is_union_or_class_helper<Type>::value> {};
 } // namespace detail
 
-// is_function : ŠÖ”Œ^
+// is_function : é–¢æ•°å‹
 template<typename Type>
 struct is_function
     : public integral_constant<bool, !(detail::in_array<Type>::value
@@ -154,30 +160,30 @@ struct is_function
                                    ||  is_void<Type>::value)>
    {};
 
-// is_member_object_pointer : ƒf[ƒ^ƒƒ“ƒoƒ|ƒCƒ“ƒ^Œ^
+// is_member_object_pointer : ãƒ‡ãƒ¼ã‚¿ãƒ¡ãƒ³ãƒãƒã‚¤ãƒ³ã‚¿å‹
 template <typename Type>
 struct is_member_object_pointer : public  false_type {};
 SHAND_TRAITS_SPEC(2, is_member_object_pointer, Type ClassName::*, !is_function<Type>::value)
 
-// is_member_function_pointer : ƒƒ“ƒoŠÖ”ƒ|ƒCƒ“ƒ^Œ^
+// is_member_function_pointer : ãƒ¡ãƒ³ãƒé–¢æ•°ãƒã‚¤ãƒ³ã‚¿å‹
 template <typename Type>
 struct is_member_function_pointer : public  false_type {};
 SHAND_TRAITS_SPEC(2, is_member_function_pointer, Type ClassName::*, is_function<Type>::value)
 
-// is_member_pointer : ƒƒ“ƒoƒ|ƒCƒ“ƒ^Œ^
+// is_member_pointer : ãƒ¡ãƒ³ãƒãƒã‚¤ãƒ³ã‚¿å‹
 template <typename Type>
 struct is_member_pointer : public integral_constant<bool,
                                   (is_member_object_pointer<Type>::value || is_member_function_pointer<Type>::value)> {};
 
-// is_arithmetic : ZpŒ^(®”Œ^/•‚“®¬”“_Œ^)
+// is_arithmetic : ç®—è¡“å‹(æ•´æ•°å‹/æµ®å‹•å°æ•°ç‚¹å‹)
 template <typename Type>
 struct is_arithmetic : public integral_constant<bool, (is_integral<Type>::value || is_float<Type>::value)> {};
 
-// is_fundamental : Šî–{Œ^(®”Œ^/•‚“®¬”“_Œ^/voidŒ^)
+// is_fundamental : åŸºæœ¬å‹(æ•´æ•°å‹/æµ®å‹•å°æ•°ç‚¹å‹/voidå‹)
 template <typename Type>
 struct is_fundamental : public integral_constant<bool, (is_arithmetic<Type>::value || is_void<Type>::value)> {};
 
-// is_enum : enumŒ^
+// is_enum : enumå‹
 template <typename Type>
 struct is_enum : public integral_constant<bool,
                                   !(is_fundamental<Type>::value
@@ -188,7 +194,7 @@ struct is_enum : public integral_constant<bool,
                                  || detail::is_union_or_class<Type>::value)>
     {};
 
-// is_object : ƒIƒuƒWƒFƒNƒgŒ^( not(ŠÖ”Œ^/QÆŒ^/voidŒ^) )
+// is_object : ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå‹( not(é–¢æ•°å‹/å‚ç…§å‹/voidå‹) )
 template <typename Type>
 struct is_object : public integral_constant<bool,
                                 !(is_function<Type>::value
@@ -196,7 +202,7 @@ struct is_object : public integral_constant<bool,
                                || is_void<Type>::value)>
     {};
 
-// is_scalar : ƒXƒJƒ‰Œ^(®”Œ^/•‚“®¬”“_”Œ^/ƒ|ƒCƒ“ƒ^Œ^/ƒƒ“ƒoƒ|ƒCƒ“ƒ^Œ^)
+// is_scalar : ã‚¹ã‚«ãƒ©å‹(æ•´æ•°å‹/æµ®å‹•å°æ•°ç‚¹æ•°å‹/ãƒã‚¤ãƒ³ã‚¿å‹/ãƒ¡ãƒ³ãƒãƒã‚¤ãƒ³ã‚¿å‹)
 template <typename Type>
 struct is_scalar : public integral_constant<bool,
                                 (is_arithmetic<Type>::value
@@ -205,7 +211,7 @@ struct is_scalar : public integral_constant<bool,
                               || is_enum<Type>::value)>
     {};
 
-// is_compound : •¡‡Œ^( not(Šî–{Œ^...®”Œ^/•‚“®¬”“_”Œ^/voidŒ^) )
+// is_compound : è¤‡åˆå‹( not(åŸºæœ¬å‹...æ•´æ•°å‹/æµ®å‹•å°æ•°ç‚¹æ•°å‹/voidå‹) )
 template <typename Type>
 struct is_compound : public integral_constant<bool, !(is_fundamental<Type>::value)> {};
 
@@ -231,7 +237,7 @@ namespace detail {
 
 } // namespace detail
 
-// is_empty : ‹ó‚Ì\‘¢‘Ì/ƒNƒ‰ƒX
+// is_empty : ç©ºã®æ§‹é€ ä½“/ã‚¯ãƒ©ã‚¹
 template <typename Type>
 struct is_empty : public integral_constant<bool, detail::is_empty_helper<Type>::value> {};
 
@@ -260,16 +266,16 @@ namespace detail {
 
 } // namespace detail
 
-// is_polymorphic : ‰¼‘zŠÖ”ƒe[ƒuƒ‹‚ğ‚Á‚Ä‚¢‚éƒNƒ‰ƒX
+// is_polymorphic : ä»®æƒ³é–¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’æŒã£ã¦ã„ã‚‹ã‚¯ãƒ©ã‚¹
 template <typename Type>
 struct is_polymorphic : public integral_constant<bool, detail::is_polymorphic_helper<Type>::value> {};
 
-// is_abstract : ’ŠÛƒNƒ‰ƒX
+// is_abstract : æŠ½è±¡ã‚¯ãƒ©ã‚¹
 template <typename Type>
 struct is_abstract : public integral_constant<bool,
     (!detail::in_array<Type>::value && detail::is_union_or_class<Type>::value)> {};
 
-// is_signed : signedŒ^
+// is_signed : signedå‹
 template <typename Type>
 struct is_signed : public false_type {};
 SHAND_TRAITS_SPEC(0, is_signed, signed char, true)
@@ -278,7 +284,7 @@ SHAND_TRAITS_SPEC(0, is_signed, int,         true)
 SHAND_TRAITS_SPEC(0, is_signed, long,        true)
 SHAND_TRAITS_SPEC(0, is_signed, long long,   true)
 
-// is_unsigned : unsignedŒ^
+// is_unsigned : unsignedå‹
 template <typename Type>
 struct is_unsigned : public false_type {};
 SHAND_TRAITS_SPEC(0, is_unsigned, unsigned char,      true)
@@ -287,7 +293,7 @@ SHAND_TRAITS_SPEC(0, is_unsigned, unsigned int,       true)
 SHAND_TRAITS_SPEC(0, is_unsigned, unsigned long,      true)
 SHAND_TRAITS_SPEC(0, is_unsigned, unsigned long long, true)
 
-// remove_const : constCü‚Ìœ‹
+// remove_const : constä¿®é£¾ã®é™¤å»
 template <typename Type>
 struct remove_const {
     typedef Type type;
@@ -298,7 +304,7 @@ struct remove_const<Type const> {
     typedef Type type;
 };
 
-// remove_volatile : volatileCü‚Ìœ‹
+// remove_volatile : volatileä¿®é£¾ã®é™¤å»
 template <typename Type>
 struct remove_volatile {
     typedef Type type;
@@ -309,13 +315,13 @@ struct remove_volatile<Type volatile> {
     typedef Type type;
 };
 
-// remove_cv : const/volatileCü‚Ìœ‹
+// remove_cv : const/volatileä¿®é£¾ã®é™¤å»
 template <typename Type>
 struct remove_cv {
     typedef typename remove_const<typename remove_volatile<Type>::type>::type type;
 };
 
-// remove_pointer : *(ƒ|ƒCƒ“ƒ^)œ‹
+// remove_pointer : *(ãƒã‚¤ãƒ³ã‚¿)é™¤å»
 template <typename Type>
 struct remove_pointer {
     typedef Type type;
@@ -326,7 +332,7 @@ struct remove_pointer<Type*> {
     typedef Type type;
 };
 
-// remove_reference : &(QÆ)œ‹
+// remove_reference : &(å‚ç…§)é™¤å»
 template <typename Type>
 struct remove_reference {
     typedef Type type;
@@ -337,7 +343,7 @@ struct remove_reference<Type&> {
     typedef Type type;
 };
 
-// remove_extent : ”z—ñ‚Ì—v‘fŒ^æ“¾
+// remove_extent : é…åˆ—ã®è¦ç´ å‹å–å¾—
 template<typename Type>
 struct remove_extent {
     typedef Type type;
@@ -353,7 +359,7 @@ struct remove_extent<Type[]> {
     typedef Type type;
 };
 
-// remove_all_extents : ‘½ŸŒ³”z—ñ‚Ì—v‘fŒ^æ“¾
+// remove_all_extents : å¤šæ¬¡å…ƒé…åˆ—ã®è¦ç´ å‹å–å¾—
 template <typename Type>
 struct remove_all_extents {
     typedef Type type;
@@ -369,25 +375,25 @@ struct remove_all_extents<Type[]> {
     typedef typename remove_all_extents<Type>::type type;
 };
 
-// add_const : constCü•t‰Á
+// add_const : constä¿®é£¾ä»˜åŠ 
 template <typename Type>
 struct add_const {
     typedef Type const type;
 };
 
-// add_volatile : volatileCü•t‰Á
+// add_volatile : volatileä¿®é£¾ä»˜åŠ 
 template <typename Type>
 struct add_volatile {
     typedef Type volatile type;
 };
 
-// add_cv : const volatileCü•t‰Á
+// add_cv : const volatileä¿®é£¾ä»˜åŠ 
 template <typename Type>
 struct add_cv {
     typedef typename add_const<typename add_volatile<Type>::type>::type type;
 };
 
-// add_pointer : *(ƒ|ƒCƒ“ƒ^)•t‰Á
+// add_pointer : *(ãƒã‚¤ãƒ³ã‚¿)ä»˜åŠ 
 template <typename Type>
 struct add_pointer {
     typedef typename remove_reference<Type>::type* type;
@@ -406,11 +412,11 @@ namespace detail {
 
 } // namespace detail
 
-// add_reference : &(QÆ)•t‰Á
+// add_reference : &(å‚ç…§)ä»˜åŠ 
 template<typename Type>
 struct add_reference : public detail::add_reference_helper<Type> {};
 
-// is_pod : PODŒ^
+// is_pod : PODå‹
 template <typename Type>
 struct is_pod : public integral_constant<bool,
                         (is_void<Type>::value
@@ -448,7 +454,7 @@ namespace detail {
 
 } // namespace detail
 
-// is_base_of : Œp³ŠÖŒW‚ğ”»’f
+// is_base_of : ç¶™æ‰¿é–¢ä¿‚ã‚’åˆ¤æ–­
 template <typename Base, typename Derived>
 struct is_base_of : public integral_constant<bool, detail::is_base_of_helper<Base, Derived>::value> {};
 
@@ -490,7 +496,7 @@ namespace detail {
 
 } // namespace detail
 
-// is_convertible : •ÏŠ·‰Â”\‚©”»’f
+// is_convertible : å¤‰æ›å¯èƒ½ã‹åˆ¤æ–­
 template <typename From, typename To>
 struct is_convertible : public integral_constant<bool, detail::is_convertible_helper<From, To>::value> {};
 

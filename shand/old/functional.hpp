@@ -1,8 +1,13 @@
 #ifndef	SHAND_FUNCTIONAL_INCLUDE
 #define SHAND_FUNCTIONAL_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //==========================================================//
-//	\‘¢‘Ì‚Ìw’èƒƒ“ƒo‚Å‚Ì”äŠr‰‰Z‚ğs‚¤ŠÖ”ƒIƒuƒWƒFƒNƒg	//
+//	æ§‹é€ ä½“ã®æŒ‡å®šãƒ¡ãƒ³ãƒã§ã®æ¯”è¼ƒæ¼”ç®—ã‚’è¡Œã†é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ	//
 //	mem_less, mem_greater, mem_equal, mem_not_equal			//
 //==========================================================//
 
@@ -114,23 +119,23 @@ namespace shand {
 // Sort struct array, for member.						//
 //														//
 // struct person {										//
-//	 int	age;	// ”N—î								//
-//	 string	name;	// –¼‘O								//
+//	 int	age;	// å¹´é½¢								//
+//	 string	name;	// åå‰								//
 // };													//
 //														//
-// age(”N—î)‚Å•À‚Ñ‘Ö‚¦ - ~‡							//
+// age(å¹´é½¢)ã§ä¸¦ã³æ›¿ãˆ - é™é †							//
 // void sort_age(vector<person> &v)						//
 // {													//
 //   sort(v.begin(), v.end(), mem_less(&person::age));	//
 // }													//
 //														//
-// name(–¼‘O)‚Å•À‚Ñ‘Ö‚¦ - ~‡							//
+// name(åå‰)ã§ä¸¦ã³æ›¿ãˆ - é™é †							//
 // void sort_name(vector<person> &v)					//
 // {													//
 //   sort(v.begin(), v.end(), mem_less(&person::name));	//
 // }													//
 //														//
-//	¸‡‚Å‚Ì•À‚Ñ‘Ö‚¦‚É‚Ímem_greater‚ğg—p				//
+//	æ˜‡é †ã§ã®ä¸¦ã³æ›¿ãˆã«ã¯mem_greaterã‚’ä½¿ç”¨				//
 //------------------------------------------------------//
 
 #endif	// SHAND_FUNCTIONAL_INCLUDE

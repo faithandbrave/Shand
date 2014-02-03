@@ -1,13 +1,18 @@
+// Copyright Akira Takahashi 2006
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 #ifndef _CE_TRAY_ICON_HPP_
 #define _CE_TRAY_ICON_HPP_
 
 #define WM_TRAY_ICON 0x1000
 
-// Å¶MFCóp
+// ‚ÄªMFCÁî®
 
 //==============================//
 //								//
-// ÉgÉåÉCÉAÉCÉRÉìä«óùÉNÉâÉX		//
+// „Éà„É¨„Ç§„Ç¢„Ç§„Ç≥„É≥ÁÆ°ÁêÜ„ÇØ„É©„Çπ		//
 //								//
 //==============================//
 class CTrayIcon {
@@ -20,8 +25,8 @@ public:
 	}
 
 	//--------------------------//
-	// ÉAÉCÉRÉìçÏê¨				//
-	// OnInitDialog()Ç≈é¿çs		//
+	// „Ç¢„Ç§„Ç≥„É≥‰ΩúÊàê				//
+	// OnInitDialog()„ÅßÂÆüË°å		//
 	//--------------------------//
 	void Create(HWND hWnd, UINT nIconID)
 	{
@@ -39,7 +44,7 @@ public:
 	}
 
 	//--------------------------//
-	// ÉAÉCÉRÉìï\é¶				//
+	// „Ç¢„Ç§„Ç≥„É≥Ë°®Á§∫				//
 	//--------------------------//
 	void Show()
 	{
@@ -47,7 +52,7 @@ public:
 	}
 
 	//--------------------------//
-	// ÉAÉCÉRÉìîÒï\é¶			//
+	// „Ç¢„Ç§„Ç≥„É≥ÈùûË°®Á§∫			//
 	//--------------------------//
 	void Hide()
 	{
@@ -55,7 +60,7 @@ public:
 	}
 
 	//--------------------------//
-	// ÉAÉCÉRÉìêÿë÷				//
+	// „Ç¢„Ç§„Ç≥„É≥ÂàáÊõø				//
 	//--------------------------//
 	void Modify(UINT nIconID)
 	{
@@ -68,7 +73,7 @@ public:
 	}
 
 private:
-	NOTIFYICONDATA m_stTrayIcon;	// ÉgÉåÉCÉAÉCÉRÉì
+	NOTIFYICONDATA m_stTrayIcon;	// „Éà„É¨„Ç§„Ç¢„Ç§„Ç≥„É≥
 };
 
 #endif	// _CE_TRAY_ICON_HPP_

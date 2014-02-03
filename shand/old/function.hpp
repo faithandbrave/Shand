@@ -1,16 +1,18 @@
 #ifndef SHAND_FUNCTION_INCLUDE
 #define SHAND_FUNCTION_INCLUDE
 
+// Copyright Akira Takahashi 2007
+// Use, modification and distribution is subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 //----------------------------------------------------------//
 // Name : function<R (T0, T1...T9)>							//
-// Desc : ”Ä—pŠÖ”ƒIƒuƒWƒFƒNƒg								//
-//		  ŠÖ”‚Ì‚æ‚¤‚È‚à‚Ì‚È‚ç‚È‚ñ‚Å‚àˆ—‚·‚éƒNƒ‰ƒX		//
+// Desc : æ±ç”¨é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ								//
+//		  é–¢æ•°ã®ã‚ˆã†ãªã‚‚ã®ãªã‚‰ãªã‚“ã§ã‚‚å‡¦ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹		//
 //															//
-// Version : 0.90 2007/10/30 ì¬							//
-//			 1.00 2007/10/31 ƒƒ“ƒoŠÖ”ƒ|ƒCƒ“ƒ^‚É‘Î‰		//
-//															//
-//				Programmed By Akira.T						//
-//		Copyright(C) 2007 Akira.T All rights reserved		//
+// Version : 0.90 2007/10/30 ä½œæˆ							//
+//			 1.00 2007/10/31 ãƒ¡ãƒ³ãƒé–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã«å¯¾å¿œ		//
 //															//
 //----------------------------------------------------------//
 
@@ -295,13 +297,13 @@ namespace shand_work {
 	union any_pointer
 	{
 		void* obj_ptr;
-		void (*func_ptr)(); // ŠÖ”ƒ|ƒCƒ“ƒ^‚Ævoid*ŠÔ‚ÌƒLƒƒƒXƒg‚Í‹–‚³‚ê‚È‚¢‚Ì‚Å•K—v
+		void (*func_ptr)(); // é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã¨void*é–“ã®ã‚­ãƒ£ã‚¹ãƒˆã¯è¨±ã•ã‚Œãªã„ã®ã§å¿…è¦
 	};
 
-	// ŠÖ””»•Êƒ^ƒO
-	struct function_ptr_tag {};	// ŠÖ”ƒ|ƒCƒ“ƒ^
-	struct function_obj_tag {};	// ŠÖ”ƒIƒuƒWƒFƒNƒg
-	struct member_ptr_tag {};	// ƒƒ“ƒoŠÖ”ƒ|ƒCƒ“ƒ^
+	// é–¢æ•°åˆ¤åˆ¥ã‚¿ã‚°
+	struct function_ptr_tag {};	// é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
+	struct function_obj_tag {};	// é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	struct member_ptr_tag {};	// ãƒ¡ãƒ³ãƒé–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 
 	template <class FuncType>
 	struct get_function_tag {
