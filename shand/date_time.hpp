@@ -57,70 +57,70 @@ typedef primitive<5> second;
 
 template <int I, int J>
 inline boost::fusion::vector<primitive<I>, primitive<J> >
-	operator&(const primitive<I>& a, const primitive<J>& b)
+    operator&(const primitive<I>& a, const primitive<J>& b)
 {
-	return boost::fusion::make_vector(a, b);
+    return boost::fusion::make_vector(a, b);
 }
 
 template <class Seq, int I>
 inline typename boost::lazy_enable_if<
-					boost::fusion::traits::is_sequence<Seq>,
-					boost::fusion::result_of::push_back<const Seq, primitive<I> > >::type
-	operator&(const Seq& a, const primitive<I>& b)
+                    boost::fusion::traits::is_sequence<Seq>,
+                    boost::fusion::result_of::push_back<const Seq, primitive<I> > >::type
+    operator&(const Seq& a, const primitive<I>& b)
 {
-	return boost::fusion::push_back(a, b);
+    return boost::fusion::push_back(a, b);
 }
 
 namespace detail {
 
 class primitive_assigner {
-	std::tm* st_;
+    std::tm* st_;
 public:
-	primitive_assigner(std::tm* st) : st_(st) {}
+    primitive_assigner(std::tm* st) : st_(st) {}
 
-	void operator()(const year& x) const	{ st_->tm_year = x.value() - 1900; }
-	void operator()(const month& x) const 	{ st_->tm_mon  = x.value() - 1; }
-	void operator()(const day& x) const		{ st_->tm_mday = x.value(); }
-	void operator()(const hour& x) const	{ st_->tm_hour = x.value(); }
-	void operator()(const minute& x) const	{ st_->tm_min  = x.value(); }
-	void operator()(const second& x) const	{ st_->tm_sec  = x.value(); }
+    void operator()(const year& x) const    { st_->tm_year = x.value() - 1900; }
+    void operator()(const month& x) const   { st_->tm_mon  = x.value() - 1; }
+    void operator()(const day& x) const     { st_->tm_mday = x.value(); }
+    void operator()(const hour& x) const    { st_->tm_hour = x.value(); }
+    void operator()(const minute& x) const  { st_->tm_min  = x.value(); }
+    void operator()(const second& x) const  { st_->tm_sec  = x.value(); }
 };
 
 class primitive_extractor {
-	const std::tm& st_;
+    const std::tm& st_;
 public:
-	primitive_extractor(const std::tm& st) : st_(st) {}
+    primitive_extractor(const std::tm& st) : st_(st) {}
 
-	void operator()(year& x) const		{ x = year(st_.tm_year + 1900); }
-	void operator()(month& x) const		{ x = month(st_.tm_mon + 1); }
-	void operator()(day& x) const		{ x = day(st_.tm_mday); }
-	void operator()(hour& x) const		{ x = hour(st_.tm_hour); }
-	void operator()(minute& x) const	{ x = minute(st_.tm_min); }
-	void operator()(second& x) const	{ x = second(st_.tm_sec); }
+    void operator()(year& x) const      { x = year(st_.tm_year + 1900); }
+    void operator()(month& x) const     { x = month(st_.tm_mon + 1); }
+    void operator()(day& x) const       { x = day(st_.tm_mday); }
+    void operator()(hour& x) const      { x = hour(st_.tm_hour); }
+    void operator()(minute& x) const    { x = minute(st_.tm_min); }
+    void operator()(second& x) const    { x = second(st_.tm_sec); }
 
-	// skip other
-	template <class T>
-	void operator()(T&) const {}
+    // skip other
+    template <class T>
+    void operator()(T&) const {}
 };
 
 inline std::tm std_localtime(std::time_t time)
 {
 #if (defined(_MSC_VER) && (_MSC_VER >= 1400))
-	std::tm st;
-	const errno_t err = localtime_s(&st, &time);
-	if (err != 0) {
-		const std::string what = (boost::format("could not convert time to tm. err:%1%") % err).str();
-		boost::throw_exception(std::runtime_error(what));
-	}
+    std::tm st;
+    const errno_t err = localtime_s(&st, &time);
+    if (err != 0) {
+        const std::string what = (boost::format("could not convert time to tm. err:%1%") % err).str();
+        boost::throw_exception(std::runtime_error(what));
+    }
 
-	return st;
+    return st;
 #else
-	std::tm* st = std::localtime(&time);
-	if (!st) {
-		boost::throw_exception(std::runtime_error("could not convert time to tm."));
-	}
+    std::tm* st = std::localtime(&time);
+    if (!st) {
+        boost::throw_exception(std::runtime_error("could not convert time to tm."));
+    }
 
-	return *st;
+    return *st;
 #endif
 }
 
@@ -154,20 +154,20 @@ public:
     date_time() : time_(0) {}
     explicit date_time(std::time_t t) : time_(t) {}
 
-	template <class Seq>
-	date_time(const Seq& seq,
-		typename boost::enable_if<boost::fusion::traits::is_sequence<Seq> >::type* = 0)
-	{
+    template <class Seq>
+    date_time(const Seq& seq,
+        typename boost::enable_if<boost::fusion::traits::is_sequence<Seq> >::type* = 0)
+    {
         std::tm st = detail::std_localtime(now_time_t());
 
-		boost::fusion::for_each(seq, detail::primitive_assigner(&st));
+        boost::fusion::for_each(seq, detail::primitive_assigner(&st));
 
         time_ = std::mktime(&st);
-	}
+    }
 
     std::string format(const std::string& fmt) const
     {
-		BOOST_ASSERT(time_ >= 0);
+        BOOST_ASSERT(time_ >= 0);
 
         std::tm st = detail::std_localtime(time_);
 
@@ -196,17 +196,17 @@ public:
     time_t to_time_t() const { return time_; }
 
     // assign
-	template <class Seq>
-	typename boost::enable_if<boost::fusion::traits::is_sequence<Seq>, date_time&>::type
-		operator=(const Seq& seq)
-	{
+    template <class Seq>
+    typename boost::enable_if<boost::fusion::traits::is_sequence<Seq>, date_time&>::type
+        operator=(const Seq& seq)
+    {
         std::tm st = detail::std_localtime(time_);
 
-		boost::fusion::for_each(seq, detail::primitive_assigner(&st));
+        boost::fusion::for_each(seq, detail::primitive_assigner(&st));
 
         time_ = std::mktime(&st);
-		return *this;
-	}
+        return *this;
+    }
 
     date_time& operator=(const year& x)
         { return assign_time(boost::lambda::_1 ->* &std::tm::tm_year = x.value() - 1900); }
@@ -264,28 +264,28 @@ public:
     friend date_time operator-(const date_time& d, const second& x)
         { return date_time::calc_time(d, boost::lambda::_1 ->* &std::tm::tm_sec -= x.value()); }
 
-	template <class ExtractPrimitives>
-	ExtractPrimitives extract() const
-	{
-		BOOST_MPL_ASSERT((boost::fusion::traits::is_sequence<ExtractPrimitives>));
+    template <class ExtractPrimitives>
+    ExtractPrimitives extract() const
+    {
+        BOOST_MPL_ASSERT((boost::fusion::traits::is_sequence<ExtractPrimitives>));
 
         std::tm st = detail::std_localtime(time_);
 
-		ExtractPrimitives result;
-		boost::fusion::for_each(result, detail::primitive_extractor(st));
+        ExtractPrimitives result;
+        boost::fusion::for_each(result, detail::primitive_extractor(st));
 
-		return result;
-	}
+        return result;
+    }
 
-	template <class OutputSequence>
-	void extract(OutputSequence& result) const
-	{
-		BOOST_MPL_ASSERT((boost::fusion::traits::is_sequence<OutputSequence>));
+    template <class OutputSequence>
+    void extract(OutputSequence& result) const
+    {
+        BOOST_MPL_ASSERT((boost::fusion::traits::is_sequence<OutputSequence>));
 
-		std::tm st = detail::std_localtime(time_);
+        std::tm st = detail::std_localtime(time_);
 
-		boost::fusion::for_each(result, detail::primitive_extractor(st));
-	}
+        boost::fusion::for_each(result, detail::primitive_extractor(st));
+    }
 };
 
 
