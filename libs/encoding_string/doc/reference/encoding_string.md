@@ -57,7 +57,7 @@ encoding_string<Encoding> compatible_decompose(const encoding_string<Encoding>& 
 
 | 名前              | 説明                                                          |
 |-------------------|---------------------------------------------------------------|
-| `encoding_string` | 文字コードのエンコーディング情報を持つ文字列クラス            |
+| [`encoding_string`](./encoding_string/encoding_string.md) | 文字コードのエンコーディング情報を持つ文字列クラス            |
 | `encode()`        | `encoding_string`オブジェクトを、他の文字コードに変換する関数 |
 | `operator<<`      | ストリーム出力                                                |
 
