@@ -19,7 +19,8 @@ encoding_string<Encoding> codeunit_substr(std::size_t index) const;             
 
 
 ##計算量
-O(N)
+- O(N)
+- UTF-32はO(1)
 
 
 ##例
