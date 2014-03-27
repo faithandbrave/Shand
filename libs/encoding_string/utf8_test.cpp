@@ -55,8 +55,8 @@ void ostream_test()
 
 void codeunit_substr_range_test()
 {
-    encoding_string<encoding::utf8> sub = string.codeunit_substr(2, 3);
-    BOOST_TEST(sub == encoding_string<encoding::utf8>(u8"うえお"));
+    encoding_string<encoding::utf8> sub = string.codeunit_substr(1, 3);
+    BOOST_TEST(sub == encoding_string<encoding::utf8>(u8"いうえ"));
 }
 
 void codeunit_substr_start_test()

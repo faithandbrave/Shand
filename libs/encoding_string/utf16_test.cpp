@@ -56,8 +56,8 @@ void iteration_test()
 void codeunit_substr_range_test()
 {
     const encoding_string<encoding::utf16> s = LITERAL("あいうえお");
-    const encoding_string<encoding::utf16> sub = s.codeunit_substr(2, 3);
-    BOOST_TEST(sub == encoding_string<encoding::utf16>(LITERAL("うえお")));
+    const encoding_string<encoding::utf16> sub = s.codeunit_substr(1, 3);
+    BOOST_TEST(sub == encoding_string<encoding::utf16>(LITERAL("いうえ")));
 }
 
 void codeunit_substr_start_test()

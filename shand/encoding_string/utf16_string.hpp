@@ -127,16 +127,14 @@ public:
             if (!start && len == index) {
                 start = i;
             }
+
+            if (len == index + codeunit_size) {
+                return data_.substr(start.get(), i - start.get()).c_str();
+            }
+
             const std::size_t n = char_size(i);
             i += n;
             ++len;
-            if (!start)
-                continue;
-
-            --codeunit_size;
-            if (codeunit_size == 0) {
-                return data_.substr(start.get(), i).c_str();
-            }
         }
         throw std::out_of_range("out of range");
     }

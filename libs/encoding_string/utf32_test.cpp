@@ -44,8 +44,8 @@ void iteration_test()
 
 void codeunit_substr_range_test()
 {
-    const encoding_string<encoding::utf32> sub = input.codeunit_substr(2, 3);
-    BOOST_TEST(sub == encoding_string<encoding::utf32>(U"うえお"));
+    const encoding_string<encoding::utf32> sub = input.codeunit_substr(1, 3);
+    BOOST_TEST(sub == encoding_string<encoding::utf32>(U"いうえ"));
 }
 
 void codeunit_substr_start_test()
