@@ -52,7 +52,7 @@ public:
     ValueType& get_value()
     { return boost::get<ValueType>(value_); }
 
-    const ValueType& get_integer() const
+    const ValueType& get_value() const
     { return boost::get<ValueType>(value_); }
 
     Enum& get_enum()
