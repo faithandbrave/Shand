@@ -89,10 +89,10 @@ radian_t<FloatingPoint> atan(const radian_t<FloatingPoint>& x)
 }
 
 template <class FloatingPoint>
-radian_t<FloatingPoint> atan2(const radian_t<FloatingPoint>& y,
-                              const radian_t<FloatingPoint>& x)
+radian_t<FloatingPoint> atan2(const FloatingPoint& y,
+                              const FloatingPoint& x)
 {
-    return radian_t<FloatingPoint>(std::atan2(y.get(), x.get()));
+    return radian_t<FloatingPoint>(std::atan2(y, x));
 }
 
 } // namespace shand
