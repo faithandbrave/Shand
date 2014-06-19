@@ -12,6 +12,7 @@
 #include <boost/geometry/util/math.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 
 namespace shand { namespace la {
 
@@ -24,6 +25,19 @@ using vector2 = vector<T, 2>;
 template <class T>
 using vector3 = vector<T, 3>;
 
+template <class T>
+using matrix2 = Eigen::Matrix<T, 2, 2>;
+
+template <class T>
+using matrix3 = Eigen::Matrix<T, 3, 3>;
+
+template <class T>
+using matrix4 = Eigen::Matrix<T, 4, 4>;
+
+template <class T>
+using rotation2d = Eigen::Rotation2D<T>;
+
+// caution : erase sign
 template <class T, int Dimension>
 radian_t<T> vector_angle(const ::shand::la::vector<T, Dimension>& v,
                          const ::shand::la::vector<T, Dimension>& u)
@@ -36,6 +50,16 @@ radian_t<T> vector_angle(const ::shand::la::vector<T, Dimension>& v,
     const T x = v.dot(u) / length;
     const T rounded = boost::algorithm::clamp(x, static_cast<T>(-1.0), static_cast<T>(1.0));
     return radian_t<T>(std::acos(rounded));
+}
+
+template <class T>
+::shand::la::matrix2<T> rotate2d(const ::shand::la::vector2<T>& v)
+{
+    ::shand::la::matrix2<T> m;
+    m <<
+        v.x() /*cosθ*/, -v.y(), /*-sinθ*/
+        v.y() /*sinθ*/,  v.x(); /*sinθ*/
+    return m;
 }
 
 }} // namespace shand::la
