@@ -62,6 +62,20 @@ template <class T>
     return m;
 }
 
+template <class T>
+::shand::la::rotation2d<T> make_rotation2d(const ::shand::la::matrix2<T>& m)
+{
+	shand::la::rotation2d<float> rotate(0.0f);
+    rotate.fromRotationMatrix(m);
+	return rotate;
+}
+
+template <class T>
+::shand::la::rotation2d<T> make_rotation2d(const ::shand::la::vector2<T>& v)
+{
+	return make_rotation2d(::shand::la::make_rotate2d_matrix(v));
+}
+
 }} // namespace shand::la
 
 #endif // SHAND_EIGEN_VECTOR_INCLUDE
