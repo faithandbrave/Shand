@@ -53,7 +53,7 @@ radian_t<T> vector_angle(const ::shand::la::vector<T, Dimension>& v,
 }
 
 template <class T>
-::shand::la::matrix2<T> rotate2d(const ::shand::la::vector2<T>& v)
+::shand::la::matrix2<T> make_rotate2d_matrix(const ::shand::la::vector2<T>& v)
 {
     ::shand::la::matrix2<T> m;
     m <<

@@ -26,7 +26,7 @@ int main()
         const shand::la::vector2<float> v = (q - p).normalized();
 
         shand::la::rotation2d<float> rotate(0.0f);
-        rotate.fromRotationMatrix(shand::la::rotate2d(v));
+        rotate.fromRotationMatrix(shand::la::make_rotate2d_matrix(v));
         const shand::radian_f theta = rotate.angle();
 
         std::cout << shand::angle_cast<shand::degree_f>(theta) << std::endl;
