@@ -8,7 +8,7 @@
 
 int main()
 {
-    shand::degree_f deg = 45.0f;
+    shand::degree_f deg(45.0f);
     shand::radian_f rad = shand::angle_cast<shand::radian_f>(deg);
 
     std::cout << rad.get() << std::endl;

@@ -26,7 +26,7 @@ class tagged_int :
 public:
     typedef Integer value_type;
 
-    tagged_int(Integer value = 0) : value_(value) {}
+    explicit tagged_int(Integer value = 0) : value_(value) {}
 
     Integer& get() { return value_; }
     const Integer& get() const { return value_; }

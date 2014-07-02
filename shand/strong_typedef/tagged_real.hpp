@@ -25,7 +25,7 @@ class tagged_real :
 public:
     typedef FloatingPoint value_type;
 
-    tagged_real(FloatingPoint value = 0) : value_(value) {}
+    explicit tagged_real(FloatingPoint value = 0) : value_(value) {}
 
     FloatingPoint& get() { return value_; }
     const FloatingPoint& get() const { return value_; }

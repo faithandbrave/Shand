@@ -32,20 +32,20 @@ int main ()
 {
     // 異なる型(タグ)間での暗黙変換はできない
     {
-        degree<float> deg = 90.0f;
+        degree<float> deg(90.0f);
 //      radian<float> rad = deg; // コンパイルエラー！型が違う
     }
 
     // degreeからradianへの変換
     {
-        degree<float> deg = 90.0f;
+        degree<float> deg(90.0f);
         radian<float> rad = degree_to_radian(deg);
         std::cout << rad << std::endl;
     }
 
     // radianからdegreeへの変換
     {
-        radian<float> rad = 0.5 * boost::math::constants::pi<float>();
+        radian<float> rad(0.5 * boost::math::constants::pi<float>());
         degree<float> deg = radian_to_degree(rad);
         std::cout << deg << std::endl;
     }

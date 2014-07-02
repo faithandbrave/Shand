@@ -12,8 +12,8 @@ struct seconds_tag {};
 
 int main()
 {
-    shand::tagged_int<std::size_t, count_tag> count = 0;
-    shand::tagged_int<std::time_t, seconds_tag> seconds = std::time(0);
+    shand::tagged_int<std::size_t, count_tag> count(0);
+    shand::tagged_int<std::time_t, seconds_tag> seconds(std::time(0));
 
     // 異なる型(タグ)間での暗黙変換はできない
 //  count = seconds; // コンパイルエラー！型が違う
