@@ -24,7 +24,6 @@ public:
     using iterator          = typename vector_type::const_iterator;
     using const_iterator    = typename vector_type::const_iterator;
     using value_type        = typename vector_type::value_type;
-    using const_reference   = typename vector_type::const_reference;
     using size_type         = typename vector_type::size_type;
     using difference_type   = typename vector_type::difference_type;
 
@@ -49,27 +48,27 @@ public:
     size_type size() const BOOST_NOEXCEPT { return vec_.size(); }
     bool empty() const BOOST_NOEXCEPT { return vec_.empty(); }
 
-    const_reference operator[](size_type n) const
+    const T& operator[](size_type n) const
     { return vec_[n]; }
 
-    const_reference at(size_type n) const
+    const T& at(size_type n) const
     { return vec_.at(n); }
 
-    boost::optional<const_reference> opt_at(size_t n) const BOOST_NOEXCEPT
+    boost::optional<const value_type&> opt_at(size_t n) const BOOST_NOEXCEPT
     {
         if (n < size())
             return vec_[n];
         return boost::none;
     }
 
-    boost::optional<const_reference> opt_front() const BOOST_NOEXCEPT
+    boost::optional<const T&> opt_front() const BOOST_NOEXCEPT
     {
         if (!empty())
             return vec_[0u];
         return boost::none;
     }
 
-    boost::optional<const_reference> opt_back() const BOOST_NOEXCEPT
+    boost::optional<const T&> opt_back() const BOOST_NOEXCEPT
     {
         if (!empty())
             return vec_[size() - 1u];
@@ -78,7 +77,7 @@ public:
 
     // reference raw data
     const T* data() const BOOST_NOEXCEPT { return vec_.data(); }
-    const vector_type& get() const { return vec_; }
+    const vector_type& get() const BOOST_NOEXCEPT { return vec_; }
 };
 
 } // namespace shand
