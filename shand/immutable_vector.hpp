@@ -78,7 +78,7 @@ public:
 
     // reference raw data
     const T* data() const BOOST_NOEXCEPT { return vec_.data(); }
-    const vector_type& get() const { return vec_; }
+    const vector_type& get() const BOOST_NOEXCEPT { return vec_; }
 };
 
 } // namespace shand
