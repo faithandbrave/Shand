@@ -8,7 +8,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <shand/static_map.hpp>
 
-int main()
+void construct_and_find_test()
 {
     shand::static_map<char, int, 3> map = {
         {'a', 1},
@@ -19,6 +19,26 @@ int main()
     BOOST_TEST(map.at('a') == 1);
     BOOST_TEST(map.at('b') == 2);
     BOOST_TEST(map.at('c') == 3);
+}
+
+void helper_function_test()
+{
+    shand::pair_maker<char, int> p;
+    const auto map = shand::make_static_map(
+        p('a', 1),
+        p('b', 2),
+        p('c', 3)
+    );
+
+    BOOST_TEST(map.at('a') == 1);
+    BOOST_TEST(map.at('b') == 2);
+    BOOST_TEST(map.at('c') == 3);
+}
+
+int main()
+{
+    construct_and_find_test();
+    helper_function_test();
 
     return boost::report_errors();
 }

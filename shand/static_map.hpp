@@ -3,12 +3,13 @@
 
 // Compile time fixed capacity map.
 //
-// Copyright Akira Takahashi 2013
+// Copyright Akira Takahashi, myoukaku 2013-2014.
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <initializer_list>
+#include <type_traits>
 #include <boost/container/static_vector.hpp>
 #include <boost/range/algorithm/sort.hpp>
 #include <boost/range/algorithm/lower_bound.hpp>
@@ -44,6 +45,43 @@ public:
         throw std::out_of_range("out of range error");
     }
 };
+
+// usage :
+//
+// enum class Color {
+//    Blue,
+//    Yellow,
+//    Red
+// };
+//
+// shand::pair_maker<Color, const char*> p;
+// const auto map = shand::make_static_map(
+//     p(Color::Blue, "AAA"),
+//     p(Color::Yellow, "BBB"),
+//     p(Color::Red, "CCC")
+// );
+// 
+// std::string s = map.at(Color::Blue);
+template <class Key, class T>
+struct pair_maker {
+    std::pair<Key, T> operator()(Key&& key, T&& value) const
+    {
+        return {std::move(key), std::move(value)};
+    }
+};
+
+template <class... Keys, class... Ts>
+auto make_static_map(std::pair<Keys, Ts>&&... args)
+    -> static_map<
+            typename std::common_type<Keys...>::type,
+            typename std::common_type<Ts...>::type,
+            sizeof...(Keys)>
+{
+    return static_map<
+                typename std::common_type<Keys...>::type,
+                typename std::common_type<Ts...>::type,
+                sizeof...(Keys)>({args...});
+}
 
 } // namespace shand
 
