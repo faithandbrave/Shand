@@ -12,8 +12,12 @@ namespace shand {
 template <class InputRange, class BinaryFunction>
 void adjacent_for_each(const InputRange& range, BinaryFunction f)
 {
-    auto first = std::begin(range);
-    auto last = std::end(range);
+    // for ADL
+    using std::begin;
+    using std::end;
+
+    auto first = begin(range);
+    auto last = end(range);
  
     if (first == last)
         return;
