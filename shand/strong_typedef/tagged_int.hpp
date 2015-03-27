@@ -15,7 +15,7 @@
 #include <boost/functional/hash.hpp>
 #include <functional>
 
-#if defined(BOOST_NO_CXX11_NOEXCEPT)
+#if !defined(BOOST_NO_CXX11_NOEXCEPT)
     #define SHAND_NOEXCEPT_COND(cond) noexcept(cond)
     #define SHAND_NOEXCEPT_IF(expr) noexcept(noexcept(expr))
 #else
