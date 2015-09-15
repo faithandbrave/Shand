@@ -114,6 +114,23 @@ public:
         throw std::out_of_range("out of range");
     }
 
+    std::uint32_t codeunit_value_at(std::size_t index) const
+    {
+        const value_type codeunit = codeunit_at(index);
+        const string_type& s = codeunit.raw_str();
+        const std::size_t size = s.size();
+        if (size == 1) {
+            const std::uint32_t c0 = static_cast<std::uint32_t>(s[0]);
+            return c0;
+        }
+        if (size == 2) {
+            const std::uint32_t c0 = static_cast<std::uint32_t>(s[0]);
+            const std::uint32_t c1 = static_cast<std::uint32_t>(s[1]);
+            return (((c0 & 0x03C0) + 0x0040) << 10) | ((c0 & 0x3F) << 10) | (c1 & 0x3FF);
+        }
+        throw std::out_of_range("out of range");
+    }
+
     encoding_string<encoding::utf16> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
     {
         assert(codeunit_size > 0);

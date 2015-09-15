@@ -80,6 +80,9 @@ public:
     encoding_string<encoding::utf32> codeunit_at(std::size_t index) const
     { return string_type(1, data_.at(index + utf32_detail::ignore_bom(data_))).c_str(); }
 
+    std::uint32_t codeunit_value_at(std::size_t index) const
+    { return static_cast<std::uint32_t>(data_.at(index + utf32_detail::ignore_bom(data_))); }
+
     encoding_string<encoding::utf32> codeunit_substr(std::size_t index, std::size_t codeunit_size) const
     { return data_.substr(index + utf32_detail::ignore_bom(data_), codeunit_size).c_str(); }
 
