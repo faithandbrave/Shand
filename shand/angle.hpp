@@ -8,7 +8,7 @@
 
 #include <cmath>
 #include <boost/math/constants/constants.hpp>
-#include "./strong_typedef/tagged_real.hpp"
+#include "./strong_typedef/tagged_float.hpp"
 
 namespace shand {
 
@@ -16,13 +16,13 @@ struct degree_tag {};
 struct radian_tag {};
 
 template <class FloatingPoint>
-using degree_t = shand::tagged_real<FloatingPoint, degree_tag>;
+using degree_t = shand::tagged_float<FloatingPoint, degree_tag>;
 using degree_f = degree_t<float>;
 using degree_d = degree_t<double>;
 using degree_ld = degree_t<long double>;
 
 template <class FloatingPoint>
-using radian_t = shand::tagged_real<FloatingPoint, radian_tag>;
+using radian_t = shand::tagged_float<FloatingPoint, radian_tag>;
 using radian_f = radian_t<float>;
 using radian_d = radian_t<double>;
 using radian_ld = radian_t<long double>;

@@ -1,5 +1,5 @@
-#ifndef SHAND_TAGGED_REAL_INCLUDE
-#define SHAND_TAGGED_REAL_INCLUDE
+#ifndef SHAND_TAGGED_FLOAT_INCLUDE
+#define SHAND_TAGGED_FLOAT_INCLUDE
 
 // strong typedef for floating point types.
 //
@@ -25,8 +25,8 @@
 namespace shand {
 
 template <class FloatingPoint, class Tag> // Tag is phantom type
-class tagged_real :
-        private boost::operators<tagged_real<FloatingPoint, Tag> > {
+class tagged_float :
+        private boost::operators<tagged_float<FloatingPoint, Tag> > {
 
     BOOST_STATIC_ASSERT(boost::is_floating_point<FloatingPoint>::value);
 
@@ -34,7 +34,7 @@ class tagged_real :
 public:
     typedef FloatingPoint value_type;
 
-    explicit tagged_real(FloatingPoint value = 0)
+    explicit tagged_float(FloatingPoint value = 0)
         SHAND_NOEXCEPT_COND(boost::has_nothrow_copy_constructor<FloatingPoint>::value)
         : value_(value) {}
 
@@ -42,18 +42,18 @@ public:
     const FloatingPoint& get() const BOOST_NOEXCEPT { return value_; }
 
     // operators
-    bool operator<(const tagged_real& x) const SHAND_NOEXCEPT_IF(value_ < x.value_)
+    bool operator<(const tagged_float& x) const SHAND_NOEXCEPT_IF(value_ < x.value_)
         { return value_ < x.value_; }
-    tagged_real& operator+=(const tagged_real& x) SHAND_NOEXCEPT_IF(value_ += x.value_)
+    tagged_float& operator+=(const tagged_float& x) SHAND_NOEXCEPT_IF(value_ += x.value_)
         { value_ += x.value_; return *this; }
-    tagged_real& operator-=(const tagged_real& x) SHAND_NOEXCEPT_IF(value_ -= x.value_)
+    tagged_float& operator-=(const tagged_float& x) SHAND_NOEXCEPT_IF(value_ -= x.value_)
         { value_ -= x.value_; return *this; }
-    tagged_real& operator*=(const tagged_real& x) SHAND_NOEXCEPT_IF(value_ *= x.value_)
+    tagged_float& operator*=(const tagged_float& x) SHAND_NOEXCEPT_IF(value_ *= x.value_)
         { value_ *= x.value_; return *this; }
-    tagged_real& operator/=(const tagged_real& x) SHAND_NOEXCEPT_IF(value_ /= x.value_)
+    tagged_float& operator/=(const tagged_float& x) SHAND_NOEXCEPT_IF(value_ /= x.value_)
         { value_ /= x.value_; return *this; }
 
-    bool equals(const tagged_real& x) const SHAND_NOEXCEPT_IF(boost::geometry::math::equals(value_, x.value_))
+    bool equals(const tagged_float& x) const SHAND_NOEXCEPT_IF(boost::geometry::math::equals(value_, x.value_))
     {
         return boost::geometry::math::equals(value_, x.value_);
     }

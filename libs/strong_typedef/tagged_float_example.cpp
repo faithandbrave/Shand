@@ -4,17 +4,17 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/math/constants/constants.hpp>
-#include <shand/strong_typedef/tagged_real.hpp>
-#include <shand/strong_typedef/tagged_real_io.hpp>
+#include <shand/strong_typedef/tagged_float.hpp>
+#include <shand/strong_typedef/tagged_float_io.hpp>
 
 struct degree_tag {};
 struct radian_tag {};
 
 template <class T>
-using degree = shand::tagged_real<T, degree_tag>;
+using degree = shand::tagged_float<T, degree_tag>;
 
 template <class T>
-using radian = shand::tagged_real<T, radian_tag>;
+using radian = shand::tagged_float<T, radian_tag>;
 
 template <class T>
 radian<T> degree_to_radian(const degree<T>& x)

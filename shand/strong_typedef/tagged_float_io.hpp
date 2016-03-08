@@ -1,5 +1,5 @@
-#ifndef SHAND_TAGGED_REAL_IO_INCLUDE
-#define SHAND_TAGGED_REAL_IO_INCLUDE
+#ifndef SHAND_TAGGED_FLOAT_IO_INCLUDE
+#define SHAND_TAGGED_FLOAT_IO_INCLUDE
 
 // strong typedef for floating point types.
 //
@@ -9,20 +9,20 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <iostream>
-#include "./tagged_real.hpp"
+#include "./tagged_float.hpp"
 
 namespace shand {
 
 template <class CharT, class Traits, class FloatingPoint, class Tag>
 std::basic_ostream<CharT, Traits>&
-    operator<<(std::basic_ostream<CharT, Traits>& os, const tagged_real<FloatingPoint, Tag>& x)
+    operator<<(std::basic_ostream<CharT, Traits>& os, const tagged_float<FloatingPoint, Tag>& x)
 {
     return os << x.get();
 }
 
 template <class CharT, class Traits, class FloatingPoint, class Tag>
 std::basic_istream<CharT, Traits>&
-    operator>>(std::basic_istream<CharT, Traits>& is, tagged_real<FloatingPoint, Tag>& x)
+    operator>>(std::basic_istream<CharT, Traits>& is, tagged_float<FloatingPoint, Tag>& x)
 {
     return is >> x.get();
 }
