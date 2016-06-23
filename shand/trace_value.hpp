@@ -19,6 +19,8 @@ class trace_value {
     ArithmeticType value_ {0};
     boost::stacktrace::stacktrace trace_;
 
+    // Design patterns for invariant suspension
+    // http://bannalia.blogspot.jp/2015/06/design-patterns-for-invariant-suspension.html
     template <class F>
     trace_value& modify_this(F f)
     {
