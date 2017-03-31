@@ -1,6 +1,6 @@
-#encoding_stringクラス
+# encoding_stringクラス
 
-##宣言
+## 宣言
 ```cpp
 namespace shand {
 
@@ -11,14 +11,14 @@ class encoding_string;
 } // namespace shand
 ```
 
-##概要
+## 概要
 `encoding_string`は、文字コード情報を持つ文字列クラスである。
 
 [`std::basic_string`][basic_string]が文字型(`char`、`wchar_t`、`char16_t`、`char32_t`)をテンプレートパラメータにとるのに対し、このクラスはテンプレートパラメータとして文字コードの種類を表す型を取る。
 
 
-##メンバ関数
-###構築・破棄
+## メンバ関数
+### 構築・破棄
 
 | 名前                                                   | 説明           |
 |--------------------------------------------------------|----------------|
@@ -26,7 +26,7 @@ class encoding_string;
 | `~encoding_string() = default;`                        | デストラクタ   |
 
 
-###文字列プロパティ
+### 文字列プロパティ
 
 | 名前                                      | 説明                                           |
 |-------------------------------------------|------------------------------------------------|
@@ -35,7 +35,7 @@ class encoding_string;
 | [`raw_str`](./encoding_string/raw_str.md) | [`basic_string`][basic_string]文字列を取得する |
 
 
-###コードユニットのインタフェース
+### コードユニットのインタフェース
 
 コードユニット(≒ 文字)単位で文字列を操作するインタフェース。結合文字や異体字セレクタは考慮しない。
 
@@ -50,7 +50,7 @@ class encoding_string;
 | [`end`](./encoding_string/end.md)                         | 末尾コードユニットの次を指すイテレータを取得する |
 
 
-##メンバ型
+## メンバ型
 
 | 名前 | 説明 |
 |------------------|------|
@@ -61,7 +61,7 @@ class encoding_string;
 | `value_type`     | イテレータの要素型。`encoding_string<Encoding>`。 |
 
 
-##例
+## 例
 ```cpp
 #include <iostream>
 #include <shand/encoding_string.hpp>
@@ -85,7 +85,7 @@ int main()
 }
 ```
 
-###出力
+### 出力
 ```
 あいうえお
 うえお
@@ -93,5 +93,5 @@ int main()
 う
 ```
 
-[basic_string]: https://sites.google.com/site/cpprefjp/reference/string/basic_string
+[basic_string]: https://cpprefjp.github.io/reference/string/basic_string.html
 

@@ -1,27 +1,27 @@
-#raw_str
+# raw_str
 ```cpp
 const string_type& raw_str() const;
 ```
 
-##概要
-[`basic_string`](https://sites.google.com/site/cpprefjp/reference/string/basic_string)文字列を取得する。
+## 概要
+[`basic_string`](https://cpprefjp.github.io/reference/string/basic_string.html)文字列を取得する。
 
 
-##戻り値
-[`basic_string`](https://sites.google.com/site/cpprefjp/reference/string/basic_string)表現の文字列への参照を返す。
+## 戻り値
+[`basic_string`](https://cpprefjp.github.io/reference/string/basic_string.html)表現の文字列への参照を返す。
 
 この関数によって返される参照の寿命は、`*this`オブジェクトと同じである。
 
 
-##計算量
+## 計算量
 O(1)
 
 
-##備考
+## 備考
 この関数は、文字列のバイト表現に関するプロパティを取得するために使用できる。
 
 
-##例
+## 例
 ```cpp
 #include <iostream>
 #include <shand/encoding_string.hpp>
@@ -37,7 +37,7 @@ int main()
 }
 ```
 
-##出力
+## 出力
 ```
 hello
 ```

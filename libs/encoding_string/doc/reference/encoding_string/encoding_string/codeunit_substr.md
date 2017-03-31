@@ -1,29 +1,29 @@
-#codeunit_substr
+# codeunit_substr
 ```cpp
 encoding_string<Encoding> codeunit_substr(std::size_t index, std::size_t codeunit_size) const; // (1)
 encoding_string<Encoding> codeunit_substr(std::size_t index) const;                            // (2)
 ```
 
-##概要
+## 概要
 部分文字列を取得する。
 
 
-##要件
+## 要件
 - `index < codeunit_size()`であること。
 - `codeunit_size > 0`であること。
 
 
-##戻り値
+## 戻り値
 - (1) : コードポイント範囲`[index, index + codeunit_size]`の文字列を抽出して返す。
 - (2) : コードポイント範囲`[index, end)`の文字列を抽出して返す。
 
 
-##計算量
+## 計算量
 - O(N)
 - UTF-32はO(1)
 
 
-##例
+## 例
 ```cpp
 #include <iostream>
 #include <shand/encoding_string.hpp>
@@ -43,7 +43,7 @@ int main()
 }
 ```
 
-##出力
+## 出力
 ```
 いうえ
 いうえお

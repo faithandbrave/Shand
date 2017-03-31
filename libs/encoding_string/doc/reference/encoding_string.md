@@ -1,6 +1,6 @@
-#`<shand/encoding_string.hpp>`
+# `<shand/encoding_string.hpp>`
 
-##概要
+## 概要
 ```cpp
 namespace shand {
 
@@ -41,7 +41,7 @@ encoding_string<Encoding> compatible_decompose(const encoding_string<Encoding>& 
 } // namespace shand
 ```
 
-##エンコーディングの種類
+## エンコーディングの種類
 
 エンコーディングの種類は、`shand::encoding`名前空間内に、それぞれ空クラスのタグとして定義している。
 
@@ -53,7 +53,7 @@ encoding_string<Encoding> compatible_decompose(const encoding_string<Encoding>& 
 | `system`               | システムの文字コード。ストリームの出力に使用する文字コード。 |
 
 
-##エンコード文字列クラスと、エンコード関数
+## エンコード文字列クラスと、エンコード関数
 
 | 名前              | 説明                                                          |
 |-------------------|---------------------------------------------------------------|
@@ -61,7 +61,7 @@ encoding_string<Encoding> compatible_decompose(const encoding_string<Encoding>& 
 | `encode()`        | `encoding_string`オブジェクトを、他の文字コードに変換する関数 |
 | `operator<<`      | ストリーム出力                                                |
 
-##Unicode正規化
+## Unicode正規化
 
 | 名前                     | 説明           |
 |--------------------------|----------------|
